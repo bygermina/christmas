@@ -1,0 +1,183 @@
+@use '@/shared/styles/design-system' as *;
+
+@keyframes ping {
+  75%,
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+.container {
+  position: relative;
+  display: flex;
+  transform: rotate(30deg);
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  z-index: 200;
+  contain: layout style paint;
+  -webkit-mask-image: radial-gradient(
+    circle,
+    rgba(from var(--color-white) r g b / 1) 0%,
+    rgba(from var(--color-white) r g b / 1) 30%,
+    rgba(from var(--color-white) r g b / 0.7) 40%,
+    rgba(from var(--color-white) r g b / 0.35) 50%,
+    rgba(from var(--color-white) r g b / 0) 70%
+  );
+  mask-image: radial-gradient(
+    circle,
+    rgba(from var(--color-white) r g b / 1) 0%,
+    rgba(from var(--color-white) r g b / 1) 30%,
+    rgba(from var(--color-white) r g b / 0.7) 40%,
+    rgba(from var(--color-white) r g b / 0.35) 50%,
+    rgba(from var(--color-white) r g b / 0) 70%
+  );
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+
+.beam {
+  position: absolute;
+  animation-name: pulse;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
+  animation-iteration-count: infinite;
+
+  &Horizontal,
+  &Vertical {
+    filter: blur(0.2px);
+  }
+
+  &Diagonal45,
+  &Diagonal135 {
+    filter: blur(0.15px);
+  }
+
+  &Diagonal45 {
+    transform: rotate(45deg);
+  }
+
+  &Diagonal135 {
+    transform: rotate(135deg);
+  }
+}
+
+.centralCircle,
+.innerCenter {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.centralCircle {
+  animation-name: ping;
+  animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  animation-iteration-count: infinite;
+  filter: blur(0.8px);
+  box-shadow:
+    0 0 8px rgba(from var(--color-white) r g b / 0.9),
+    0 0 16px rgba(from var(--color-gold-400) r g b / 0.5),
+    0 0 24px rgba(from var(--color-gold-400) r g b / 0.3),
+    0 0 32px rgba(from var(--color-gold-400) r g b / 0.2);
+}
+
+.innerCenter {
+  filter: blur(0.3px);
+  animation-name: pulse;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
+  animation-iteration-count: infinite;
+  box-shadow:
+    0 0 6px rgba(from var(--color-white) r g b / 1),
+    0 0 12px rgba(from var(--color-gold-400) r g b / 0.6),
+    0 0 18px rgba(from var(--color-gold-400) r g b / 0.4),
+    0 0 24px rgba(from var(--color-gold-400) r g b / 0.3);
+}
+
+.variantWhite {
+  .centralCircle {
+    background: radial-gradient(
+      circle,
+      rgba(from var(--color-white) r g b / 1) 0%,
+      rgba(from var(--color-white) r g b / 0.95) 20%,
+      rgba(from var(--color-white) r g b / 0.7) 35%,
+      rgba(from var(--color-white) r g b / 0.5) 50%,
+      rgba(from var(--color-white) r g b / 0.3) 65%,
+      rgba(from var(--color-white) r g b / 0) 80%
+    );
+  }
+
+  .innerCenter {
+    background: radial-gradient(
+      circle,
+      rgba(from var(--color-white) r g b / 1) 0%,
+      rgba(from var(--color-white) r g b / 0.9) 30%,
+      rgba(from var(--color-white) r g b / 0.6) 45%,
+      rgba(from var(--color-white) r g b / 0.4) 60%,
+      rgba(from var(--color-white) r g b / 0) 80%
+    );
+  }
+}
+
+.variantGold {
+  .centralCircle {
+    background: radial-gradient(
+      circle,
+      rgba(from var(--color-white) r g b / 1) 0%,
+      rgba(from var(--color-white) r g b / 0.95) 20%,
+      rgba(from var(--color-gold-300) r g b / 0.6) 35%,
+      rgba(from var(--color-gold-400) r g b / 0.4) 50%,
+      rgba(from var(--color-gold-500) r g b / 0.3) 65%,
+      rgba(from var(--color-gold-500) r g b / 0) 80%
+    );
+  }
+
+  .innerCenter {
+    background: radial-gradient(
+      circle,
+      rgba(from var(--color-white) r g b / 1) 0%,
+      rgba(from var(--color-white) r g b / 0.9) 30%,
+      rgba(from var(--color-gold-300) r g b / 0.5) 45%,
+      rgba(from var(--color-gold-400) r g b / 0.35) 60%,
+      rgba(from var(--color-gold-400) r g b / 0) 80%
+    );
+  }
+}
+
+.performanceMode {
+  -webkit-mask-image: none;
+  mask-image: none;
+
+  .beamHorizontal,
+  .beamVertical,
+  .beamDiagonal45,
+  .beamDiagonal135 {
+    filter: none;
+  }
+
+  .centralCircle {
+    filter: none;
+    box-shadow:
+      0 0 6px rgba(from var(--color-white) r g b / 0.75),
+      0 0 12px rgba(from var(--color-gold-400) r g b / 0.3);
+  }
+
+  .innerCenter {
+    filter: none;
+    box-shadow:
+      0 0 4px rgba(from var(--color-white) r g b / 0.8),
+      0 0 8px rgba(from var(--color-gold-400) r g b / 0.3);
+  }
+}

@@ -1,0 +1,49 @@
+@use '../../styles/design-system' as *;
+
+.root {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  contain: strict;
+}
+
+.container {
+  position: absolute;
+  inset: 0;
+  contain: layout style paint;
+  font-family: font-family(sans);
+  font-weight: font-weight(light);
+  white-space: pre;
+  opacity: 0.55;
+  font-variant-numeric: tabular-nums;
+  filter: blur(0.2px) saturate(0.95);
+}
+
+.grid {
+  display: grid;
+  height: 100%;
+  grid-template-columns: repeat(3, 1fr);
+  gap: spacing(8);
+  padding: spacing(4);
+
+  .column {
+    display: flex;
+    flex-direction: column;
+    gap: spacing(2);
+    user-select: none;
+
+    .line {
+      font-size: 0.75rem;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      tab-size: 8;
+      overflow-wrap: anywhere;
+      color: rgba(from var(--color-slate-300) r g b / 0.22);
+      text-shadow:
+        0 0 16px rgba(from var(--color-blue-400) r g b / 0.09),
+        0 0 12px rgba(from var(--color-slate-400) r g b / 0.14);
+    }
+  }
+}

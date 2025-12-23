@@ -1,0 +1,33 @@
+@use '@/shared/styles/design-system' as *;
+
+.typography-h1-hero {
+  margin: 0;
+  font-size: clamp(2rem, 8vw, 3.5rem);
+
+  @media (min-width: breakpoint(xs)) and (max-width: 929px) {
+    font-size: clamp(2rem, 5vw, 3rem);
+  }
+
+  @media (min-width: 930px) {
+    font-size: 3rem;
+
+    @include respond-to(sm) {
+      font-size: 3.75rem;
+    }
+
+    @media (min-width: 1401px) {
+      font-size: 4.5rem;
+    }
+  }
+}
+
+.typography-subheading-responsive {
+  margin: 0 0 spacing(4);
+  color: var(--color-slate-400);
+  font-size: clamp(0.875rem, 3.5vw, 1.25rem);
+
+  @media (min-width: 930px) {
+    font-size: inherit;
+    margin-bottom: 0;
+  }
+}

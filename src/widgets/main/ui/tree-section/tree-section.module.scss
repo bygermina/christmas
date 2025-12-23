@@ -1,0 +1,105 @@
+@use '@/shared/styles/design-system' as *;
+
+.tree {
+  position: absolute;
+  left: 50%;
+  top: clamp(190px, 31vh, 350px);
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  width: min(94vw, 560px);
+  height: auto;
+  max-height: 100%;
+  filter: drop-shadow(0 0 18px rgba(from var(--color-blue-400) r g b / 0.12));
+  opacity: 0;
+  animation: tree-settle 1.15s ease-out 0.08s forwards;
+
+  @media (orientation: portrait) and (max-width: breakpoint(xs)) {
+    width: min(92vw, 500px);
+    top: clamp(170px, 29vh, 310px);
+  }
+
+  @include landscape-main {
+    left: 23vw;
+    top: 50%;
+    transform: translate(-50%, -50%) translateY(6vh);
+    width: auto;
+    height: 88dvh;
+    max-width: 960px;
+    filter: drop-shadow(0 0 22px rgba(from var(--color-blue-400) r g b / 0.14));
+    animation-name: tree-settle-landscape;
+  }
+
+  @media (min-width: breakpoint(sm)) and (orientation: landscape) {
+    max-width: 50vw;
+  }
+}
+
+.treeMedia {
+  display: block;
+  width: 100%;
+  height: auto;
+  @include fade-in(0.8s, 0.2s);
+
+  $white: rgba(from var(--color-white) r g b / 1);
+  $white-50: rgba(from var(--color-white) r g b / 0.5);
+  $gradient:
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      $white-50 20%,
+      $white 30%,
+      $white 70%,
+      $white-50 80%,
+      transparent 100%
+    ),
+    linear-gradient(
+      to right,
+      transparent 0%,
+      $white-50 20%,
+      $white 30%,
+      $white 70%,
+      $white-50 80%,
+      transparent 100%
+    );
+
+  mask-image: $gradient;
+  -webkit-mask-image: $gradient;
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+  -webkit-mask-size: 100% 100%;
+  mask-composite: intersect;
+  -webkit-mask-composite: source-in;
+}
+
+@keyframes tree-settle {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -49.2%) scale(0.995);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes tree-settle-landscape {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -49.2%) translateY(6vh) scale(0.995);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) translateY(6vh) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tree,
+  .treeMedia {
+    opacity: 1;
+    animation: none;
+  }
+}

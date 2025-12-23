@@ -1,0 +1,21 @@
+@use 'sass:meta';
+@use './tokens' as *;
+@use './functions' as *;
+
+:root {
+  @each $name, $value in $colors {
+    @if meta.type-of($value) == 'map' {
+      @each $shade, $color in $value {
+        --color-#{$name}-#{$shade}: #{$color};
+      }
+    } @else {
+      --color-#{$name}: #{$value};
+    }
+  }
+
+  --color-primary-strong: #{semantic-color(primary-strong)};
+  --color-surface: #{semantic-color(surface)};
+  --color-on-surface: #{semantic-color(on-surface)};
+
+  --font-family-sans: #{font-family(sans)};
+}

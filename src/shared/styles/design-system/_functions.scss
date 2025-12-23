@@ -1,0 +1,71 @@
+@use 'sass:map';
+@use 'sass:list';
+@use 'sass:meta';
+@use './tokens' as tokens;
+
+@function _lookup($map, $key, $label) {
+  $value: map.get($map, $key);
+  @if $value == null {
+    @error "#{$label} '#{$key}' not found.";
+  }
+  @return $value;
+}
+
+// Colors -----------------------------------------------------------------
+
+@function ds-color($color-name, $shade: null) {
+  $color-value: _lookup(tokens.$colors, $color-name, 'Color');
+
+  @if $shade == null {
+    @return $color-value;
+  }
+
+  @if meta.type-of($color-value) != 'map' {
+    @error "Color '#{$color-name}' is not a nested map and cannot have a shade.";
+  }
+
+  @return _lookup($color-value, $shade, "Shade for color '#{$color-name}'");
+}
+
+@function semantic-color($role) {
+  $ref: _lookup(tokens.$semantic-colors, $role, 'Semantic color');
+  @return ds-color(list.nth($ref, 1), list.nth($ref, 2));
+}
+
+// Spacing & sizing -------------------------------------------------------
+
+@function spacing($size) {
+  @return _lookup(tokens.$spacing, $size, 'Spacing');
+}
+
+@function radius($size) {
+  @return _lookup(tokens.$radius, $size, 'Radius');
+}
+
+// Typography -------------------------------------------------------------
+
+@function font-family($family) {
+  @return _lookup(tokens.$font-family, $family, 'Font family');
+}
+
+@function font-size($size) {
+  @return map.get(_lookup(tokens.$font-size, $size, 'Font size'), size);
+}
+
+@function line-height($size) {
+  @return map.get(_lookup(tokens.$font-size, $size, 'Font size'), line-height);
+}
+
+@function font-weight($weight) {
+  @return _lookup(tokens.$font-weight, $weight, 'Font weight');
+}
+
+// Layout & motion --------------------------------------------------------
+
+@function breakpoint($size) {
+  @return _lookup(tokens.$breakpoints, $size, 'Breakpoint');
+}
+
+@function z-index($layer) {
+  @return _lookup(tokens.$z-index, $layer, 'z-index layer');
+}

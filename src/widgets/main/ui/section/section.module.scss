@@ -1,0 +1,83 @@
+@use '@/shared/styles/design-system' as *;
+
+.root {
+  position: relative;
+  height: 100dvh;
+  width: 100%;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: clamp(230px, 45vh, 500px) minmax(0, 1fr);
+  align-items: stretch;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  &::before {
+    top: 0;
+    height: 58%;
+    background:
+      radial-gradient(
+        ellipse at 50% 34%,
+        rgba(from var(--color-blue-400) r g b / 0.16) 0%,
+        rgba(from var(--color-cyan-400) r g b / 0.06) 26%,
+        transparent 58%
+      );
+  }
+
+  &::after {
+    bottom: 0;
+    height: 46%;
+    background:
+      linear-gradient(
+        180deg,
+        transparent 0%,
+        rgba(from var(--color-surface) r g b / 0.42) 24%,
+        rgba(from var(--color-surface) r g b / 0.72) 100%
+      );
+  }
+
+  @media (orientation: portrait) and (min-aspect-ratio: 3/5) {
+    grid-template-rows: clamp(280px, 52vh, 600px) minmax(0, 1fr);
+  }
+
+  @include landscape-main {
+    grid-template-rows: 1fr;
+    grid-template-columns: minmax(0, 46vw) minmax(0, 1fr);
+    align-items: center;
+
+    &::before {
+      inset-block: 0;
+      width: 58%;
+      height: auto;
+      background:
+        radial-gradient(
+          ellipse at 33% 54%,
+          rgba(from var(--color-blue-400) r g b / 0.18) 0%,
+          rgba(from var(--color-cyan-400) r g b / 0.07) 28%,
+          transparent 64%
+        );
+    }
+
+    &::after {
+      inset-block: 0;
+      left: 36%;
+      right: 0;
+      width: auto;
+      height: auto;
+      background:
+        linear-gradient(
+          90deg,
+          transparent 0%,
+          rgba(from var(--color-surface) r g b / 0.52) 22%,
+          rgba(from var(--color-surface) r g b / 0.82) 68%,
+          rgba(from var(--color-surface) r g b / 0.94) 100%
+        );
+    }
+  }
+}

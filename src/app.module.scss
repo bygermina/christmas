@@ -1,0 +1,70 @@
+@use '@/shared/styles/design-system' as *;
+
+.root {
+  position: relative;
+  height: 100dvh;
+  background: var(--color-surface);
+  overflow: hidden;
+  contain: layout style;
+}
+
+.background {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: z-index(base);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(from var(--color-primary-strong) r g b / 0.06) 0%,
+      rgba(from var(--color-primary-strong) r g b / 0.002) 15%,
+      rgba(from var(--color-primary-strong) r g b / 0.001) 60%,
+      var(--color-surface) 100%
+    );
+}
+
+.background::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      135deg,
+      rgba(from var(--color-on-surface) r g b / 0.01) 0px,
+      rgba(from var(--color-on-surface) r g b / 0.01) 1px,
+      transparent 1px,
+      transparent 10px
+    );
+  mix-blend-mode: overlay;
+  opacity: 0.06;
+}
+
+.codeLayer {
+  position: absolute;
+  inset: 0;
+  z-index: z-index(backdrop);
+  contain: layout style paint;
+}
+
+.root > main {
+  position: relative;
+  z-index: z-index(content);
+  contain: layout style;
+}
+
+.skipLink {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  z-index: z-index(skip-link);
+  padding: spacing(2) spacing(4);
+  background: var(--color-surface);
+  color: var(--color-on-surface);
+  text-decoration: none;
+  border-radius: radius(sm);
+
+  &:focus {
+    top: 0;
+  }
+}
