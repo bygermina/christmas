@@ -1,0 +1,154 @@
+@use '@/shared/styles/design-system' as *;
+
+.typography {
+  margin: 0;
+  padding: 0;
+}
+
+// ============================================
+// TYPOGRAPHY HIERARCHY
+// ============================================
+// h1 > h2 > h3 > subheading > body > caption > label
+
+.typography-h1 {
+  --typography-h1-line-height: 1.15;
+  font-size: clamp(2rem, 8vw, 3.5rem);
+  line-height: var(--typography-h1-line-height);
+  font-weight: font-weight(bold);
+  letter-spacing: -0.02em;
+  font-feature-settings: 'kern' 1, 'liga' 1;
+  @include font-smoothing;
+
+  @include respond-to(md) {
+    --typography-h1-line-height: 1.1;
+    font-size: 4.5rem;
+  }
+}
+
+.typography-h2,
+.typography-h3 {
+  font-weight: font-weight(bold);
+  font-feature-settings: 'kern' 1, 'liga' 1;
+  @include font-smoothing;
+}
+
+.typography-h2 {
+  @include typography(3xl);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+
+  @include respond-to(md) {
+    @include typography(4xl);
+  }
+}
+
+.typography-h3 {
+  @include typography(2xl);
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+
+  @include respond-to(md) {
+    @include typography(3xl);
+  }
+}
+
+.typography-subheading {
+  @include typography(base);
+  line-height: 1.6;
+  margin-bottom: spacing(4);
+  letter-spacing: 0.01em;
+  font-feature-settings: 'kern' 1;
+  @include font-smoothing;
+
+  @include respond-to(sm) {
+    @include typography(xl);
+  }
+
+  @include respond-to(md) {
+    @include typography(2xl);
+  }
+}
+
+// ============================================
+// TEXT VARIANTS
+// ============================================
+
+.typography-body {
+  @include typography(base);
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  font-feature-settings: 'kern' 1;
+  @include font-smoothing;
+}
+
+.typography-caption {
+  @include typography(xs);
+  line-height: 1.4;
+  color: var(--color-slate-400);
+}
+
+.typography-label {
+  @include typography(sm, medium);
+  line-height: 1.4;
+  display: block;
+  margin-bottom: spacing(1);
+}
+
+$sizes: xs, sm, base, lg, xl, 2xl, 3xl, 4xl;
+
+@each $size in $sizes {
+  .typography-size-#{$size} {
+    @include typography($size);
+  }
+}
+
+$weights: (
+  normal: normal,
+  medium: medium,
+  bold: bold,
+);
+
+@each $key, $value in $weights {
+  .typography-weight-#{$key} {
+    font-weight: font-weight($value);
+  }
+}
+
+// Colors - refined for better contrast and hierarchy
+$colors: (
+  default: var(--color-white),
+  muted: var(--color-slate-400),
+  primary: var(--color-blue-300),
+  secondary: var(--color-slate-300),
+  accent: var(--color-blue-300),
+  subtle: var(--color-slate-500),
+);
+
+@each $key, $value in $colors {
+  .typography-color-#{$key} {
+    color: $value;
+  }
+}
+
+$alignments: (
+  left: left,
+  center: center,
+  right: right,
+  justify: justify,
+);
+
+@each $key, $value in $alignments {
+  .typography-align-#{$key} {
+    text-align: $value;
+  }
+}
+
+.typographyTruncate {
+  @include truncate;
+}
+
+@for $index from 1 through 4 {
+  .typographyLineClamp-#{$index} {
+    @include line-clamp($index);
+  }
+}

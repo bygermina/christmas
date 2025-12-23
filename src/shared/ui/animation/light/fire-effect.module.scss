@@ -1,0 +1,94 @@
+@use '@/shared/styles/design-system' as *;
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes ping {
+  75%,
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.container {
+  position: relative;
+  display: flex;
+  transform: rotate(30deg);
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  z-index: 200;
+}
+
+.beam {
+  position: absolute;
+  animation: pulse cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+  &Horizontal,
+  &Vertical {
+    filter: blur(0.2px);
+  }
+
+  &Diagonal45,
+  &Diagonal135 {
+    filter: blur(0.15px);
+  }
+
+  &Horizontal {
+    animation-duration: 11s;
+    animation-delay: 0s;
+  }
+
+  &Vertical {
+    animation-duration: 13s;
+    animation-delay: 2s;
+  }
+
+  &Diagonal45 {
+    transform: rotate(45deg);
+    animation-duration: 14s;
+    animation-delay: 4s;
+  }
+
+  &Diagonal135 {
+    transform: rotate(135deg);
+    animation-duration: 10s;
+    animation-delay: 1s;
+  }
+}
+
+.centralCircle,
+.innerCenter {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.centralCircle {
+  animation: ping 7s cubic-bezier(0, 0, 0.2, 1) infinite;
+  animation-delay: 3s;
+  filter: blur(0.8px);
+  box-shadow:
+    0 0 8px rgba(255, 255, 255, 0.9),
+    0 0 16px rgba(255, 193, 7, 0.5),
+    0 0 24px rgba(255, 193, 7, 0.3),
+    0 0 32px rgba(255, 193, 7, 0.2);
+}
+
+.innerCenter {
+  filter: blur(0.3px);
+  animation: pulse 15s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  animation-delay: 5s;
+  box-shadow:
+    0 0 6px rgba(255, 255, 255, 1),
+    0 0 12px rgba(255, 193, 7, 0.6),
+    0 0 18px rgba(255, 193, 7, 0.4),
+    0 0 24px rgba(255, 193, 7, 0.3);
+}

@@ -1,0 +1,132 @@
+$colors: (
+  // Primary accent - refined blue
+  'blue': (
+      300: rgb(147, 197, 253),
+      400: rgb(59, 130, 246),
+      500: rgb(37, 99, 235),
+    ),
+  // Cyan - accent for glass text
+  'cyan': (
+      400: rgb(34, 211, 238),
+    ),
+  // Neutrals - simplified slate scale
+  'slate': (
+      300: rgb(203, 213, 225),
+      400: rgb(148, 163, 184),
+      500: rgb(100, 116, 139),
+      600: rgb(71, 85, 105),
+      700: rgb(51, 65, 85),
+      800: rgb(30, 41, 59),
+      900: rgb(15, 23, 42),
+    ),
+  // Background colors
+  'dark': rgb(2, 6, 23),
+  'white': rgb(245, 242, 230),
+);
+
+$spacing: (
+  1: 0.25rem,
+  // 4px
+  2: 0.5rem,
+  // 8px
+  3: 0.75rem,
+  // 12px
+  4: 1rem,
+  // 16px
+  6: 1.5rem,
+  // 24px
+  8: 2rem,
+  // 32px
+);
+
+$font-family: (
+  sans: (
+    'Inter',
+    system-ui,
+    -apple-system,
+    sans-serif,
+  ),
+  mono: (
+    'Fira Code',
+    'Courier New',
+    monospace,
+  ),
+);
+
+$font-size: (
+  xs: (
+    size: 0.75rem,
+    line-height: 1rem,
+  ),
+  // 12px
+  sm: (
+      size: 0.875rem,
+      line-height: 1.25rem,
+    ),
+  // 14px
+  base: (
+      size: 1rem,
+      line-height: 1.5rem,
+    ),
+  // 16px
+  lg: (
+      size: 1.125rem,
+      line-height: 1.75rem,
+    ),
+  // 18px
+  xl: (
+      size: 1.25rem,
+      line-height: 1.75rem,
+    ),
+  // 20px
+  2xl: (
+      size: 1.5rem,
+      line-height: 2rem,
+    ),
+  // 24px
+  3xl: (
+      size: 1.875rem,
+      line-height: 2.25rem,
+    ),
+  // 30px
+  4xl: (
+    size: 2.25rem,
+    line-height: 2.5rem,
+  ),
+  // 36px
+);
+
+$font-weight: (
+  normal: 400,
+  medium: 500,
+  bold: 700,
+);
+
+$radius: (
+  sm: 0.25rem,
+  // 4px - refined for better proportions
+  md: 0.5rem,
+  // 8px - standard
+  lg: 0.75rem,
+  // 12px - for cards
+  full: 9999px,
+);
+
+$shadows: (
+  xl: (0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04))
+);
+
+$transitions: (
+  base: 300ms,
+  slow: 500ms,
+);
+
+$z-index: (
+  content: 5,
+  tooltip: 1070,
+);
+
+$breakpoints: (
+  sm: 640px,
+  md: 768px,
+);

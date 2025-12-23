@@ -1,0 +1,16 @@
+@use '@/shared/styles/design-system/css-variables' as *;
+@import '@/shared/styles/glass-text.css';
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  height: 100%;
+}
+

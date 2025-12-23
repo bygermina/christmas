@@ -1,0 +1,12 @@
+@use '@/shared/styles/design-system' as *;
+
+.picture,
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+// .image {
+//   object-fit: cover;
+// }

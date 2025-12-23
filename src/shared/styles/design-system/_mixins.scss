@@ -1,0 +1,112 @@
+@use './tokens' as tokens;
+@use './_functions' as *;
+
+@mixin typography($size: base, $weight: normal) {
+  font-size: font-size($size);
+  line-height: line-height($size);
+  font-weight: font-weight($weight);
+}
+
+@mixin font-family($family: sans) {
+  font-family: font-family($family);
+}
+
+@mixin font-smoothing {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@mixin button-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: radius(md);
+  font-weight: font-weight(medium);
+  transition: all transition(base);
+  outline: none;
+  cursor: pointer;
+  border: none;
+
+  &:disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  &:focus-visible {
+    outline: 2px solid transparent;
+    outline-offset: 0;
+  }
+}
+
+@mixin focus-ring($color: 'blue', $shade: 400, $opacity: 0.6) {
+  &:focus-visible {
+    outline-color: color-opacity($color, $shade, $opacity);
+  }
+}
+
+@mixin respond-to($breakpoint) {
+  @media (min-width: breakpoint($breakpoint)) {
+    @content;
+  }
+}
+
+@mixin landscape {
+  @media (orientation: landscape) {
+    @content;
+  }
+}
+
+@mixin landscape-tablet {
+  @media (orientation: landscape) and (min-width: breakpoint(sm)) {
+    @content;
+  }
+}
+
+@mixin portrait-square {
+  @media (orientation: portrait) and (min-aspect-ratio: 9/20) {
+    @content;
+  }
+}
+
+@mixin landscape-short {
+  @media (orientation: landscape) and (max-height: 650px) {
+    @content;
+  }
+}
+
+@mixin landscape-ultrawide {
+  @media (orientation: landscape) and (min-width: 1401px) {
+    @content;
+  }
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin line-clamp($lines: 2) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@mixin fade-in($duration: 0.8s, $delay: 0s) {
+  opacity: 0;
+  animation: fadeIn $duration $delay forwards;
+}
+

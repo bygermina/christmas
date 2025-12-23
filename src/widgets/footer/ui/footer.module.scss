@@ -1,0 +1,63 @@
+@use '@/shared/styles/design-system' as *;
+
+.footer {
+  @include fade-in(0.8s, 1s);
+  position: fixed;
+  inset: auto 0 0;
+  z-index: 20;
+  padding: spacing(4) spacing(4) spacing(3);
+  overflow: hidden;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: spacing(2);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(400px, 80%);
+    height: 0.5px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--color-blue-400-50),
+      transparent
+    );
+  }
+}
+
+.socialLinks {
+  @include flex-center;
+  gap: spacing(3);
+  pointer-events: auto;
+}
+
+.socialLink {
+  @include flex-center;
+  width: 2rem;
+  height: 2rem;
+  color: var(--color-slate-500);
+  border-radius: radius(full);
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: var(--color-blue-400);
+    transform: translateY(-2px);
+    background-color: var(--color-blue-400-10);
+  }
+}
+
+.icon {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+.footerText {
+  @include typography(xs);
+  color: var(--color-slate-600);
+  pointer-events: auto;
+}

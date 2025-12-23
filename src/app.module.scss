@@ -1,0 +1,28 @@
+@use '@/shared/styles/design-system' as *;
+
+.root {
+  position: relative;
+  min-height: 100vh;
+  background: rgb(1, 4, 18);
+}
+
+.skipLink {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  z-index: 1000;
+  padding: spacing(2) spacing(4);
+  background: var(--color-dark, rgb(2, 6, 23));
+  color: var(--color-white, rgb(245, 242, 230));
+  text-decoration: none;
+  border-radius: radius(sm);
+
+  &:focus {
+    top: 0;
+  }
+}
+
+.scrollContainer {
+  position: relative;
+  z-index: 1;
+}
