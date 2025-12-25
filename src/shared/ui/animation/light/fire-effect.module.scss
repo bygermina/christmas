@@ -30,7 +30,9 @@
 
 .beam {
   position: absolute;
-  animation: pulse cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  animation-name: pulse;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
+  animation-iteration-count: infinite;
 
   &Horizontal,
   &Vertical {
@@ -42,26 +44,12 @@
     filter: blur(0.15px);
   }
 
-  &Horizontal {
-    animation-duration: 11s;
-    animation-delay: 0s;
-  }
-
-  &Vertical {
-    animation-duration: 13s;
-    animation-delay: 2s;
-  }
-
   &Diagonal45 {
     transform: rotate(45deg);
-    animation-duration: 14s;
-    animation-delay: 4s;
   }
 
   &Diagonal135 {
     transform: rotate(135deg);
-    animation-duration: 10s;
-    animation-delay: 1s;
   }
 }
 
@@ -72,8 +60,9 @@
 }
 
 .centralCircle {
-  animation: ping 7s cubic-bezier(0, 0, 0.2, 1) infinite;
-  animation-delay: 3s;
+  animation-name: ping;
+  animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  animation-iteration-count: infinite;
   filter: blur(0.8px);
   box-shadow:
     0 0 8px rgba(255, 255, 255, 0.9),
@@ -84,8 +73,9 @@
 
 .innerCenter {
   filter: blur(0.3px);
-  animation: pulse 15s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  animation-delay: 5s;
+  animation-name: pulse;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
+  animation-iteration-count: infinite;
   box-shadow:
     0 0 6px rgba(255, 255, 255, 1),
     0 0 12px rgba(255, 193, 7, 0.6),

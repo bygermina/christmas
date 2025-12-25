@@ -35,14 +35,11 @@ export const RouteDrawer = ({ predefinedPath, onRouteDrawn }: RouteDrawerProps) 
     };
   }, []);
 
-  const prevIsDrawing = useRef(false);
-
   useEffect(() => {
-    if (prevIsDrawing.current && !isDrawing && points.length > 0 && onRouteDrawn) {
+    if (points.length > 0 && onRouteDrawn) {
       onRouteDrawn(points);
     }
-    prevIsDrawing.current = isDrawing;
-  }, [isDrawing, points, onRouteDrawn]);
+  }, [points, onRouteDrawn]);
 
   const getSvgCoords = (e: React.MouseEvent<SVGSVGElement>): [number, number] => {
     const svg = svgRef.current;

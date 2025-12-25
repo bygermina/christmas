@@ -1,3 +1,7 @@
+import { cn } from '@/shared/lib/cn';
+
+import styles from './svg-path-visualization.module.scss';
+
 interface SVGPathVisualizationProps {
   paths?: string[];
   color?: string;
@@ -21,7 +25,7 @@ export const SVGPathVisualization = ({
 
   return (
     <svg
-      className="absolute left-0 top-0 w-screen h-screen pointer-events-none z-20"
+      className={cn(styles.container, viewBox ? styles.containerWithViewBox : styles.containerWithoutViewBox)}
       viewBox={defaultViewBox}
     >
       {paths.map((path, index) => (
