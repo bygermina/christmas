@@ -1,12 +1,10 @@
 import { useEffect, useState, useCallback, type RefObject } from 'react';
 
 import { TypeText } from '@/shared/ui/animation/text/type-text';
-import { StaticText } from '@/shared/ui/animation/text/static-text';
 import { Typography } from '@/shared/ui/typography/typography';
 import { cn } from '@/shared/lib/cn';
 import { useEvent } from '@/shared/lib/hooks/use-event';
 
-import { useMainWidgetContext } from '../../model/use-main-widget-context';
 import { CodeUnderText } from './code-under-text';
 
 import styles from './content.module.scss';
@@ -25,8 +23,7 @@ interface ContentProps {
 }
 
 export const Content = ({ letterRef, onContentReady }: ContentProps) => {
-  const { animate } = useMainWidgetContext();
-  const [isTextVisible, setIsTextVisible] = useState(!animate);
+  const [isTextVisible, setIsTextVisible] = useState(false);
 
   const handleStarAnimationComplete = useCallback(() => {
     setIsTextVisible(true);
@@ -35,10 +32,6 @@ export const Content = ({ letterRef, onContentReady }: ContentProps) => {
   useEvent('starAnimationComplete', handleStarAnimationComplete);
 
   useEffect(() => {
-    if (!animate) {
-    onContentReady?.(true);
-      return;
-    }
 
     const timer = setTimeout(() => {
       onContentReady?.(true);
@@ -48,15 +41,13 @@ export const Content = ({ letterRef, onContentReady }: ContentProps) => {
       clearTimeout(timer);
       onContentReady?.(false);
     };
-  }, [onContentReady, animate]);
-
-  const TextComponent = animate ? TypeText : StaticText;
+  }, [onContentReady]);
 
   return (
     <div className={styles.container}>
       
       <Typography variant="h1" className={styles.heading}>
-        <TextComponent
+        <TypeText
           text="Merry Christmas &"
           ref={letterRef}
           targetLetterIndex={ANIMATION_CONFIG.TARGET_LETTER_INDEX}
@@ -65,9 +56,9 @@ export const Content = ({ letterRef, onContentReady }: ContentProps) => {
           delay={ANIMATION_CONFIG.TITLE_DELAY}
         />
 
-        <TextComponent text="Happy new year" delay={ANIMATION_CONFIG.SUBTITLE_DELAY} />
+        <TypeText text="Happy new year" delay={ANIMATION_CONFIG.SUBTITLE_DELAY} />
       </Typography>
-      <div className={cn(styles.subtitleWrapper, animate && styles.subtitleWrapperAnimated)}>
+      <div className={cn(styles.subtitleWrapper, styles.subtitleWrapperAnimated)}>
         <Typography variant="subheading" className={styles.subheading} color="muted">
           Wishing you a magical year ahead
         </Typography>

@@ -10,7 +10,7 @@ export type Dimensions = {
   scale: number;
 };
 
-const getElementDimensions = (
+export const getElementDimensions = (
   element: HTMLElement,
   baseHeight: number | undefined,
   part: number,
@@ -51,7 +51,7 @@ const areSizesEqual = (a: Dimensions, b: Dimensions): boolean =>
   areEqual(a.width, b.width) && areEqual(a.height, b.height) && areEqual(a.scale, b.scale);
 
 export const useElementDimensions = (
-  elementRef: React.RefObject<HTMLElement | null>,
+  elementRef?: React.RefObject<HTMLElement | null>,
   isContentReady: boolean = true,
   baseHeight?: number,
   part: number = 0.5,
@@ -61,8 +61,8 @@ export const useElementDimensions = (
   const prevDimensions = useRef<Dimensions>(defaultDimensions);
 
   useEffect(() => {
-    const element = elementRef.current;
-    if (!element) return;
+    const element = elementRef?.current;
+    if (!element || !elementRef) return;
 
     const updateDimensions = () => {
       const newDimensions = getElementDimensions(element, baseHeight, part, containerRef?.current);

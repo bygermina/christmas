@@ -16,7 +16,6 @@ interface StarWithColorChangeProps {
     speed: number;
     enableRotation: boolean;
   };
-  containerRef: PathEffectsProps['containerRef'];
   onCompleteEvent?: string;
   size?: number;
 }
@@ -25,7 +24,6 @@ const StarWithColorChange = ({
   path,
   delay,
   commonMotionProps,
-  containerRef,
   onCompleteEvent,
   size,
 }: StarWithColorChangeProps) => {
@@ -40,7 +38,6 @@ const StarWithColorChange = ({
       {...commonMotionProps}
       path={path}
       delay={delay}
-      containerRef={containerRef}
       onComplete={handleComplete}
       onCompleteEvent={onCompleteEvent}
     >
@@ -49,9 +46,8 @@ const StarWithColorChange = ({
   );
 };
 
-export const AnimatedPathEffects = (props: PathEffectsProps) => {
-  const { containerRef, isContentReady } = props;
-  const { scaledPathTree, scaledPaths, path } = usePathData(props);
+export const AnimatedPathEffects = ({ isContentReady, letterIRef, targetElement }: PathEffectsProps) => {
+  const { scaledPathTree, scaledPaths, path } = usePathData({ isContentReady, letterIRef, targetElement });
   const { screenWidth, isMobile } = useScreenSizeContext();
 
   if (!scaledPathTree || !isContentReady) return null;
@@ -74,7 +70,6 @@ export const AnimatedPathEffects = (props: PathEffectsProps) => {
         path={path}
         delay={scaledPathTree.delay}
         commonMotionProps={commonMotionProps}
-        containerRef={containerRef}
         onCompleteEvent="starAnimationComplete"
         size={scaledPathTree.size}
       />
@@ -84,7 +79,6 @@ export const AnimatedPathEffects = (props: PathEffectsProps) => {
           {...commonMotionProps}
           path={p.path}
           delay={p.delay}
-          containerRef={containerRef}
         >
           <FireEffect variant="white" size={p.size} />
         </CSSPathMotion>

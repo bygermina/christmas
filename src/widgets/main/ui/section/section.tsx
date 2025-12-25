@@ -4,7 +4,7 @@ import { useScreenSizeContext } from '@/shared/lib/providers/use-context';
 
 import { TreeSection, type TreeSectionRef } from '../tree-section';
 import { Content } from '../content';
-import { PathEffects } from '../path-effects';
+import { AnimatedPathEffects } from '../path-effects/animated-path-effects';
 
 import styles from './section.module.scss';
 
@@ -34,12 +34,11 @@ export const Section = () => {
         onContentReady={setIsContentReady}
       />
 
-      <PathEffects
+      <AnimatedPathEffects
         key={`effects-${screenWidth}-${screenHeight}`}
         letterIRef={letterIRef}
         isContentReady={isContentReady}
         targetElement={treeElement}
-        containerRef={sectionRef}
       />
     </section>
   );

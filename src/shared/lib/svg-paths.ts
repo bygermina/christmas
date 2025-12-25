@@ -1,9 +1,8 @@
 export const pathTree = {
-  path: '',
-  start: { x: 400, y: 261 },
-  delay: 0.47,
+  path: 'M557,858 L557,800 L530,773 L530,730 L570,691 L570,672 L617,624 L620,617 L630,611 L645,598 L664,597  ',
+  start: { x: 604, y: 305 },
+  delay: 0.17,
   duration: 1,
-  size: 3,
 };
 
 export const pathTree2 = {
@@ -132,4 +131,3 @@ export const pathTree10Short = {
 };
 
 export const paths = [ pathTree10, pathTree10Short, pathTree9, pathTree9Short, pathTree8, pathTree8Short, pathTree7, pathTree7Short, pathTree6, pathTree6Short, pathTree5, pathTree5Short, pathTree4, pathTree4Short, pathTree3, pathTree3Short, pathTree2, pathTree2Short];
-

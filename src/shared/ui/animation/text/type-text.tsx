@@ -22,11 +22,6 @@ export const TypeText = forwardRef<HTMLSpanElement, TypeTextProps>(
     const [currentIndex, setCurrentIndex] = useState(0);
 
     useEffect(() => {
-      setDisplayedText('');
-      setCurrentIndex(0);
-    }, [text]);
-
-    useEffect(() => {
       if (currentIndex >= text.length) return;
 
       const timer = setTimeout(

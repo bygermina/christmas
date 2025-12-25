@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-
-import { getElementDimensions } from '@/shared/lib/slider/slider.utils';
+import { getElementDimensions } from './use-element-dimensions';
 
 export const useElementSize = (ref: React.RefObject<HTMLElement | null>) => {
   const [size, setSize] = useState({ left: 0, right: 0, width: 0 });

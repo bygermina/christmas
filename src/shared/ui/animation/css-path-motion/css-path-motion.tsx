@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ReactNode, type RefObject } from 'react';
+import { useEffect, useRef, type ReactNode } from 'react';
 
 import { getPathLength } from '@/shared/lib/svg';
 import { useIntersectionObserver } from '@/shared/lib/hooks/use-intersection-observer';
@@ -25,7 +25,6 @@ interface CSSPathMotionProps {
   speed?: number; //px/sec
   onCompleteEvent?: string;
   onComplete?: () => void;
-  containerRef?: RefObject<HTMLElement | null>;
 }
 
 export const CSSPathMotion = ({
@@ -42,12 +41,11 @@ export const CSSPathMotion = ({
   speed,
   onCompleteEvent,
   onComplete,
-  containerRef,
 }: CSSPathMotionProps) => {
   const motionRef = useRef<HTMLDivElement>(null);
   const computedDurationRef = useRef<number>(duration);
 
-  const visibilityRef = containerRef || motionRef;
+  const visibilityRef = motionRef;
   const isVisible = useIntersectionObserver(visibilityRef, {
     threshold: 0,
     rootMargin: '0px',

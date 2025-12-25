@@ -1,2 +1,0 @@
-export { Vignette } from './vignette';
-

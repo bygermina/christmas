@@ -6,9 +6,7 @@ export const useScreenSize = () => {
   const [screenWidth, setScreenWidth] = useState(
     typeof window !== 'undefined' ? window.innerWidth : 1920,
   );
-  const [screenHeight, setScreenHeight] = useState(
-    typeof window !== 'undefined' ? window.innerHeight : 1080,
-  );
+  const [screenHeight, setScreenHeight] = useState(window.innerHeight);
 
   const isPortrait = screenHeight > screenWidth;
   const isSquare = isPortrait && screenHeight / screenWidth < 1.3;

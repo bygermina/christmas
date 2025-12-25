@@ -11,14 +11,12 @@ export const usePathData = ({
   letterIRef,
   isContentReady,
   targetElement,
-  containerRef,
 }: PathEffectsProps) => {
   const letterIDimensions = useElementDimensions(
     letterIRef,
     isContentReady,
     0,
     LETTER_PART,
-    containerRef,
   );
   const { isPortrait } = useScreenSizeContext();
 
