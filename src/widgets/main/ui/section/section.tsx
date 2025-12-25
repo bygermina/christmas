@@ -23,7 +23,6 @@ export const Section = () => {
 
   return (
     <section ref={sectionRef} className={styles.root}>
-      
       <TreeSection
         ref={treeRefCallback}
         isContentReady={isContentReady}

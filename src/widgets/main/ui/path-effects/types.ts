@@ -12,4 +12,5 @@ export interface PathEffectsProps {
 export interface ScaledPath {
   path: string;
   delay: number;
+  size?: number;
 }

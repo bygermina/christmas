@@ -18,6 +18,7 @@ interface StarWithColorChangeProps {
   };
   containerRef: PathEffectsProps['containerRef'];
   onCompleteEvent?: string;
+  size?: number;
 }
 
 const StarWithColorChange = ({
@@ -26,6 +27,7 @@ const StarWithColorChange = ({
   commonMotionProps,
   containerRef,
   onCompleteEvent,
+  size,
 }: StarWithColorChangeProps) => {
   const [variant, setVariant] = useState<'white' | 'gold'>('white');
 
@@ -42,7 +44,7 @@ const StarWithColorChange = ({
       onComplete={handleComplete}
       onCompleteEvent={onCompleteEvent}
     >
-      <FireEffect variant={variant} />
+      <FireEffect variant={variant} size={size} />
     </CSSPathMotion>
   );
 };
@@ -74,6 +76,7 @@ export const AnimatedPathEffects = (props: PathEffectsProps) => {
         commonMotionProps={commonMotionProps}
         containerRef={containerRef}
         onCompleteEvent="starAnimationComplete"
+        size={scaledPathTree.size}
       />
       {scaledPaths?.map((p, index) => (
         <CSSPathMotion
@@ -83,7 +86,7 @@ export const AnimatedPathEffects = (props: PathEffectsProps) => {
           delay={p.delay}
           containerRef={containerRef}
         >
-          <FireEffect variant="white" />
+          <FireEffect variant="white" size={p.size} />
         </CSSPathMotion>
       ))}
     </>

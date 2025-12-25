@@ -1,6 +1,6 @@
 import { useRef, useImperativeHandle, forwardRef, type RefObject } from 'react';
 
-import { useElementDimensions, type Dimensions } from '@/shared/lib/hooks/use-element-dimensions';
+import { useElementDimensions } from '@/shared/lib/hooks/use-element-dimensions';
 import { pathTree, paths } from '@/shared/lib/svg-paths';
 import { BREAKPOINTS } from '@/shared/lib/breakpoints';
 import { ImageMask } from '@/shared/ui/animation/image/image-mask';
@@ -14,8 +14,8 @@ import tablet from '../../assets/blue circuit tree-932.webp';
 
 import styles from './tree-section.module.scss';
 
-const IMAGE_BASE_HEIGHT = 826;
-const IMAGE_BASE_WIDTH = 826;
+const IMAGE_BASE_HEIGHT = 1115;
+const IMAGE_BASE_WIDTH = 1116;
 const IMAGE_ASPECT_RATIO = IMAGE_BASE_HEIGHT / IMAGE_BASE_WIDTH;
 const IMAGE_CENTER_PART = 0.5;
 
@@ -24,12 +24,11 @@ export interface TreeSectionProps {
   containerRef?: RefObject<HTMLElement | null>;
 }
 
-type Path = { path: string; start: { x: number; y: number }; delay: number; duration: number };
+type Path = { path: string; start: { x: number; y: number }; delay: number; duration: number; size?: number };
 
 export interface TreeSectionRef {
   getPath: () => Path;
   getPaths: () => Path[];
-  getImageDimensions: () => Dimensions;
 }
 
 export const TreeSection = forwardRef<TreeSectionRef, TreeSectionProps>(function TreeSection(
@@ -53,7 +52,6 @@ export const TreeSection = forwardRef<TreeSectionRef, TreeSectionProps>(function
     () => ({
       getPath: () => ({ ...pathTree, path: getScaledPath(imageDimensions, dx, pathTree) }),
       getPaths: () => paths.map((p) => ({ ...p, path: getScaledPath(imageDimensions, dx, p) })),
-      getImageDimensions: () => imageDimensions,
     }),
     [dx, imageDimensions],
   );

@@ -36,7 +36,7 @@ export const Content = ({ letterRef, onContentReady }: ContentProps) => {
 
   useEffect(() => {
     if (!animate) {
-      onContentReady?.(true);
+    onContentReady?.(true);
       return;
     }
 
