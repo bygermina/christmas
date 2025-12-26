@@ -13,6 +13,7 @@ interface ImageMaskProps {
   style?: React.CSSProperties;
   sources?: PictureSource[];
   alt?: string;
+  onLoad?: () => void;
 }
 
 export const ImageMask = forwardRef<HTMLImageElement, ImageMaskProps>(
@@ -24,6 +25,7 @@ export const ImageMask = forwardRef<HTMLImageElement, ImageMaskProps>(
       style,
       sources,
       alt = 'masked',
+      onLoad,
     },
     ref,
   ) => {
@@ -45,6 +47,7 @@ export const ImageMask = forwardRef<HTMLImageElement, ImageMaskProps>(
             className={styles.picture}
             loading="eager"
             fetchPriority="high"
+            onLoad={onLoad}
           />
         </div>
       </div>

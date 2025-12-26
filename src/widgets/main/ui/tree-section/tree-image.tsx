@@ -11,31 +11,42 @@ import tablet from '../../assets/blue electronic christmas tree-1000.webp';
 
 import styles from './tree-section.module.scss';
 
-export const TreeImage = forwardRef<HTMLImageElement>(function TreeImage(_props, ref) {
-  const { screenWidth } = useScreenSizeContext();
+interface TreeImageProps {
+  onImageLoad?: () => void;
+}
 
-  const sources = createResponsiveSources({
-    mobile,
-    tablet,
-    desktop,
-  });
+export const TreeImage = forwardRef<HTMLImageElement, TreeImageProps>(
+  function TreeImage({ onImageLoad }, ref) {
+    const { screenWidth } = useScreenSizeContext();
 
-  const fallbackSrc =
-    screenWidth >= BREAKPOINTS.TABLET
-      ? desktop
-      : screenWidth >= BREAKPOINTS.MOBILE
-        ? tablet
-        : mobile;
+    const sources = createResponsiveSources({
+      mobile,
+      tablet,
+      desktop,
+    });
 
-  return (
-    <ImageMask
-      key={screenWidth}
-      ref={ref}
-      className={styles.treeImage}
-      imageClassName={styles.image}
-      src={fallbackSrc}
-      sources={sources}
-      alt="Circuit tree"
-    />
-  );
-});
+    const fallbackSrc =
+      screenWidth >= BREAKPOINTS.TABLET
+        ? desktop
+        : screenWidth >= BREAKPOINTS.MOBILE
+          ? tablet
+          : mobile;
+
+    const handleLoad = () => {
+      onImageLoad?.();
+    };
+
+    return (
+      <ImageMask
+        key={screenWidth}
+        ref={ref}
+        className={styles.treeImage}
+        imageClassName={styles.image}
+        src={fallbackSrc}
+        sources={sources}
+        alt="Circuit tree"
+        onLoad={handleLoad}
+      />
+    );
+  },
+);

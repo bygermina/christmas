@@ -20,9 +20,10 @@ const ANIMATION_CONFIG = {
 interface ContentProps {
   letterRef?: RefObject<HTMLSpanElement | null>;
   onContentReady?: (isReady: boolean) => void;
+  isImageLoaded?: boolean;
 }
 
-export const Content = ({ letterRef, onContentReady }: ContentProps) => {
+export const Content = ({ letterRef, onContentReady, isImageLoaded = false }: ContentProps) => {
   const [isTextVisible, setIsTextVisible] = useState(false);
 
   const handleStarAnimationComplete = useCallback(() => {
@@ -32,6 +33,7 @@ export const Content = ({ letterRef, onContentReady }: ContentProps) => {
   useEvent('starAnimationComplete', handleStarAnimationComplete);
 
   useEffect(() => {
+    if (!isImageLoaded) return;
 
     const timer = setTimeout(() => {
       onContentReady?.(true);
@@ -41,22 +43,26 @@ export const Content = ({ letterRef, onContentReady }: ContentProps) => {
       clearTimeout(timer);
       onContentReady?.(false);
     };
-  }, [onContentReady]);
+  }, [onContentReady, isImageLoaded]);
 
   return (
     <div className={styles.container}>
       
       <Typography variant="h1" className={styles.heading}>
-        <TypeText
-          text="Merry Christmas &"
-          ref={letterRef}
-          targetLetterIndex={ANIMATION_CONFIG.TARGET_LETTER_INDEX}
-          className={cn('glass-text-shine', styles.titleMain)}
-          speed={ANIMATION_CONFIG.TITLE_SPEED}
-          delay={ANIMATION_CONFIG.TITLE_DELAY}
-        />
+        {isImageLoaded && (
+          <>
+            <TypeText
+              text="Merry Christmas &"
+              ref={letterRef}
+              targetLetterIndex={ANIMATION_CONFIG.TARGET_LETTER_INDEX}
+              className={cn('glass-text-shine', styles.titleMain)}
+              speed={ANIMATION_CONFIG.TITLE_SPEED}
+              delay={ANIMATION_CONFIG.TITLE_DELAY}
+            />
 
-        <TypeText text="Happy new year" delay={ANIMATION_CONFIG.SUBTITLE_DELAY} />
+            <TypeText text="Happy new year" delay={ANIMATION_CONFIG.SUBTITLE_DELAY} />
+          </>
+        )}
       </Typography>
       <div className={cn(styles.subtitleWrapper, styles.subtitleWrapperAnimated)}>
         <Typography variant="subheading" className={styles.subheading} color="muted">
