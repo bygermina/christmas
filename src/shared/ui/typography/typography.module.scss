@@ -25,6 +25,26 @@
   }
 }
 
+.typography-h1-hero {
+  --typography-h1-line-height: 1.2;
+  font-size: clamp(2rem, 8vw, 3.5rem);
+
+  @media (min-width: 930px) {
+    --typography-h1-line-height: 1.15;
+    font-size: 3rem;
+
+    @include respond-to(sm) {
+      --typography-h1-line-height: 1.1;
+      font-size: 3.75rem;
+    }
+
+    @media (min-width: 1401px) {
+      --typography-h1-line-height: 1.05;
+      font-size: 4.5rem;
+    }
+  }
+}
+
 .typography-h2,
 .typography-h3 {
   font-weight: font-weight(bold);
@@ -66,6 +86,16 @@
 
   @include respond-to(md) {
     @include typography(2xl);
+  }
+}
+
+.typography-subheading-responsive {
+  font-size: clamp(0.875rem, 3.5vw, 1.25rem);
+  margin-bottom: spacing(4);
+
+  @media (min-width: 930px) {
+    font-size: inherit;
+    margin-bottom: 0;
   }
 }
 

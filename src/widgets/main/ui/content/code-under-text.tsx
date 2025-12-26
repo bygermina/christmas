@@ -1,3 +1,5 @@
+import { CodeText } from '@/shared/ui/typography/code-text';
+
 import styles from './code-under-text.module.scss';
 
 const codeLines = [
@@ -17,9 +19,9 @@ export const CodeUnderText = () => {
     <div className={styles.container}>
       <div className={styles.code}>
         {codeLines.map((line, index) => (
-          <div key={index} className={styles.line}>
+          <CodeText key={index} variant="gradient">
             {line || '\u00A0'}
-          </div>
+          </CodeText>
         ))}
       </div>
     </div>

@@ -1,39 +1,13 @@
 @use '@/shared/styles/design-system' as *;
 
 .heading {
-  --typography-h1-line-height: 1.2;
   margin-bottom: spacing(8);
-  font-size: clamp(2rem, 8vw, 3.5rem);
-
-  @media (min-width: 930px) {
-    --typography-h1-line-height: 1.15;
-    font-size: 3rem;
-
-    @include respond-to(sm) {
-      --typography-h1-line-height: 1.1;
-      font-size: 3.75rem;
-    }
-
-    @media (min-width: 1401px) {
-      --typography-h1-line-height: 1.05;
-      font-size: 4.5rem;
-    }
-  }
 }
 
 .titleMain {
   margin-right: spacing(4);
 }
 
-.subheading {
-  font-size: clamp(0.875rem, 3.5vw, 1.25rem);
-  margin-bottom: spacing(4);
-
-  @media (min-width: 930px) {
-    font-size: inherit;
-    margin-bottom: 0;
-  }
-}
 
 .container {
   @include flex-center;

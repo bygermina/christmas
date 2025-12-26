@@ -54,8 +54,9 @@ $font-family: (
     sans-serif,
   ),
   mono: (
-    'Fira Code',
-    'Courier New',
+    'Inter',
+    system-ui,
+    -apple-system,
     monospace,
   ),
 );
@@ -104,6 +105,7 @@ $font-size: (
 );
 
 $font-weight: (
+  light: 300,
   normal: 400,
   medium: 500,
   bold: 700,

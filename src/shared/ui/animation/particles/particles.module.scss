@@ -8,8 +8,24 @@
 
 .particle {
   position: absolute;
-  height: 0.5rem;
-  width: 0.5rem;
+  width: 4px;
+  height: 4px;
   border-radius: 50%;
-  background-color: rgba(from var(--color-blue-400) r g b / 0.3);
+  pointer-events: none;
+
+  background: radial-gradient(
+    circle,
+    rgba(from var(--color-cyan-400) r g b / 0.35) 0%,
+    rgba(from var(--color-blue-400) r g b / 0.25) 55%,
+    transparent 100%
+  );
+
+  box-shadow:
+    0 0 3px rgba(from var(--color-cyan-400) r g b / 0.28),
+    0 0 6px rgba(from var(--color-blue-400) r g b / 0.18);
+
+  mix-blend-mode: screen;
+  opacity: 0.45;
+
+  // Ambient mode: no bright white core (keeps the background calm)
 }

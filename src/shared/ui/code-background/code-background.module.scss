@@ -11,9 +11,11 @@
 .container {
   position: absolute;
   inset: 0;
-  @include font-family(mono);
+  @include font-family(sans);
+  font-weight: font-weight(light);
   white-space: pre;
   opacity: 0.7;
+  font-variant-numeric: tabular-nums;
 }
 
 .grid {
@@ -34,7 +36,8 @@
       font-size: 0.75rem;
       line-height: 1.5;
       white-space: pre-wrap;
-      word-break: break-all;
+      tab-size: 8;
+      overflow-wrap: anywhere;
       color: var(--color-blue-400-30, rgba(59, 130, 246, 0.3));
     }
   }

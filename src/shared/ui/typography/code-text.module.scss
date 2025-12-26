@@ -1,0 +1,51 @@
+@use '@/shared/styles/design-system' as *;
+
+.codeText {
+  @include font-family(sans);
+  font-size: 1.5rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  font-weight: font-weight(light);
+}
+
+.codeText-default {
+  color: var(--color-blue-400-30);
+}
+
+.codeText-gradient {
+  color: var(--color-blue-400-30);
+
+  &:not(:empty) {
+    $gradient: linear-gradient(
+      135deg,
+      #{color-opacity('blue', 300, 0.25)} 0%,
+      #{color-opacity('blue', 400, 0.3)} 20%,
+      #{color-opacity('gold', 600, 0.35)} 30%,
+      #{color-opacity('gold', 300, 0.4)} 35%,
+      #{color-opacity('cyan', 400, 0.25)} 40%,
+      #{color-opacity('blue', 400, 0.3)} 50%,
+      #{color-opacity('cyan', 400, 0.25)} 60%,
+      #{color-opacity('gold', 300, 0.4)} 65%,
+      #{color-opacity('gold', 600, 0.35)} 70%,
+      #{color-opacity('blue', 400, 0.3)} 80%,
+      #{color-opacity('blue', 300, 0.25)} 100%
+    );
+
+    background: $gradient;
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: code-shimmer 8s ease-in-out infinite;
+  }
+}
+
+@keyframes code-shimmer {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
