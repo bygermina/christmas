@@ -1,21 +1,124 @@
 @use '@/shared/styles/design-system' as *;
 
-.root {
+.cursor {
   position: fixed;
-  width: 350px;
-  height: 350px;
+  width: 120px;
+  height: 120px;
+  pointer-events: none;
+  z-index: 9999;
   border-radius: 50%;
+  transform: translate(-50%, -50%);
+  
   background: radial-gradient(
     circle,
-    rgba(from var(--color-blue-400) r g b / 0.12) 0%,
-    rgba(from var(--color-blue-400) r g b / 0.1) 25%,
-    rgba(from var(--color-blue-500) r g b / 0.08) 45%,
-    rgba(from var(--color-blue-500) r g b / 0.05) 65%,
-    transparent 85%
+    rgba(from var(--color-cyan-400) r g b / 0.15) 0%,
+    rgba(from var(--color-blue-400) r g b / 0.1) 30%,
+    rgba(from var(--color-blue-300) r g b / 0.05) 60%,
+    transparent 100%
   );
-  filter: blur(90px);
-  z-index: 50;
+  
+  filter: 
+    blur(20px)
+    drop-shadow(0 0 30px rgba(from var(--color-cyan-400) r g b / 0.3))
+    drop-shadow(0 0 60px rgba(from var(--color-blue-400) r g b / 0.2));
+  
+  animation: pulse 2s ease-in-out infinite;
   mix-blend-mode: screen;
+}
+
+.cursorCore {
+  position: fixed;
+  width: 20px;
+  height: 20px;
   pointer-events: none;
-  will-change: transform;
+  z-index: 10000;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  
+  background: radial-gradient(
+    circle,
+    rgba(from var(--color-white) r g b / 0.8) 0%,
+    rgba(from var(--color-cyan-400) r g b / 0.6) 40%,
+    rgba(from var(--color-blue-400) r g b / 0.4) 70%,
+    transparent 100%
+  );
+  
+  filter: 
+    blur(2px)
+    drop-shadow(0 0 4px rgba(from var(--color-white) r g b / 0.8))
+    drop-shadow(0 0 8px rgba(from var(--color-cyan-400) r g b / 0.6));
+  
+  animation: corePulse 1.5s ease-in-out infinite;
+  mix-blend-mode: screen;
+}
+
+.container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.spark {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  pointer-events: none;
+  z-index: 9998;
+  border-radius: 50%;
+  
+  background: radial-gradient(
+    circle,
+    rgba(from var(--color-white) r g b / 0.9) 0%,
+    rgba(from var(--color-cyan-400) r g b / 0.7) 50%,
+    transparent 100%
+  );
+  
+  box-shadow: 
+    0 0 4px rgba(from var(--color-cyan-400) r g b / 0.8),
+    0 0 8px rgba(from var(--color-blue-400) r g b / 0.6),
+    0 0 12px rgba(from var(--color-blue-300) r g b / 0.4);
+  
+  mix-blend-mode: screen;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    background: rgba(from var(--color-white) r g b / 1);
+    box-shadow: 0 0 2px rgba(from var(--color-white) r g b / 1);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 1;
+  }
+}
+
+@keyframes corePulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    filter: 
+      blur(2px)
+      drop-shadow(0 0 4px rgba(from var(--color-white) r g b / 0.8))
+      drop-shadow(0 0 8px rgba(from var(--color-cyan-400) r g b / 0.6));
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+    filter: 
+      blur(2px)
+      drop-shadow(0 0 6px rgba(from var(--color-white) r g b / 1))
+      drop-shadow(0 0 12px rgba(from var(--color-cyan-400) r g b / 0.8));
+  }
 }

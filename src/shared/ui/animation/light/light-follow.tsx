@@ -1,62 +1,48 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useScreenSizeContext } from '@/shared/lib/providers/use-context';
-import { useAnimationFrame } from '@/shared/lib/animation-helpers';
+
+import { useMouseVelocity } from './use-mouse-velocity';
+import { useSparkAnimation } from './use-spark-animation';
+import { calculateSpeed, createSpark, shouldCreateSpark } from './light-follow.utils';
+import type { Spark } from './light-follow.types';
 
 import styles from './light-follow.module.scss';
 
-const SIZE = 360;
-const OFFSET = SIZE / 2;
-const FRAME_THROTTLE_MS = 50;
-
-export const LightFollowCoursor = () => {
+export const LightFollowCursor = () => {
   const { isMobile } = useScreenSizeContext();
+  const [isVisible, setIsVisible] = useState(false);
 
-  const ref = useRef<HTMLDivElement | null>(null);
-  const lastX = useRef<number>(0);
-  const lastY = useRef<number>(0);
-  const prevX = useRef<number>(0);
-  const prevY = useRef<number>(0);
-  const lastUpdateTime = useRef<number>(0);
+  const sparksRef = useRef<Spark[]>([]);
+  const sparkIdRef = useRef(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const { updateVelocity } = useMouseVelocity();
+  const { addSpark } = useSparkAnimation(sparksRef, containerRef, styles.spark, !isMobile && isVisible);
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      lastX.current = e.clientX;
-      lastY.current = e.clientY;
-    };
+    if (isMobile) return;
 
-    if (typeof window !== 'undefined') {
-      lastX.current = window.innerWidth + SIZE;
-      lastY.current = window.innerHeight + SIZE;
-    }
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isVisible) setIsVisible(true);
+
+      const velocity = updateVelocity(e.clientX, e.clientY);
+      const speed = calculateSpeed(velocity);
+
+      if (shouldCreateSpark(speed)) {
+        const spark = createSpark(e.clientX, e.clientY, sparkIdRef.current++);
+        addSpark(spark);
+      }
+    };
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
     };
-  }, []);
+  }, [isMobile, isVisible, updateVelocity, addSpark]);
 
-  useAnimationFrame(() => {
-    const el = ref.current;
-    if (!el) return;
+  if (isMobile || !isVisible) return null;
 
-    const now = performance.now();
-    if (now - lastUpdateTime.current < FRAME_THROTTLE_MS) return;
-    lastUpdateTime.current = now;
-
-    const nextX = lastX.current - OFFSET;
-    const nextY = lastY.current - OFFSET;
-
-    if (nextX === prevX.current && nextY === prevY.current) return;
-
-    prevX.current = nextX;
-    prevY.current = nextY;
-
-    el.style.transform = `translate3d(${nextX}px, ${nextY}px, 0)`;
-  }, !isMobile);
-
-  if (isMobile) return null;
-
-  return <div ref={ref} className={styles.root} />;
+  return <div ref={containerRef} className={styles.container} />;
 };

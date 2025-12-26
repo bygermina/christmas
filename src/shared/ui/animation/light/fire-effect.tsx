@@ -1,4 +1,4 @@
-import { type CSSProperties, useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 
 import { colorWithOpacity } from '@/shared/lib/colors';
 import { useScreenSizeContext } from '@/shared/lib/providers/use-context';
@@ -19,7 +19,6 @@ import {
 } from './fire-effect.constants';
 
 interface FireEffectProps {
-  style?: CSSProperties;
   variant?: 'white' | 'gold';
   size?: number;
 }
@@ -95,7 +94,7 @@ const generateRandomDelay = () => Math.random() * ANIMATION_CONFIG.MAX_DELAY;
 const generateRandomDuration = (base: number) =>
   base + Math.random() * ANIMATION_CONFIG.DURATION_VARIANCE;
 
-export const FireEffect = ({ style, variant = 'white', size }: FireEffectProps) => {
+export const FireEffect = ({ variant = 'white', size }: FireEffectProps) => {
   const { screenWidth } = useScreenSizeContext();
   const isGold = variant === 'gold';
 
@@ -199,7 +198,6 @@ export const FireEffect = ({ style, variant = 'white', size }: FireEffectProps) 
         width: sizes.container,
         height: sizes.container,
         filter: createContainerFilter(isGold, sizes.dropShadow),
-        ...style,
       }}
     >
       {beams.map((beam, index) => (

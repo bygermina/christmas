@@ -1,5 +1,6 @@
 import { ScreenSizeProvider } from '@/shared/lib/providers/screen-size-provider';
 import { CodeBackground } from '@/shared/ui/code-background/code-background';
+import { LightFollowCursor } from '@/shared/ui/animation/light';
 import { MainWidget } from '@/widgets/main';
 import { FooterWidget } from '@/widgets/footer';
 
@@ -16,6 +17,7 @@ export const App = () => {
         <div aria-hidden="true">
           <CodeBackground />
         </div>
+        <LightFollowCursor />
         <main id="main-content" className={styles.scrollContainer}>
           <MainWidget />
           <FooterWidget />

@@ -14,13 +14,7 @@ const getDurationFromSpeed = (fallbackSeconds: number, speed?: number, length?: 
 interface CSSPathMotionProps {
   path: string;
   children: ReactNode;
-  duration?: number;
   delay?: number;
-  iterations?: number | 'infinite';
-  timingFunction?: string;
-  direction?: 'normal' | 'reverse' | 'alternate' | 'alternate-reverse';
-  autoRotate?: boolean;
-  rotationDegrees?: number;
   enableRotation?: boolean;
   speed?: number; //px/sec
   onCompleteEvent?: string;
@@ -30,18 +24,13 @@ interface CSSPathMotionProps {
 export const CSSPathMotion = ({
   path,
   children,
-  duration = 3,
   delay = 0,
-  iterations = 1,
-  timingFunction = 'linear',
-  direction = 'normal',
-  autoRotate = false,
-  rotationDegrees = 1080,
   enableRotation = true,
   speed,
   onCompleteEvent,
   onComplete,
 }: CSSPathMotionProps) => {
+  const duration = 3;
   const motionRef = useRef<HTMLDivElement>(null);
   const computedDurationRef = useRef<number>(duration);
 
@@ -66,10 +55,10 @@ export const CSSPathMotion = ({
       const seconds = computedDurationRef.current;
       motionRef.current.style.setProperty('--animation-duration', `${seconds}s`);
       motionRef.current.style.setProperty('--animation-delay', `${delay}s`);
-      motionRef.current.style.setProperty('--animation-timing', timingFunction);
-      motionRef.current.style.setProperty('--animation-iterations', iterations.toString());
-      motionRef.current.style.setProperty('--animation-direction', direction);
-      motionRef.current.style.setProperty('--rotation-degrees', `${rotationDegrees}deg`);
+      motionRef.current.style.setProperty('--animation-timing', 'linear');
+      motionRef.current.style.setProperty('--animation-iterations', '1');
+      motionRef.current.style.setProperty('--animation-direction', 'normal');
+      motionRef.current.style.setProperty('--rotation-degrees', '1080deg');
 
       const totalAnimationTime = (seconds + delay) * 1000;
 
@@ -85,10 +74,6 @@ export const CSSPathMotion = ({
   }, [
     duration,
     delay,
-    timingFunction,
-    iterations,
-    direction,
-    rotationDegrees,
     path,
     speed,
     onCompleteEvent,
@@ -108,7 +93,7 @@ export const CSSPathMotion = ({
         className={enableRotation ? styles.motionWithRotation : styles.motion}
         style={{
           offsetPath: `path('${path}')`,
-          offsetRotate: autoRotate ? 'auto' : '0deg',
+          offsetRotate: '0deg',
         }}
       >
         {children}

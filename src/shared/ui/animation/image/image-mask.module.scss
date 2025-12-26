@@ -50,13 +50,6 @@
   }
 }
 
-.imageWrapperNone {
-  :global(img) {
-    mask-image: none;
-    -webkit-mask-image: none;
-  }
-}
-
 .container {
   @include fade-in(0.5s, 0s);
 }

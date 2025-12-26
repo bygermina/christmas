@@ -12,12 +12,10 @@ interface TypeTextProps {
   className?: string;
   delay?: number;
   speed?: number;
-  opacity?: number;
-  targetLetterClassName?: string; // Class name for the target letter
 }
 
 export const TypeText = forwardRef<HTMLSpanElement, TypeTextProps>(
-  ({ text, targetLetterIndex, className = '', delay = 0, speed = 0.1, opacity = 100, targetLetterClassName }, ref) => {
+  ({ text, targetLetterIndex, className = '', delay = 0, speed = 0.1 }, ref) => {
     const [displayedText, setDisplayedText] = useState('');
     const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -39,10 +37,8 @@ export const TypeText = forwardRef<HTMLSpanElement, TypeTextProps>(
       <div className={className}>
         <TextWithTargetLetter
           ref={ref}
-          opacity={opacity}
           text={displayedText}
           targetLetterIndex={targetLetterIndex}
-          targetLetterClassName={targetLetterClassName}
         />
         {currentIndex < text.length && displayedText && (
           <motion.span

@@ -50,18 +50,6 @@ export const scaleSvgPath = (
   });
 };
 
-export const pointsToPath = (points: Array<[number, number]>): string => {
-  if (points.length === 0) return '';
-
-  return points
-    .map((p, index) => {
-      const x = Math.round(p[0]);
-      const y = Math.round(p[1]);
-      return index === 0 ? `M ${x},${y}` : `L ${x},${y}`;
-    })
-    .join(' ');
-};
-
 export const getImageOffset = (elDimensions: Dimensions, originalRation: number) => {
   const widthExpected = elDimensions.height / originalRation;
   const overflowX = elDimensions.width - widthExpected;

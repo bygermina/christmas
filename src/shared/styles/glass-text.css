@@ -22,24 +22,6 @@
   animation-delay: 2s;
 }
 
-.glass-text {
-  background: linear-gradient(
-    135deg,
-    rgba(from var(--color-white) r g b / 0.7) 0%,
-    rgba(from var(--color-blue-300) r g b / 0.6) 25%,
-    rgba(from var(--color-blue-400) r g b / 0.6) 50%,
-    rgba(from var(--color-blue-300) r g b / 0.6) 75%,
-    rgba(from var(--color-white) r g b / 0.6) 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 6px rgba(from var(--color-blue-400) r g b / 0.15))
-    drop-shadow(0 0 12px rgba(from var(--color-blue-400) r g b / 0.1));
-  -webkit-text-stroke: 0.5px rgba(from var(--color-white) r g b / 0.2);
-  position: relative;
-}
-
 @keyframes glass-shine {
   0%,
   100% {
