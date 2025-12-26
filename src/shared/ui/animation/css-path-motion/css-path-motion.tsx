@@ -21,6 +21,8 @@ interface CSSPathMotionProps {
   onComplete?: () => void;
 }
 
+const DEFAULT_DURATION = 3;
+
 export const CSSPathMotion = ({
   path,
   children,
@@ -30,61 +32,40 @@ export const CSSPathMotion = ({
   onCompleteEvent,
   onComplete,
 }: CSSPathMotionProps) => {
-  const duration = 3;
   const motionRef = useRef<HTMLDivElement>(null);
-  const computedDurationRef = useRef<number>(duration);
 
-  const visibilityRef = motionRef;
-  const isVisible = useIntersectionObserver(visibilityRef, {
+  const isVisible = useIntersectionObserver(motionRef, {
     threshold: 0,
     rootMargin: '0px',
   });
 
   useEffect(() => {
-    if (!speed || speed <= 0 || !path) {
-      computedDurationRef.current = duration;
-      return;
-    }
+    const element = motionRef.current;
+    if (!element) return;
 
     const length = getPathLength(path);
-    computedDurationRef.current = getDurationFromSpeed(duration, speed, length);
-  }, [path, speed, duration]);
+    const duration = speed ? getDurationFromSpeed(DEFAULT_DURATION, speed, length) : DEFAULT_DURATION;
+    element.style.setProperty('--animation-duration', `${duration}s`);
+    element.style.setProperty('--animation-delay', `${delay}s`);
+    element.style.setProperty('--animation-timing', 'linear');
+    element.style.setProperty('--animation-iterations', '1');
+    element.style.setProperty('--animation-direction', 'normal');
+    element.style.setProperty('--rotation-degrees', '1080deg');
 
-  useEffect(() => {
-    if (motionRef.current) {
-      const seconds = computedDurationRef.current;
-      motionRef.current.style.setProperty('--animation-duration', `${seconds}s`);
-      motionRef.current.style.setProperty('--animation-delay', `${delay}s`);
-      motionRef.current.style.setProperty('--animation-timing', 'linear');
-      motionRef.current.style.setProperty('--animation-iterations', '1');
-      motionRef.current.style.setProperty('--animation-direction', 'normal');
-      motionRef.current.style.setProperty('--rotation-degrees', '1080deg');
+    // Управляем состоянием анимации
+    element.style.animationPlayState = isVisible ? 'running' : 'paused';
 
-      const totalAnimationTime = (seconds + delay) * 1000;
+    // Таймер для события окончания
+    const totalAnimationTime = (duration + delay) * 1000;
+    const timer = setTimeout(() => {
+      if (onCompleteEvent) {
+        window.dispatchEvent(new CustomEvent(onCompleteEvent));
+      }
+      onComplete?.();
+    }, totalAnimationTime);
 
-      const timer = setTimeout(() => {
-        if (onCompleteEvent) {
-          window.dispatchEvent(new CustomEvent(onCompleteEvent));
-        }
-        onComplete?.();
-      }, totalAnimationTime);
-
-      return () => clearTimeout(timer);
-    }
-  }, [
-    duration,
-    delay,
-    path,
-    speed,
-    onCompleteEvent,
-    onComplete,
-  ]);
-
-  useEffect(() => {
-    if (motionRef.current) {
-      motionRef.current.style.animationPlayState = isVisible ? 'running' : 'paused';
-    }
-  }, [isVisible]);
+    return () => clearTimeout(timer);
+  }, [path, speed, delay, onCompleteEvent, onComplete, isVisible]);
 
   return (
     <div className={styles.container}>

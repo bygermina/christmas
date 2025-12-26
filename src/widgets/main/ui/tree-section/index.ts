@@ -1,2 +1,1 @@
-export { TreeSection, type TreeSectionRef } from './tree-section';
-
+export { TreeImage } from './tree-image';

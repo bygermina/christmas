@@ -5,11 +5,7 @@
   margin-bottom: spacing(8);
   font-size: clamp(2rem, 8vw, 3.5rem);
 
-  @include portrait-square {
-    margin-bottom: spacing(4);
-  }
-
-  @include landscape {
+  @media (min-width: 930px) {
     --typography-h1-line-height: 1.15;
     font-size: 3rem;
 
@@ -18,16 +14,10 @@
       font-size: 3.75rem;
     }
 
-    @include landscape-ultrawide {
+    @media (min-width: 1401px) {
       --typography-h1-line-height: 1.05;
       font-size: 4.5rem;
     }
-  }
-
-  @include landscape-short {
-    --typography-h1-line-height: 1.1;
-    margin-bottom: spacing(4);
-    font-size: 2rem;
   }
 }
 
@@ -39,11 +29,7 @@
   font-size: clamp(0.875rem, 3.5vw, 1.25rem);
   margin-bottom: spacing(4);
 
-  @include portrait-square {
-    margin-bottom: spacing(2);
-  }
-
-  @include landscape {
+  @media (min-width: 930px) {
     font-size: inherit;
     margin-bottom: 0;
   }
@@ -60,25 +46,13 @@
   height: calc(100dvh - 100vw);
   transform: translateY(-10%);
 
-  @include portrait-square {
-    margin-top: 45dvh;
-    height: 55dvh;
-  }
-
-  @include landscape {
+  @media (min-width: 930px) {
     margin-top: 0;
     height: auto;
     max-width: 1280px;
     margin-left: 30vw;
     margin-right: auto;
     min-height: 100dvh;
-
-    @include landscape-short {
-      --tree-width: calc(100dvh * 720 / 932 - 3rem);
-      margin-left: var(--tree-width);
-      margin-right: 0;
-      width: calc(100% - var(--tree-width));
-    }
   }
 }
 

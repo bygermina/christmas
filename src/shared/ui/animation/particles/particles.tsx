@@ -1,16 +1,16 @@
 import { useMemo } from 'react';
 import { motion } from 'framer-motion';
 
-import { useScreenSize } from '@/shared/lib/hooks/use-screen-size';
+import { useScreenSizeContext } from '@/shared/lib/providers/use-context';
 
 import styles from './particles.module.scss';
 
 export const Particles = () => {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const { isMobile } = useScreenSize();
+  const { isMobile } = useScreenSizeContext();
 
-  const particleCount = useMemo(() => (isMobile ? 15 : 30), [isMobile]);
+  const particleCount = isMobile ? 15 : 30;
 
   const particles = useMemo(
     () =>

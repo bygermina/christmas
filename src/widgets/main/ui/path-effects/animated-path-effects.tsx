@@ -1,32 +1,40 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 
 import { FireEffect } from '@/shared/ui/animation/light/fire-effect';
 import { CSSPathMotion } from '@/shared/ui/animation/css-path-motion/css-path-motion';
 import { useScreenSizeContext } from '@/shared/lib/providers/use-context';
 import { BREAKPOINTS } from '@/shared/lib/breakpoints';
 
-import { usePathData } from './use-path-data';
 import { BASE_SPEED, SPEED_MULTIPLIERS } from './constants';
-import type { PathEffectsProps } from './types';
 
-interface StarWithColorChangeProps {
+interface TreePath {
   path: string;
+  start: { x: number; y: number };
   delay: number;
-  commonMotionProps: {
-    speed: number;
-    enableRotation: boolean;
-  };
-  onCompleteEvent?: string;
+  duration: number;
   size?: number;
+}
+
+interface AnimatedPathEffectsProps {
+  mainPath: TreePath & { fullPath: string };
+  additionalPaths: TreePath[];
 }
 
 const StarWithColorChange = ({
   path,
   delay,
-  commonMotionProps,
+  speed,
+  enableRotation,
   onCompleteEvent,
   size,
-}: StarWithColorChangeProps) => {
+}: {
+  path: string;
+  delay: number;
+  speed: number;
+  enableRotation: boolean;
+  onCompleteEvent?: string;
+  size?: number;
+}) => {
   const [variant, setVariant] = useState<'white' | 'gold'>('white');
 
   const handleComplete = () => {
@@ -35,7 +43,8 @@ const StarWithColorChange = ({
 
   return (
     <CSSPathMotion
-      {...commonMotionProps}
+      speed={speed}
+      enableRotation={enableRotation}
       path={path}
       delay={delay}
       onComplete={handleComplete}
@@ -46,42 +55,64 @@ const StarWithColorChange = ({
   );
 };
 
-export const AnimatedPathEffects = ({ isContentReady, letterIRef, targetElement }: PathEffectsProps) => {
-  const { scaledPathTree, scaledPaths, path } = usePathData({ isContentReady, letterIRef, targetElement });
+const PathEffect = ({
+  path,
+  delay,
+  speed,
+  enableRotation,
+  size,
+}: {
+  path: string;
+  delay: number;
+  speed: number;
+  enableRotation: boolean;
+  size?: number;
+}) => (
+  <CSSPathMotion
+    speed={speed}
+    enableRotation={enableRotation}
+    path={path}
+    delay={delay}
+  >
+    <FireEffect variant="white" size={size} />
+  </CSSPathMotion>
+);
+
+export const AnimatedPathEffects = ({
+  mainPath,
+  additionalPaths,
+}: AnimatedPathEffectsProps) => {
   const { screenWidth, isMobile } = useScreenSizeContext();
 
-  if (!scaledPathTree || !isContentReady) return null;
+  const speed = useMemo(() => {
+    const screenSpeedMultiplier = isMobile
+      ? SPEED_MULTIPLIERS.MOBILE
+      : screenWidth < BREAKPOINTS.TABLET
+        ? SPEED_MULTIPLIERS.TABLET
+        : SPEED_MULTIPLIERS.DESKTOP;
 
-  const screenSpeedMultiplier = isMobile
-    ? SPEED_MULTIPLIERS.MOBILE
-    : screenWidth < BREAKPOINTS.TABLET
-      ? SPEED_MULTIPLIERS.TABLET
-      : SPEED_MULTIPLIERS.DESKTOP;
-
-  const speed = BASE_SPEED * screenSpeedMultiplier;
-  const commonMotionProps = {
-    speed,
-    enableRotation: true,
-  };
+    return BASE_SPEED * screenSpeedMultiplier;
+  }, [isMobile, screenWidth]);
 
   return (
     <>
       <StarWithColorChange
-        path={path}
-        delay={scaledPathTree.delay}
-        commonMotionProps={{...commonMotionProps, speed: 300 }}
+        path={mainPath.fullPath}
+        delay={mainPath.delay}
+        speed={300}
+        enableRotation
         onCompleteEvent="starAnimationComplete"
-        size={scaledPathTree.size}
+        size={mainPath.size}
       />
-      {scaledPaths?.map((p, index) => (
-        <CSSPathMotion
-          key={index}
-          {...commonMotionProps}
+      {additionalPaths.map((p, index) => (
+        <PathEffect
+          key={`${index}-${p.delay}`}
           path={p.path}
           delay={p.delay}
-        >
-          <FireEffect variant="white" size={p.size} />
-        </CSSPathMotion>
+          speed={speed}
+          enableRotation
+          size={p.size}
+        />
       ))}
     </>
   );

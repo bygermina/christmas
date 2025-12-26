@@ -1,45 +1,43 @@
-import { useCallback, useRef, useState } from 'react';
-
 import { useScreenSizeContext } from '@/shared/lib/providers/use-context';
+import { useState } from 'react';
 
-import { TreeSection, type TreeSectionRef } from '../tree-section';
+import { TreeImage } from '../tree-section/tree-image';
 import { Content } from '../content';
 import { AnimatedPathEffects } from '../path-effects/animated-path-effects';
+import { useTreeAnimation } from './use-tree-animation';
 
 import styles from './section.module.scss';
 
 export const Section = () => {
   const { screenWidth, screenHeight } = useScreenSizeContext();
-
-  const sectionRef = useRef<HTMLElement | null>(null);
-  const letterIRef = useRef<HTMLSpanElement>(null);
-
-  const [treeElement, setTreeElement] = useState<TreeSectionRef | null>(null);
   const [isContentReady, setIsContentReady] = useState(false);
 
-  const treeRefCallback = useCallback((node: TreeSectionRef | null) => {
-    setTreeElement(node);
-  }, []);
+  const {
+    imageRef,
+    letterIRef,
+    containerRef,
+    mainPath,
+    additionalPaths,
+    isReady,
+  } = useTreeAnimation(isContentReady);
 
   return (
-    <section ref={sectionRef} className={styles.root}>
-      <TreeSection
-        ref={treeRefCallback}
-        isContentReady={isContentReady}
-        containerRef={sectionRef}
-      />
+    <section ref={containerRef} className={styles.root}>
+      <TreeImage ref={imageRef} />
+      
       <Content
         key={`${screenWidth}-${screenHeight}`}
         letterRef={letterIRef}
         onContentReady={setIsContentReady}
       />
 
-      <AnimatedPathEffects
-        key={`effects-${screenWidth}-${screenHeight}`}
-        letterIRef={letterIRef}
-        isContentReady={isContentReady}
-        targetElement={treeElement}
-      />
+      {isReady && (
+        <AnimatedPathEffects
+          key={`effects-${screenWidth}-${screenHeight}`}
+          mainPath={mainPath}
+          additionalPaths={additionalPaths}
+        />
+      )}
     </section>
   );
 };

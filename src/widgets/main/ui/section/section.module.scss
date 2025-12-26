@@ -9,15 +9,8 @@
   flex-direction: column;
   justify-content: space-between;
 
-  @include landscape {
-    height: auto;
-    max-height: none;
+  @media (min-width: 930px) {
     flex-direction: row;
     justify-content: flex-start;
-
-    @include landscape-short {
-      height: 100dvh;
-      flex-direction: column;
-    }
   }
 }
