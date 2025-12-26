@@ -8,9 +8,9 @@ import { createResponsiveSources } from '@/shared/ui/picture/picture.utils';
 import { useScreenSizeContext } from '@/shared/lib/providers/use-context';
 import { getImageOffset, getScaledPath } from '@/shared/lib/svg';
 
-import desktop from '../../assets/blue electronic christmas tree.jpg';
-import mobile from '../../assets/blue circuit tree-500.webp';
-import tablet from '../../assets/blue circuit tree-932.webp';
+import desktop from '../../assets/blue electronic christmas tree.webp';
+import mobile from '../../assets/blue electronic christmas tree-600.webp';
+import tablet from '../../assets/blue electronic christmas tree-1000.webp';
 
 import styles from './tree-section.module.scss';
 
