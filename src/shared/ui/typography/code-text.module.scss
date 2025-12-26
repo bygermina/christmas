@@ -1,0 +1,54 @@
+@use '@/shared/styles/design-system' as *;
+
+.codeText {
+  font-family: font-family(mono);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  font-weight: font-weight(normal);
+}
+
+@include respond-to(sm) {
+  .codeText {
+    font-size: 1.05rem;
+  }
+}
+
+@media (min-width: 930px) {
+  .codeText {
+    font-size: 1.35rem;
+  }
+}
+
+.codeText-default {
+  color: rgba(from var(--color-blue-400) r g b / 0.3);
+}
+
+.codeText-gradient {
+  color: rgba(from var(--color-blue-400) r g b / 0.3);
+
+  &:not(:empty) {
+    $gradient: linear-gradient(
+      135deg,
+      rgba(from var(--color-blue-300) r g b / 0.25) 0%,
+      rgba(from var(--color-blue-400) r g b / 0.3) 20%,
+      rgba(from var(--color-gold-600) r g b / 0.35) 30%,
+      rgba(from var(--color-gold-300) r g b / 0.4) 35%,
+      rgba(from var(--color-cyan-400) r g b / 0.25) 40%,
+      rgba(from var(--color-blue-400) r g b / 0.3) 50%,
+      rgba(from var(--color-cyan-400) r g b / 0.25) 60%,
+      rgba(from var(--color-gold-300) r g b / 0.4) 65%,
+      rgba(from var(--color-gold-600) r g b / 0.35) 70%,
+      rgba(from var(--color-blue-400) r g b / 0.3) 80%,
+      rgba(from var(--color-blue-300) r g b / 0.25) 100%
+    );
+
+    background: $gradient;
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: code-shimmer 8s ease-in-out infinite;
+  }
+}
+
