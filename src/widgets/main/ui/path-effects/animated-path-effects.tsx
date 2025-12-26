@@ -69,7 +69,7 @@ export const AnimatedPathEffects = ({ isContentReady, letterIRef, targetElement 
       <StarWithColorChange
         path={path}
         delay={scaledPathTree.delay}
-        commonMotionProps={commonMotionProps}
+        commonMotionProps={{...commonMotionProps, speed: 300 }}
         onCompleteEvent="starAnimationComplete"
         size={scaledPathTree.size}
       />

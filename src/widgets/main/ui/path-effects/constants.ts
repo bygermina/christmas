@@ -1,5 +1,5 @@
 export const ARC_RADIUS = 250;
-export const BASE_SPEED = 90;
+export const BASE_SPEED = 200;
 export const LETTER_PART = 0.3;
 
 export const SPEED_MULTIPLIERS = {

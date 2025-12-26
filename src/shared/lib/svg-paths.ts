@@ -1,7 +1,7 @@
 export const pathTree = {
   path: 'M557,858 L557,800 L530,773 L530,730 L570,691 L570,672 L617,624 L620,617 L630,611 L645,598 L664,597  ',
   start: { x: 604, y: 305 },
-  delay: 0.17,
+  delay: 2,
   duration: 1,
 };
 
