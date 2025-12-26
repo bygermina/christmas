@@ -30,17 +30,17 @@
   &:not(:empty) {
     $gradient: linear-gradient(
       135deg,
-      rgba(147, 197, 253, 0.25) 0%,
-      rgba(59, 130, 246, 0.3) 20%,
-      rgba(184, 134, 11, 0.35) 30%,
-      rgba(255, 215, 0, 0.4) 35%,
-      rgba(34, 211, 238, 0.25) 40%,
-      rgba(59, 130, 246, 0.3) 50%,
-      rgba(34, 211, 238, 0.25) 60%,
-      rgba(255, 215, 0, 0.4) 65%,
-      rgba(184, 134, 11, 0.35) 70%,
-      rgba(59, 130, 246, 0.3) 80%,
-      rgba(147, 197, 253, 0.25) 100%
+      #{color-opacity('blue', 300, 0.25)} 0%,
+      #{color-opacity('blue', 400, 0.3)} 20%,
+      #{color-opacity('gold', 600, 0.35)} 30%,
+      #{color-opacity('gold', 300, 0.4)} 35%,
+      #{color-opacity('cyan', 400, 0.25)} 40%,
+      #{color-opacity('blue', 400, 0.3)} 50%,
+      #{color-opacity('cyan', 400, 0.25)} 60%,
+      #{color-opacity('gold', 300, 0.4)} 65%,
+      #{color-opacity('gold', 600, 0.35)} 70%,
+      #{color-opacity('blue', 400, 0.3)} 80%,
+      #{color-opacity('blue', 300, 0.25)} 100%
     );
 
     background: $gradient;

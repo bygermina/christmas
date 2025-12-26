@@ -10,6 +10,12 @@
   // Cyan - accent for glass text
   --color-cyan-400: #{ds-color('cyan', 400)};
 
+  // Gold - accent for fire effects
+  --color-gold-300: #{ds-color('gold', 300)};
+  --color-gold-400: #{ds-color('gold', 400)};
+  --color-gold-500: #{ds-color('gold', 500)};
+  --color-gold-600: #{ds-color('gold', 600)};
+
   // Slate - neutrals
   --color-slate-300: #{ds-color('slate', 300)};
   --color-slate-400: #{ds-color('slate', 400)};
@@ -47,6 +53,17 @@
   --color-slate-800-30: #{color-opacity('slate', 800, 0.3)};
   --color-slate-800-50: #{color-opacity('slate', 800, 0.5)};
   --color-slate-800-80: #{color-opacity('slate', 800, 0.8)};
+
+  // Gold colors with opacity
+  --color-gold-400-20: #{color-opacity('gold', 400, 0.2)};
+  --color-gold-400-30: #{color-opacity('gold', 400, 0.3)};
+  --color-gold-400-35: #{color-opacity('gold', 400, 0.35)};
+  --color-gold-400-40: #{color-opacity('gold', 400, 0.4)};
+  --color-gold-400-50: #{color-opacity('gold', 400, 0.5)};
+  --color-gold-400-60: #{color-opacity('gold', 400, 0.6)};
+  --color-gold-600-35: #{color-opacity('gold', 600, 0.35)};
+  --color-white-90: #{color-opacity('white', null, 0.9)};
+  --color-white-100: #{color-opacity('white', null, 1)};
 
   --spacing-2: #{spacing(2)};
   --spacing-4: #{spacing(4)};

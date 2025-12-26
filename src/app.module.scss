@@ -3,7 +3,7 @@
 .root {
   position: relative;
   min-height: 100vh;
-  background: rgb(1, 4, 18);
+  background: var(--color-dark);
 }
 
 .skipLink {

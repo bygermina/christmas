@@ -72,9 +72,9 @@ export const COLORS = {
   blueLight: 'var(--color-blue-300)',
   blueDark: 'var(--color-blue-500)',
   white: 'var(--color-white)',
-  gold: '#FFC107',
-  goldLight: '#FFD54F',
-  goldDark: '#FF8F00',
+  gold: 'var(--color-gold-400)',
+  goldLight: 'var(--color-gold-300)',
+  goldDark: 'var(--color-gold-500)',
 } as const;
 
 export const STANDARD_STOPS = [

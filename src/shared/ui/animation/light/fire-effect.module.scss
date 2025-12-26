@@ -65,10 +65,10 @@
   animation-iteration-count: infinite;
   filter: blur(0.8px);
   box-shadow:
-    0 0 8px rgba(255, 255, 255, 0.9),
-    0 0 16px rgba(255, 193, 7, 0.5),
-    0 0 24px rgba(255, 193, 7, 0.3),
-    0 0 32px rgba(255, 193, 7, 0.2);
+    0 0 8px rgba(from var(--color-white) r g b / 0.9),
+    0 0 16px rgba(from var(--color-gold-400) r g b / 0.5),
+    0 0 24px rgba(from var(--color-gold-400) r g b / 0.3),
+    0 0 32px rgba(from var(--color-gold-400) r g b / 0.2);
 }
 
 .innerCenter {
@@ -77,8 +77,8 @@
   animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
   animation-iteration-count: infinite;
   box-shadow:
-    0 0 6px rgba(255, 255, 255, 1),
-    0 0 12px rgba(255, 193, 7, 0.6),
-    0 0 18px rgba(255, 193, 7, 0.4),
-    0 0 24px rgba(255, 193, 7, 0.3);
+    0 0 6px rgba(from var(--color-white) r g b / 1),
+    0 0 12px rgba(from var(--color-gold-400) r g b / 0.6),
+    0 0 18px rgba(from var(--color-gold-400) r g b / 0.4),
+    0 0 24px rgba(from var(--color-gold-400) r g b / 0.3);
 }
