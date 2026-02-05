@@ -61,11 +61,15 @@
 
 .spark {
   position: fixed;
+  left: 0;
+  top: 0;
   width: 4px;
   height: 4px;
   pointer-events: none;
   z-index: 9998;
   border-radius: 50%;
+  will-change: transform, opacity;
+  contain: layout style;
   
   background: radial-gradient(
     circle,

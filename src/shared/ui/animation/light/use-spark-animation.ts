@@ -21,8 +21,7 @@ export const useSparkAnimation = (
     sparksRef.current.forEach((spark, index) => {
       const element = children[index] as HTMLDivElement;
       if (element) {
-        element.style.left = `${spark.x}px`;
-        element.style.top = `${spark.y}px`;
+        element.style.transform = `translate(${spark.x}px, ${spark.y}px) translate(-50%, -50%)`;
         element.style.opacity = String(spark.life);
       }
     });
@@ -34,7 +33,7 @@ export const useSparkAnimation = (
     while (children.length < sparksRef.current.length) {
       const div = document.createElement('div');
       div.className = sparkClassName;
-      div.style.transform = 'translate(-50%, -50%)';
+      div.style.transform = 'translate(0px, 0px) translate(-50%, -50%)';
       container.appendChild(div);
     }
   };

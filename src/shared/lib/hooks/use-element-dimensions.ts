@@ -61,10 +61,17 @@ export const useElementDimensions = (
   const prevDimensions = useRef<Dimensions>(defaultDimensions);
 
   useEffect(() => {
-    const element = elementRef?.current;
-    if (!element || !elementRef) return;
+    if (typeof window === 'undefined') return;
+    if (!elementRef) return;
+
+    let rafId: number | null = null;
+    let resizeObserver: ResizeObserver | null = null;
+    let mutationObserver: MutationObserver | null = null;
 
     const updateDimensions = () => {
+      const element = elementRef.current;
+      if (!element) return;
+
       const newDimensions = getElementDimensions(element, baseHeight, part, containerRef?.current);
       const sizesChanged = !areSizesEqual(prevDimensions.current, newDimensions);
       prevDimensions.current = newDimensions;
@@ -72,29 +79,50 @@ export const useElementDimensions = (
       if (sizesChanged) setDimensions(newDimensions);
     };
 
-    if (isContentReady) updateDimensions();
+    let rafScheduled = false;
+    
+    const scheduleUpdate = () => {
+      if (rafScheduled) return;
+      rafScheduled = true;
+      requestAnimationFrame(() => {
+        rafScheduled = false;
+        updateDimensions();
+      });
+    };
 
-    const resizeObserver = new ResizeObserver(updateDimensions);
+    const init = () => {
+      const element = elementRef.current;
+      if (!element) {
+        rafId = requestAnimationFrame(init);
+        return;
+      }
 
-    const mutationObserver = new MutationObserver(() => {
-      requestAnimationFrame(updateDimensions);
-    });
+      if (resizeObserver) return;
 
-    resizeObserver.observe(element);
-    mutationObserver.observe(element, {
-      attributes: true,
-      attributeFilter: ['style', 'class'],
-      subtree: false,
-    });
+      if (isContentReady) updateDimensions();
 
-    window.addEventListener('scroll', updateDimensions, { passive: true });
-    window.addEventListener('resize', updateDimensions, { passive: true });
+      resizeObserver = new ResizeObserver(scheduleUpdate);
+      mutationObserver = new MutationObserver(scheduleUpdate);
+
+      resizeObserver.observe(element);
+      mutationObserver.observe(element, {
+        attributes: true,
+        attributeFilter: ['style', 'class'],
+        subtree: false,
+      });
+
+      window.addEventListener('scroll', scheduleUpdate, { passive: true });
+      window.addEventListener('resize', scheduleUpdate, { passive: true });
+    };
+
+    init();
 
     return () => {
-      resizeObserver.disconnect();
-      mutationObserver.disconnect();
-      window.removeEventListener('scroll', updateDimensions);
-      window.removeEventListener('resize', updateDimensions);
+      if (rafId) cancelAnimationFrame(rafId);
+      resizeObserver?.disconnect();
+      mutationObserver?.disconnect();
+      window.removeEventListener('scroll', scheduleUpdate);
+      window.removeEventListener('resize', scheduleUpdate);
     };
   }, [baseHeight, elementRef, isContentReady, part, containerRef]);
 

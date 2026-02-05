@@ -4,7 +4,7 @@ interface UseIntersectionObserverOptions {
   threshold?: number | number[];
   rootMargin?: string;
   root?: Element | null;
-  once?: boolean; // Only trigger once when element becomes visible
+  once?: boolean;
 }
 
 export const useIntersectionObserver = (
@@ -23,7 +23,7 @@ export const useIntersectionObserver = (
         const isVisible = entry.isIntersecting;
 
         if (once && hasTriggeredRef.current && !isVisible) {
-          return; // Don't update if already triggered and element is no longer visible
+          return;
         }
 
         if (once && isVisible && !hasTriggeredRef.current) {

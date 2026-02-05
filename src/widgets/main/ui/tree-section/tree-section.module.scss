@@ -2,16 +2,26 @@
 
 .treeImage {
   position: absolute;
-  transform: translateY(7%);
+  left: 50%;
+  top: clamp(200px, 32vh, 360px);
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  width: min(100%, 560px);
+  height: auto;
+  max-height: 100%;
+  margin-top: 0;
 
-  @media (min-width: 930px) {
-    top: 0;
+  @media (min-width: 930px) and (orientation: landscape) {
+    left: 23vw;
+    top: 50%;
+    transform: translate(-50%, -50%) translateY(6vh);
     width: auto;
-    height: 100dvh;
+    height: 88dvh;
     max-width: 960px;
+    margin-top: 0;
   }
 
-  @media (min-width: 930px) and (min-width: breakpoint(sm)) {
+  @media (min-width: 930px) and (orientation: landscape) and (min-width: breakpoint(sm)) {
     max-width: 50vw;
   }
 }

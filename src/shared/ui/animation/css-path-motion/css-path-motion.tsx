@@ -16,7 +16,7 @@ interface CSSPathMotionProps {
   children: ReactNode;
   delay?: number;
   enableRotation?: boolean;
-  speed?: number; //px/sec
+  speed?: number;
   onCompleteEvent?: string;
   onComplete?: () => void;
 }
@@ -52,10 +52,8 @@ export const CSSPathMotion = ({
     element.style.setProperty('--animation-direction', 'normal');
     element.style.setProperty('--rotation-degrees', '1080deg');
 
-    // Управляем состоянием анимации
     element.style.animationPlayState = isVisible ? 'running' : 'paused';
 
-    // Таймер для события окончания
     const totalAnimationTime = (duration + delay) * 1000;
     const timer = setTimeout(() => {
       if (onCompleteEvent) {

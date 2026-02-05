@@ -14,3 +14,11 @@ body {
   height: 100%;
 }
 
+body {
+  font-family: var(--font-family-sans, system-ui);
+  background: var(--color-dark);
+  color: var(--color-white);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+}

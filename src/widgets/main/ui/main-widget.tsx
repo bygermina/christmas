@@ -1,15 +1,14 @@
 import { Particles } from '@/shared/ui/animation/particles/particles';
-import { useScreenSizeContext } from '@/shared/lib/providers/use-context';
+import { useLayoutKey } from '@/shared/lib/hooks/use-layout-key';
 
 import { Section } from './section';
 
-
 export const MainWidget = () => {
-  const { screenWidth, screenHeight } = useScreenSizeContext();
+  const layoutKey = useLayoutKey();
 
   return (
     <>
-      <Section key={`${screenWidth}-${screenHeight}`} />
+      <Section key={layoutKey} />
       <Particles />
     </>
   );

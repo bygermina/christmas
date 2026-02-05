@@ -3,6 +3,7 @@ import { useEffect, useState, useCallback, type RefObject } from 'react';
 import { TypeText } from '@/shared/ui/animation/text/type-text';
 import { Typography } from '@/shared/ui/typography/typography';
 import { cn } from '@/shared/lib/cn';
+import { whenFontsReady } from '@/shared/lib/fonts-ready';
 import { useEvent } from '@/shared/lib/hooks/use-event';
 
 import { CodeUnderText } from './code-under-text';
@@ -10,7 +11,6 @@ import { CodeUnderText } from './code-under-text';
 import styles from './content.module.scss';
 import typographyStyles from '@/shared/ui/typography/typography.module.scss';
 
-const CONTENT_READY_DELAY = 5800;
 const ANIMATION_CONFIG = {
   TITLE_SPEED: 0.1,
   TITLE_DELAY: 1.0,
@@ -26,6 +26,8 @@ interface ContentProps {
 
 export const Content = ({ letterRef, onContentReady, isImageLoaded = false }: ContentProps) => {
   const [isTextVisible, setIsTextVisible] = useState(false);
+  const [isTitleComplete, setIsTitleComplete] = useState(false);
+  const [isSubtitleComplete, setIsSubtitleComplete] = useState(false);
 
   const handleStarAnimationComplete = useCallback(() => {
     setIsTextVisible(true);
@@ -34,21 +36,22 @@ export const Content = ({ letterRef, onContentReady, isImageLoaded = false }: Co
   useEvent('starAnimationComplete', handleStarAnimationComplete);
 
   useEffect(() => {
-    if (!isImageLoaded) return;
+    if (!isImageLoaded || !isTitleComplete || !isSubtitleComplete) return;
 
-    const timer = setTimeout(() => {
-      onContentReady?.(true);
-    }, CONTENT_READY_DELAY);
+    let cancelled = false;
+
+    void whenFontsReady().then(() => {
+      if (!cancelled) onContentReady?.(true);
+    });
 
     return () => {
-      clearTimeout(timer);
+      cancelled = true;
       onContentReady?.(false);
     };
-  }, [onContentReady, isImageLoaded]);
+  }, [onContentReady, isImageLoaded, isTitleComplete, isSubtitleComplete]);
 
   return (
     <div className={styles.container}>
-      
       <Typography
         variant="h1"
         className={cn(styles.heading, typographyStyles['typography-h1-hero'])}
@@ -62,9 +65,14 @@ export const Content = ({ letterRef, onContentReady, isImageLoaded = false }: Co
               className={cn('glass-text-shine', styles.titleMain)}
               speed={ANIMATION_CONFIG.TITLE_SPEED}
               delay={ANIMATION_CONFIG.TITLE_DELAY}
+              onComplete={() => setIsTitleComplete(true)}
             />
 
-            <TypeText text="Happy new year" delay={ANIMATION_CONFIG.SUBTITLE_DELAY} />
+            <TypeText
+              text="Happy new year"
+              delay={ANIMATION_CONFIG.SUBTITLE_DELAY}
+              onComplete={() => setIsSubtitleComplete(true)}
+            />
           </>
         )}
       </Typography>
@@ -77,8 +85,11 @@ export const Content = ({ letterRef, onContentReady, isImageLoaded = false }: Co
           Wishing you a magical year ahead
         </Typography>
       </div>
-      {isTextVisible && <CodeUnderText />}
-      
+      <div className={styles.codeSlot}>
+        <div className={cn(!isTextVisible && styles.codeUnderTextHidden)}>
+          <CodeUnderText />
+        </div>
+      </div>
     </div>
   );
 };

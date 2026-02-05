@@ -1,22 +1,18 @@
 $colors: (
-  // Primary accent - refined blue
   'blue': (
       300: rgb(147, 197, 253),
       400: rgb(59, 130, 246),
       500: rgb(37, 99, 235),
     ),
-  // Cyan - accent for glass text
   'cyan': (
       400: rgb(34, 211, 238),
     ),
-  // Gold - accent for fire effects
   'gold': (
       400: rgb(255, 193, 7),
       300: rgb(255, 213, 79),
       500: rgb(255, 143, 0),
       600: rgb(184, 134, 11),
     ),
-  // Neutrals - simplified slate scale
   'slate': (
       300: rgb(203, 213, 225),
       400: rgb(148, 163, 184),
@@ -26,24 +22,17 @@ $colors: (
       800: rgb(30, 41, 59),
       900: rgb(15, 23, 42),
     ),
-  // Background colors
   'dark': rgb(2, 6, 23),
   'white': rgb(245, 242, 230),
 );
 
 $spacing: (
   1: 0.25rem,
-  // 4px
   2: 0.5rem,
-  // 8px
   3: 0.75rem,
-  // 12px
   4: 1rem,
-  // 16px
   6: 1.5rem,
-  // 24px
   8: 2rem,
-  // 32px
 );
 
 $font-family: (
@@ -54,9 +43,12 @@ $font-family: (
     sans-serif,
   ),
   mono: (
-    'Inter',
-    system-ui,
-    -apple-system,
+    'Fira Code',
+    ui-monospace,
+    'SFMono-Regular',
+    'SF Mono',
+    Menlo,
+    Consolas,
     monospace,
   ),
 );
@@ -66,42 +58,34 @@ $font-size: (
     size: 0.75rem,
     line-height: 1rem,
   ),
-  // 12px
   sm: (
       size: 0.875rem,
       line-height: 1.25rem,
     ),
-  // 14px
   base: (
       size: 1rem,
       line-height: 1.5rem,
     ),
-  // 16px
   lg: (
       size: 1.125rem,
       line-height: 1.75rem,
     ),
-  // 18px
   xl: (
       size: 1.25rem,
       line-height: 1.75rem,
     ),
-  // 20px
   2xl: (
       size: 1.5rem,
       line-height: 2rem,
     ),
-  // 24px
   3xl: (
       size: 1.875rem,
       line-height: 2.25rem,
     ),
-  // 30px
   4xl: (
     size: 2.25rem,
     line-height: 2.5rem,
   ),
-  // 36px
 );
 
 $font-weight: (
@@ -113,11 +97,8 @@ $font-weight: (
 
 $radius: (
   sm: 0.25rem,
-  // 4px - refined for better proportions
   md: 0.5rem,
-  // 8px - standard
   lg: 0.75rem,
-  // 12px - for cards
   full: 9999px,
 );
 

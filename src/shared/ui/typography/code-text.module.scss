@@ -1,11 +1,23 @@
 @use '@/shared/styles/design-system' as *;
 
 .codeText {
-  @include font-family(sans);
-  font-size: 1.5rem;
+  @include font-family(mono);
+  font-size: 0.9rem;
   line-height: 1.5;
   white-space: pre-wrap;
-  font-weight: font-weight(light);
+  font-weight: font-weight(normal);
+}
+
+@include respond-to(sm) {
+  .codeText {
+    font-size: 1.05rem;
+  }
+}
+
+@media (min-width: 930px) {
+  .codeText {
+    font-size: 1.35rem;
+  }
 }
 
 .codeText-default {

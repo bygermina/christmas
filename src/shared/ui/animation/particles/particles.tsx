@@ -1,47 +1,74 @@
-import { useMemo } from 'react';
+import { useState, useEffect, memo } from 'react';
 import { motion } from 'framer-motion';
 
 import { useScreenSizeContext } from '@/shared/lib/providers/use-context';
+import { usePrefersReducedMotion } from '@/shared/lib/hooks/use-prefers-reduced-motion';
 
 import styles from './particles.module.scss';
 
-export const Particles = () => {
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const PARTICLE_PADDING = 100;
 
-  const { isMobile } = useScreenSizeContext();
+const randomInViewport = (viewportSize: number): number =>
+  Math.random() * (viewportSize + PARTICLE_PADDING * 2) - PARTICLE_PADDING;
+
+const createParticles = (
+  count: number,
+  screenWidth: number,
+  screenHeight: number,
+) =>
+  Array.from({ length: count }).map(() => ({
+    initialX: randomInViewport(screenWidth),
+    initialY: randomInViewport(screenHeight),
+    targetX: randomInViewport(screenWidth),
+    targetY: randomInViewport(screenHeight),
+    duration: Math.random() * 10 + 10,
+  }));
+
+export const Particles = () => {
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const { isMobile, screenWidth, screenHeight } = useScreenSizeContext();
 
   const particleCount = isMobile ? 15 : 30;
 
-  const particles = useMemo(
-    () =>
-      Array.from({ length: particleCount }).map(() => ({
-        initialX: Math.random() * 1200,
-        initialY: Math.random() * 800,
-        targetX: Math.random() * 1200,
-        targetY: Math.random() * 800,
-        duration: Math.random() * 10 + 10,
-      })),
-    [particleCount],
-  );
+  const [particles, setParticles] = useState<
+    ReturnType<typeof createParticles>
+  >([]);
+
+  useEffect(() => {
+    setParticles(createParticles(particleCount, screenWidth, screenHeight));
+  }, [particleCount, screenWidth, screenHeight]);
 
   if (prefersReducedMotion) return null;
 
   return (
     <div className={styles.container}>
       {particles.map((p, i) => (
-        <motion.div
-          key={i}
-          className={styles.particle}
-          initial={{ x: p.initialX, y: p.initialY }}
-          animate={{ x: p.targetX, y: p.targetY }}
-          transition={{
-            duration: p.duration,
-            repeat: Infinity,
-            repeatType: 'reverse',
-            ease: 'easeInOut',
-          }}
-        />
+        <ParticleItem key={i} {...p} />
       ))}
     </div>
   );
 };
+
+const ParticleItem = memo(({ initialX, initialY, targetX, targetY, duration }: {
+  initialX: number;
+  initialY: number;
+  targetX: number;
+  targetY: number;
+  duration: number;
+}) => (
+  <motion.div
+    className={styles.particleWrapper}
+    initial={{ x: initialX, y: initialY }}
+    animate={{ x: targetX, y: targetY }}
+    transition={{
+      duration,
+      repeat: Infinity,
+      repeatType: 'reverse',
+      ease: 'easeInOut',
+    }}
+  >
+    <div className={styles.particle} />
+  </motion.div>
+));
+
+ParticleItem.displayName = 'ParticleItem';

@@ -50,8 +50,8 @@ export const scaleSvgPath = (
   });
 };
 
-export const getImageOffset = (elDimensions: Dimensions, originalRation: number) => {
-  const widthExpected = elDimensions.height / originalRation;
+export const getImageOffset = (elDimensions: Dimensions, originalRatio: number) => {
+  const widthExpected = elDimensions.height / originalRatio;
   const overflowX = elDimensions.width - widthExpected;
 
   return overflowX < 0 ? overflowX / 2 : 0;

@@ -5,11 +5,6 @@
   padding: 0;
 }
 
-// ============================================
-// TYPOGRAPHY HIERARCHY
-// ============================================
-// h1 > h2 > h3 > subheading > body > caption > label
-
 .typography-h1 {
   --typography-h1-line-height: 1.15;
   font-size: clamp(2rem, 8vw, 3.5rem);
@@ -99,10 +94,6 @@
   }
 }
 
-// ============================================
-// TEXT VARIANTS
-// ============================================
-
 .typography-body {
   @include typography(base);
   line-height: 1.6;
@@ -144,7 +135,6 @@ $weights: (
   }
 }
 
-// Colors - refined for better contrast and hierarchy
 $colors: (
   default: var(--color-white),
   muted: var(--color-slate-400),

@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 
 import { BREAKPOINTS } from '@/shared/lib/breakpoints';
 
@@ -6,10 +6,12 @@ export const useScreenSize = () => {
   const [screenWidth, setScreenWidth] = useState(
     typeof window !== 'undefined' ? window.innerWidth : 1920,
   );
-  const [screenHeight, setScreenHeight] = useState(window.innerHeight);
+  const [screenHeight, setScreenHeight] = useState(
+    typeof window !== 'undefined' ? window.innerHeight : 1080,
+  );
 
   const isPortrait = screenHeight > screenWidth;
-  const isSquare = isPortrait && screenHeight / screenWidth < 1.3;
+  const isMobile = screenWidth < BREAKPOINTS.MOBILE;
 
   useEffect(() => {
     let timeoutId: number | undefined;
@@ -42,24 +44,10 @@ export const useScreenSize = () => {
     };
   }, []);
 
-  const deviceInfo = useMemo(
-    () => ({
-      isMobile: screenWidth < BREAKPOINTS.MOBILE,
-      isTablet: screenWidth >= BREAKPOINTS.MOBILE && screenWidth < BREAKPOINTS.TABLET,
-      isDesktop: screenWidth >= BREAKPOINTS.TABLET,
-    }),
-    [screenWidth],
-  );
-
-  const screenMode = isPortrait ? 'Portrait' : 'Landscape';
-  const containerScreenMode = isSquare ? 'Square' : screenMode;
-
   return {
     screenWidth,
     screenHeight,
     isPortrait,
-    screenMode,
-    containerScreenMode,
-    ...deviceInfo,
+    isMobile,
   };
 };

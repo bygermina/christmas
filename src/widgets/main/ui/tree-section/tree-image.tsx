@@ -1,8 +1,10 @@
-import { forwardRef } from 'react';
+import { forwardRef, useCallback } from 'react';
 
-import { BREAKPOINTS } from '@/shared/lib/breakpoints';
 import { ImageMask } from '@/shared/ui/animation/image/image-mask';
-import { createResponsiveSources } from '@/shared/ui/picture/picture.utils';
+import {
+  createResponsiveSources,
+  getResponsiveFallbackSrc,
+} from '@/shared/ui/picture/picture.utils';
 import { useScreenSizeContext } from '@/shared/lib/providers/use-context';
 
 import desktop from '../../assets/blue electronic christmas tree.webp';
@@ -10,6 +12,8 @@ import mobile from '../../assets/blue electronic christmas tree-600.webp';
 import tablet from '../../assets/blue electronic christmas tree-1000.webp';
 
 import styles from './tree-section.module.scss';
+
+const TREE_IMAGES = { mobile, tablet, desktop };
 
 interface TreeImageProps {
   onImageLoad?: () => void;
@@ -19,22 +23,10 @@ export const TreeImage = forwardRef<HTMLImageElement, TreeImageProps>(
   function TreeImage({ onImageLoad }, ref) {
     const { screenWidth } = useScreenSizeContext();
 
-    const sources = createResponsiveSources({
-      mobile,
-      tablet,
-      desktop,
-    });
+    const sources = createResponsiveSources(TREE_IMAGES);
+    const fallbackSrc = getResponsiveFallbackSrc(screenWidth, TREE_IMAGES);
 
-    const fallbackSrc =
-      screenWidth >= BREAKPOINTS.TABLET
-        ? desktop
-        : screenWidth >= BREAKPOINTS.MOBILE
-          ? tablet
-          : mobile;
-
-    const handleLoad = () => {
-      onImageLoad?.();
-    };
+    const handleLoad = useCallback(() => onImageLoad?.(), [onImageLoad]);
 
     return (
       <ImageMask

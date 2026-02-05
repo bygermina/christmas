@@ -4,14 +4,22 @@
   position: absolute;
   inset: 0;
   overflow: hidden;
+  contain: layout style paint;
 }
 
-.particle {
+.particleWrapper {
   position: absolute;
   width: 4px;
   height: 4px;
-  border-radius: 50%;
   pointer-events: none;
+  will-change: transform;
+  contain: layout style;
+}
+
+.particle {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
 
   background: radial-gradient(
     circle,
@@ -25,7 +33,35 @@
     0 0 6px rgba(from var(--color-blue-400) r g b / 0.18);
 
   mix-blend-mode: screen;
-  opacity: 0.45;
+  will-change: opacity, transform;
 
-  // Ambient mode: no bright white core (keeps the background calm)
+  animation: particle-breathe var(--particle-breathe-duration, 4.8s) ease-in-out infinite;
+  animation-delay: var(--particle-breathe-delay, 0s);
+}
+
+.particleWrapper:nth-child(3n) {
+  --particle-breathe-duration: 6.2s;
+  --particle-breathe-delay: -1.1s;
+}
+
+.particleWrapper:nth-child(4n) {
+  --particle-breathe-duration: 5.4s;
+  --particle-breathe-delay: -2.2s;
+}
+
+.particleWrapper:nth-child(5n) {
+  --particle-breathe-duration: 7s;
+  --particle-breathe-delay: -3.4s;
+}
+
+@keyframes particle-breathe {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1.35);
+  }
+  50% {
+    opacity: 0.2;
+    transform: scale(0.8);
+  }
 }

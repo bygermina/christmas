@@ -1,5 +1,5 @@
 import { ScreenSizeProvider } from '@/shared/lib/providers/screen-size-provider';
-import { CodeBackground } from '@/shared/ui/code-background/code-background';
+import { CodeBackground } from '@/shared/ui/code-background';
 import { LightFollowCursor } from '@/shared/ui/animation/light';
 import { MainWidget } from '@/widgets/main';
 import { FooterWidget } from '@/widgets/footer';
@@ -14,11 +14,12 @@ export const App = () => {
         <a href="#main-content" className={styles.skipLink}>
           Skip to main content
         </a>
-        <div aria-hidden="true">
+        <div className={styles.background} aria-hidden="true" />
+        <div className={styles.codeLayer} aria-hidden="true">
           <CodeBackground />
         </div>
         <LightFollowCursor />
-        <main id="main-content" className={styles.scrollContainer}>
+        <main id="main-content">
           <MainWidget />
           <FooterWidget />
         </main>

@@ -2,7 +2,7 @@ import { forwardRef } from 'react';
 
 interface TextWithTargetLetterProps {
   text: string;
-  targetLetterIndex?: number; // Index of the letter to create a reference
+  targetLetterIndex?: number;
 }
 
 export const TextWithTargetLetter = forwardRef<HTMLSpanElement, TextWithTargetLetterProps>(
@@ -28,3 +28,5 @@ export const TextWithTargetLetter = forwardRef<HTMLSpanElement, TextWithTargetLe
     );
   },
 );
+
+TextWithTargetLetter.displayName = 'TextWithTargetLetter';

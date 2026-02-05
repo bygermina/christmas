@@ -1,4 +1,4 @@
-import { useEffect, useState, forwardRef } from 'react';
+import { useEffect, useRef, useState, forwardRef } from 'react';
 
 import { motion } from 'framer-motion';
 
@@ -8,16 +8,18 @@ import styles from './type-text.module.scss';
 
 interface TypeTextProps {
   text: string;
-  targetLetterIndex?: number; // Index of the letter for reference
+  targetLetterIndex?: number;
   className?: string;
   delay?: number;
   speed?: number;
+  onComplete?: () => void;
 }
 
 export const TypeText = forwardRef<HTMLSpanElement, TypeTextProps>(
-  ({ text, targetLetterIndex, className = '', delay = 0, speed = 0.1 }, ref) => {
+  ({ text, targetLetterIndex, className = '', delay = 0, speed = 0.1, onComplete }, ref) => {
     const [displayedText, setDisplayedText] = useState('');
     const [currentIndex, setCurrentIndex] = useState(0);
+    const didCompleteRef = useRef(false);
 
     useEffect(() => {
       if (currentIndex >= text.length) return;
@@ -32,6 +34,13 @@ export const TypeText = forwardRef<HTMLSpanElement, TypeTextProps>(
 
       return () => clearTimeout(timer);
     }, [currentIndex, text, delay, speed]);
+
+    useEffect(() => {
+      if (didCompleteRef.current) return;
+      if (currentIndex < text.length) return;
+      didCompleteRef.current = true;
+      onComplete?.();
+    }, [currentIndex, text.length, onComplete]);
 
     return (
       <div className={className}>
@@ -50,3 +59,5 @@ export const TypeText = forwardRef<HTMLSpanElement, TypeTextProps>(
     );
   },
 );
+
+TypeText.displayName = 'TypeText';

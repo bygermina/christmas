@@ -1,10 +1,12 @@
-import { useRef, useMemo } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { useElementDimensions } from '@/shared/lib/hooks/use-element-dimensions';
 import { pathTree, paths } from '@/shared/lib/svg-paths';
 import { getImageOffset, getScaledPath } from '@/shared/lib/svg';
 import { createSvgArc, getLastPointFromSvgPath } from '@/shared/lib/svg';
 import { useScreenSizeContext } from '@/shared/lib/providers/use-context';
+
+import type { MainPath, TreePath } from '../path-effects/types';
 
 const IMAGE_BASE_HEIGHT = 1115;
 const IMAGE_BASE_WIDTH = 1116;
@@ -13,24 +15,17 @@ const IMAGE_CENTER_PART = 0.5;
 const LETTER_PART = 0.25;
 const ARC_RADIUS = 250;
 
-interface TreePath {
-  path: string;
-  start: { x: number; y: number };
-  delay: number;
-  duration: number;
-  size?: number;
-}
-
 export const useTreeAnimation = (isContentReady: boolean) => {
   const imageRef = useRef<HTMLImageElement>(null);
   const letterIRef = useRef<HTMLSpanElement>(null);
   const containerRef = useRef<HTMLElement>(null);
+  const [targetPoint, setTargetPoint] = useState<{ x: number; y: number } | null>(null);
   
   const { isPortrait } = useScreenSizeContext();
 
   const imageDimensions = useElementDimensions(
     imageRef,
-    isContentReady,
+    true,
     IMAGE_BASE_HEIGHT,
     IMAGE_CENTER_PART,
     containerRef,
@@ -38,20 +33,52 @@ export const useTreeAnimation = (isContentReady: boolean) => {
 
   const letterIDimensions = useElementDimensions(
     letterIRef,
-    isContentReady,
+    true,
     0,
     LETTER_PART,
+    containerRef,
   );
+
+  useEffect(() => {
+    if (!isContentReady || isPortrait) {
+      setTargetPoint(null);
+      return;
+    }
+
+    const container = containerRef.current;
+    const el = letterIRef.current;
+    if (!container || !el) return;
+
+    let raf1 = 0;
+    let raf2 = 0;
+
+    raf1 = window.requestAnimationFrame(() => {
+      raf2 = window.requestAnimationFrame(() => {
+        const containerRect = container.getBoundingClientRect();
+        const rect = el.getBoundingClientRect();
+
+        setTargetPoint({
+          x: rect.left - containerRect.left + rect.width * 0.5,
+          y: rect.top - containerRect.top + rect.height * 0.5,
+        });
+      });
+    });
+
+    return () => {
+      window.cancelAnimationFrame(raf1);
+      window.cancelAnimationFrame(raf2);
+    };
+  }, [isContentReady, isPortrait]);
 
   const dx = getImageOffset(imageDimensions, IMAGE_ASPECT_RATIO);
 
-  const mainPath = useMemo((): TreePath & { fullPath: string } => {
+  const mainPath = useMemo((): MainPath => {
     const scaledPath = getScaledPath(imageDimensions, dx, pathTree);
     
     let curve = '';
     if (!isPortrait && scaledPath) {
       const lastPoint = getLastPointFromSvgPath(scaledPath);
-      const targetPosition = letterIDimensions?.center;
+      const targetPosition = targetPoint ?? letterIDimensions.center;
 
       if (lastPoint && targetPosition && targetPosition.x !== 0 && targetPosition.y !== 0) {
         curve = createSvgArc(
@@ -69,7 +96,7 @@ export const useTreeAnimation = (isContentReady: boolean) => {
       path: scaledPath,
       fullPath: `${scaledPath}${curve}`,
     };
-  }, [imageDimensions, dx, letterIDimensions, isPortrait]);
+  }, [imageDimensions, dx, letterIDimensions, isPortrait, targetPoint]);
 
   const additionalPaths = useMemo(
     (): TreePath[] =>
@@ -86,7 +113,10 @@ export const useTreeAnimation = (isContentReady: boolean) => {
     containerRef,
     mainPath,
     additionalPaths,
-    isReady: isContentReady && mainPath.path !== '',
+    isReady:
+      isContentReady &&
+      mainPath.path !== '' &&
+      (isPortrait || (targetPoint !== null && targetPoint.x !== 0 && targetPoint.y !== 0)),
   };
 };
 

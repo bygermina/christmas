@@ -6,18 +6,15 @@ import { useScreenSizeContext } from '@/shared/lib/providers/use-context';
 import { BREAKPOINTS } from '@/shared/lib/breakpoints';
 
 import { BASE_SPEED, SPEED_MULTIPLIERS } from './constants';
-
-interface TreePath {
-  path: string;
-  start: { x: number; y: number };
-  delay: number;
-  duration: number;
-  size?: number;
-}
+import type { MainPath, PathEffectProps, TreePath } from './types';
 
 interface AnimatedPathEffectsProps {
-  mainPath: TreePath & { fullPath: string };
+  mainPath: MainPath;
   additionalPaths: TreePath[];
+}
+
+interface StarWithColorChangeProps extends PathEffectProps {
+  onCompleteEvent?: string;
 }
 
 const StarWithColorChange = ({
@@ -27,14 +24,7 @@ const StarWithColorChange = ({
   enableRotation,
   onCompleteEvent,
   size,
-}: {
-  path: string;
-  delay: number;
-  speed: number;
-  enableRotation: boolean;
-  onCompleteEvent?: string;
-  size?: number;
-}) => {
+}: StarWithColorChangeProps) => {
   const [variant, setVariant] = useState<'white' | 'gold'>('white');
 
   const handleComplete = () => {
@@ -61,13 +51,7 @@ const PathEffect = ({
   speed,
   enableRotation,
   size,
-}: {
-  path: string;
-  delay: number;
-  speed: number;
-  enableRotation: boolean;
-  size?: number;
-}) => (
+}: PathEffectProps) => (
   <CSSPathMotion
     speed={speed}
     enableRotation={enableRotation}

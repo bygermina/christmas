@@ -5,12 +5,13 @@
   height: 100dvh;
   width: 100%;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  display: grid;
+  grid-template-rows: clamp(220px, 46vh, 520px) minmax(0, 1fr);
+  align-items: stretch;
 
-  @media (min-width: 930px) {
-    flex-direction: row;
-    justify-content: flex-start;
+  @media (min-width: 930px) and (orientation: landscape) {
+    grid-template-rows: 1fr;
+    grid-template-columns: minmax(0, 46vw) minmax(0, 1fr);
+    align-items: center;
   }
 }

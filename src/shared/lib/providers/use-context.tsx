@@ -6,7 +6,7 @@ export const ScreenSizeContext = createContext<ReturnType<typeof useScreenSize> 
   undefined,
 );
 
-export function useScreenSizeContext() {
+export const useScreenSizeContext = () => {
   const context = useContext(ScreenSizeContext);
 
   if (!context) {
@@ -14,4 +14,4 @@ export function useScreenSizeContext() {
   }
 
   return context;
-}
+};
