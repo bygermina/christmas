@@ -6,11 +6,13 @@
   inset: 0;
   z-index: 0;
   overflow: hidden;
+  contain: strict;
 }
 
 .container {
   position: absolute;
   inset: 0;
+  contain: layout style paint;
   @include font-family(sans);
   font-weight: font-weight(light);
   white-space: pre;

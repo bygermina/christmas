@@ -1,2 +1,2 @@
-export { LightFollowCursor } from './light-follow';
+export { LightFollowCursor as default } from './light-follow';
 

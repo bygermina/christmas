@@ -5,6 +5,7 @@
   height: 100dvh;
   background: var(--color-dark);
   overflow: hidden;
+  contain: layout style;
 }
 
 .background {
@@ -15,10 +16,10 @@
   background:
     linear-gradient(
       180deg,
-      rgba(from var(--color-blue-500) r g b / 0.06) 0%,
-      rgba(from var(--color-blue-500) r g b / 0.002) 15%,
-      rgba(from var(--color-blue-500) r g b / 0.001) 60%,
-      rgba(0, 0, 0, 1) 100%
+      #{color-opacity('blue', 500, 0.06)} 0%,
+      #{color-opacity('blue', 500, 0.002)} 15%,
+      #{color-opacity('blue', 500, 0.001)} 60%,
+      var(--color-dark) 100%
     );
 }
 
@@ -30,8 +31,8 @@
   background:
     repeating-linear-gradient(
       135deg,
-      rgba(from var(--color-white) r g b / 0.01) 0px,
-      rgba(from var(--color-white) r g b / 0.01) 1px,
+      #{color-opacity('white', null, 0.01)} 0px,
+      #{color-opacity('white', null, 0.01)} 1px,
       transparent 1px,
       transparent 10px
     );
@@ -43,11 +44,13 @@
   position: absolute;
   inset: 0;
   z-index: 1;
+  contain: layout style paint;
 }
 
 .root > main {
   position: relative;
   z-index: 2;
+  contain: layout style;
 }
 
 .skipLink {
@@ -56,8 +59,8 @@
   left: 0;
   z-index: 1000;
   padding: spacing(2) spacing(4);
-  background: var(--color-dark, rgb(2, 6, 23));
-  color: var(--color-white, rgb(245, 242, 230));
+  background: var(--color-dark);
+  color: var(--color-white);
   text-decoration: none;
   border-radius: radius(sm);
 

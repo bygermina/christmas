@@ -1,11 +1,14 @@
+import { lazy, Suspense } from 'react';
+
 import { ScreenSizeProvider } from '@/shared/lib/providers/screen-size-provider';
 import { CodeBackground } from '@/shared/ui/code-background';
-import { LightFollowCursor } from '@/shared/ui/animation/light';
 import { MainWidget } from '@/widgets/main';
 import { FooterWidget } from '@/widgets/footer';
 
 import styles from './app.module.scss';
 import './app.globals.scss';
+
+const LightFollowCursor = lazy(() => import('@/shared/ui/animation/light'));
 
 export const App = () => {
   return (
@@ -18,7 +21,9 @@ export const App = () => {
         <div className={styles.codeLayer} aria-hidden="true">
           <CodeBackground />
         </div>
-        <LightFollowCursor />
+        <Suspense fallback={null}>
+          <LightFollowCursor />
+        </Suspense>
         <main id="main-content">
           <MainWidget />
           <FooterWidget />

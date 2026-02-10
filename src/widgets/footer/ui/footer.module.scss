@@ -12,6 +12,7 @@
   flex-direction: column;
   align-items: center;
   gap: spacing(2);
+  contain: layout style paint;
 
   &::before {
     content: '';
