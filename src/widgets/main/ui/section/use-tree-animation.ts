@@ -12,10 +12,13 @@ const IMAGE_BASE_HEIGHT = 1115;
 const IMAGE_BASE_WIDTH = 1116;
 const IMAGE_ASPECT_RATIO = IMAGE_BASE_HEIGHT / IMAGE_BASE_WIDTH;
 const IMAGE_CENTER_PART = 0.5;
-const LETTER_PART = 0.25;
+const DEFAULT_LETTER_TARGET_PART = 0.23;
 const ARC_RADIUS = 250;
 
-export const useTreeAnimation = (isContentReady: boolean) => {
+export const useTreeAnimation = (
+  isContentReady: boolean,
+  letterTargetPart: number = DEFAULT_LETTER_TARGET_PART,
+) => {
   const imageRef = useRef<HTMLImageElement>(null);
   const letterIRef = useRef<HTMLSpanElement>(null);
   const containerRef = useRef<HTMLElement>(null);
@@ -31,44 +34,31 @@ export const useTreeAnimation = (isContentReady: boolean) => {
     containerRef,
   );
 
-  const letterIDimensions = useElementDimensions(
-    letterIRef,
-    true,
-    0,
-    LETTER_PART,
-    containerRef,
-  );
+  const letterIDimensions = useElementDimensions(letterIRef, true, 0, letterTargetPart, containerRef);
 
   useEffect(() => {
-    if (!isContentReady || isPortrait) {
-      setTargetPoint(null);
-      return;
-    }
+    if (!isContentReady || isPortrait) return;
 
     const container = containerRef.current;
     const el = letterIRef.current;
     if (!container || !el) return;
 
-    let raf1 = 0;
-    let raf2 = 0;
+    let raf = 0;
 
-    raf1 = window.requestAnimationFrame(() => {
-      raf2 = window.requestAnimationFrame(() => {
-        const containerRect = container.getBoundingClientRect();
-        const rect = el.getBoundingClientRect();
+    raf = window.requestAnimationFrame(() => {
+      const containerRect = container.getBoundingClientRect();
+      const rect = el.getBoundingClientRect();
 
-        setTargetPoint({
-          x: rect.left - containerRect.left + rect.width * 0.5,
-          y: rect.top - containerRect.top + rect.height * 0.5,
-        });
+      setTargetPoint({
+        x: rect.left - containerRect.left + rect.width * 0.5,
+        y: rect.top - containerRect.top + rect.height * letterTargetPart,
       });
     });
 
     return () => {
-      window.cancelAnimationFrame(raf1);
-      window.cancelAnimationFrame(raf2);
+      window.cancelAnimationFrame(raf);
     };
-  }, [isContentReady, isPortrait]);
+  }, [isContentReady, isPortrait, letterTargetPart]);
 
   const dx = getImageOffset(imageDimensions, IMAGE_ASPECT_RATIO);
 

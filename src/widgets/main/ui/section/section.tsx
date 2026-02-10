@@ -36,7 +36,7 @@ export const Section = () => {
       />
       {isReady && isImageLoaded && (
         <AnimatedPathEffects
-          key={`effects-${layoutKey}`}
+          key={layoutKey}
           mainPath={mainPath}
           additionalPaths={additionalPaths}
         />

@@ -90,7 +90,7 @@ export const AnimatedPathEffects = ({
       />
       {additionalPaths.map((p, index) => (
         <PathEffect
-          key={`${index}-${p.delay}`}
+          key={index}
           path={p.path}
           delay={p.delay}
           speed={speed}
