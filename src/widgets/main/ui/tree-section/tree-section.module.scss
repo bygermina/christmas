@@ -11,7 +11,7 @@
   max-height: 100%;
   margin-top: 0;
 
-  @media (min-width: 930px) and (orientation: landscape) {
+  @media (min-width: 500px) and (orientation: landscape) {
     left: 23vw;
     top: 50%;
     transform: translate(-50%, -50%) translateY(6vh);
@@ -21,7 +21,7 @@
     margin-top: 0;
   }
 
-  @media (min-width: 930px) and (orientation: landscape) and (min-width: breakpoint(sm)) {
+  @media (min-width: 500px) and (orientation: landscape) and (min-width: breakpoint(sm)) {
     max-width: 50vw;
   }
 }

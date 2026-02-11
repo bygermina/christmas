@@ -24,7 +24,7 @@
   align-self: start;
   padding: spacing(1) spacing(4) spacing(8);
 
-  @media (min-width: 930px) and (orientation: landscape) {
+  @media (min-width: 500px) and (orientation: landscape) {
     grid-row: auto;
     grid-column: 2;
     align-self: start;
@@ -54,7 +54,7 @@
   visibility: hidden;
 }
 
-@media (min-width: 930px) and (orientation: landscape) {
+@media (min-width: 500px) and (orientation: landscape) {
   .codeSlot {
     margin-top: spacing(5);
     min-height: 11rem;

@@ -27,6 +27,28 @@
   overflow: visible;
   z-index: 200;
   contain: layout style paint;
+  -webkit-mask-image: radial-gradient(
+    circle,
+    rgba(from var(--color-white) r g b / 1) 0%,
+    rgba(from var(--color-white) r g b / 1) 30%,
+    rgba(from var(--color-white) r g b / 0.7) 40%,
+    rgba(from var(--color-white) r g b / 0.35) 50%,
+    rgba(from var(--color-white) r g b / 0) 70%
+  );
+  mask-image: radial-gradient(
+    circle,
+    rgba(from var(--color-white) r g b / 1) 0%,
+    rgba(from var(--color-white) r g b / 1) 30%,
+    rgba(from var(--color-white) r g b / 0.7) 40%,
+    rgba(from var(--color-white) r g b / 0.35) 50%,
+    rgba(from var(--color-white) r g b / 0) 70%
+  );
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
 }
 
 .beam {
@@ -82,4 +104,54 @@
     0 0 12px rgba(from var(--color-gold-400) r g b / 0.6),
     0 0 18px rgba(from var(--color-gold-400) r g b / 0.4),
     0 0 24px rgba(from var(--color-gold-400) r g b / 0.3);
+}
+
+.variantWhite {
+  .centralCircle {
+    background: radial-gradient(
+      circle,
+      rgba(from var(--color-white) r g b / 1) 0%,
+      rgba(from var(--color-white) r g b / 0.95) 20%,
+      rgba(from var(--color-white) r g b / 0.7) 35%,
+      rgba(from var(--color-white) r g b / 0.5) 50%,
+      rgba(from var(--color-white) r g b / 0.3) 65%,
+      rgba(from var(--color-white) r g b / 0) 80%
+    );
+  }
+
+  .innerCenter {
+    background: radial-gradient(
+      circle,
+      rgba(from var(--color-white) r g b / 1) 0%,
+      rgba(from var(--color-white) r g b / 0.9) 30%,
+      rgba(from var(--color-white) r g b / 0.6) 45%,
+      rgba(from var(--color-white) r g b / 0.4) 60%,
+      rgba(from var(--color-white) r g b / 0) 80%
+    );
+  }
+}
+
+.variantGold {
+  .centralCircle {
+    background: radial-gradient(
+      circle,
+      rgba(from var(--color-white) r g b / 1) 0%,
+      rgba(from var(--color-white) r g b / 0.95) 20%,
+      rgba(from var(--color-gold-300) r g b / 0.6) 35%,
+      rgba(from var(--color-gold-400) r g b / 0.4) 50%,
+      rgba(from var(--color-gold-500) r g b / 0.3) 65%,
+      rgba(from var(--color-gold-500) r g b / 0) 80%
+    );
+  }
+
+  .innerCenter {
+    background: radial-gradient(
+      circle,
+      rgba(from var(--color-white) r g b / 1) 0%,
+      rgba(from var(--color-white) r g b / 0.9) 30%,
+      rgba(from var(--color-gold-300) r g b / 0.5) 45%,
+      rgba(from var(--color-gold-400) r g b / 0.35) 60%,
+      rgba(from var(--color-gold-400) r g b / 0) 80%
+    );
+  }
 }

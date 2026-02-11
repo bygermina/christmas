@@ -9,7 +9,7 @@
   grid-template-rows: clamp(220px, 46vh, 520px) minmax(0, 1fr);
   align-items: stretch;
 
-  @media (min-width: 930px) and (orientation: landscape) {
+  @media (min-width: 500px) and (orientation: landscape) {
     grid-template-rows: 1fr;
     grid-template-columns: minmax(0, 46vw) minmax(0, 1fr);
     align-items: center;

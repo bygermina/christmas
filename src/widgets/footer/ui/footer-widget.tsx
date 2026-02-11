@@ -1,4 +1,5 @@
 import { GithubIcon, LinkedinIcon, EmailIcon } from '@/shared/ui/icons';
+import { useScreenSizeContext } from '@/shared/lib/providers/use-context';
 
 import styles from './footer.module.scss';
 
@@ -21,6 +22,10 @@ const SOCIAL_LINKS = [
 ];
 
 export const FooterWidget = () => {
+  const { screenHeight } = useScreenSizeContext();
+
+  if (screenHeight < 600) return null;
+
   return (
     <footer className={styles.footer}>
       <nav className={styles.socialLinks} aria-label="Social links">

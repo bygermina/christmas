@@ -24,6 +24,10 @@
   --typography-h1-line-height: 1.2;
   font-size: clamp(2rem, 8vw, 3.5rem);
 
+  @media (min-width: 500px) and (max-width: 929px) {
+    font-size: clamp(2rem, 5vw, 3rem);
+  }
+
   @media (min-width: 930px) {
     --typography-h1-line-height: 1.15;
     font-size: 3rem;

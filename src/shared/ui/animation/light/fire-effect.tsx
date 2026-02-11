@@ -11,17 +11,65 @@ import {
   SIZE_CONFIG,
   BEAM_DIRECTIONS,
   FILTER_CONFIG,
-  GRADIENT_OPACITY,
-  GRADIENT_POSITIONS,
   COLORS,
   STANDARD_STOPS,
   DIAGONAL_STOPS,
 } from './fire-effect.constants';
 
-interface FireEffectProps {
-  variant?: 'white' | 'gold';
-  size?: number;
+type BeamId = 'horizontal' | 'vertical' | 'diagonal45' | 'diagonal135';
+
+interface BeamBaseConfig {
+  id: BeamId;
+  className: string;
+  direction: number;
+  stops: number[];
+  sizeKey: 'horizontalBeam' | 'verticalBeam' | 'diagonalBeam';
+  getColor: (params: { isGold: boolean }) => string;
 }
+
+interface AnimationConfig {
+  horizontal: number;
+  vertical: number;
+  diagonal45: number;
+  diagonal135: number;
+  centralCircle: number;
+  innerCenter: number;
+}
+
+const BEAM_BASE_CONFIG: BeamBaseConfig[] = [
+  {
+    id: 'horizontal',
+    className: styles.beamHorizontal,
+    direction: BEAM_DIRECTIONS.HORIZONTAL,
+    stops: STANDARD_STOPS,
+    sizeKey: 'horizontalBeam',
+    getColor: () => COLORS.white,
+  },
+  {
+    id: 'vertical',
+    className: styles.beamVertical,
+    direction: BEAM_DIRECTIONS.VERTICAL,
+    stops: STANDARD_STOPS,
+    sizeKey: 'verticalBeam',
+    getColor: ({ isGold }) => (isGold ? COLORS.goldLight : COLORS.white),
+  },
+  {
+    id: 'diagonal45',
+    className: styles.beamDiagonal45,
+    direction: BEAM_DIRECTIONS.HORIZONTAL,
+    stops: DIAGONAL_STOPS,
+    sizeKey: 'diagonalBeam',
+    getColor: () => COLORS.white,
+  },
+  {
+    id: 'diagonal135',
+    className: styles.beamDiagonal135,
+    direction: BEAM_DIRECTIONS.HORIZONTAL,
+    stops: DIAGONAL_STOPS,
+    sizeKey: 'diagonalBeam',
+    getColor: ({ isGold }) => (isGold ? COLORS.gold : COLORS.white),
+  },
+];
 
 const createBeamGradient = (color: string, direction: number, stops: number[]) => {
   const gradientStops = stops
@@ -33,50 +81,10 @@ const createBeamGradient = (color: string, direction: number, stops: number[]) =
   return `linear-gradient(${direction}deg, transparent 0%, ${gradientStops}, transparent 100%)`;
 };
 
-const createRadialGradient = (stops: string[]) => `radial-gradient(circle, ${stops.join(', ')})`;
-
-const createGradientStop = (color: string, opacity: number, position: number) =>
-  `${colorWithOpacity(color, opacity)} ${position}%`;
-
-const createCentralCircleStops = (isGold: boolean) => {
-  if (isGold) {
-    return [
-      createGradientStop(COLORS.white, GRADIENT_OPACITY.FULL, GRADIENT_POSITIONS.START),
-      createGradientStop(COLORS.white, GRADIENT_OPACITY.HIGH, GRADIENT_POSITIONS.EARLY),
-      createGradientStop(COLORS.goldLight, GRADIENT_OPACITY.MEDIUM_LOW, GRADIENT_POSITIONS.MID),
-      createGradientStop(COLORS.gold, GRADIENT_OPACITY.LOW_MEDIUM, GRADIENT_POSITIONS.CENTER),
-      createGradientStop(COLORS.goldDark, GRADIENT_OPACITY.MINIMAL, GRADIENT_POSITIONS.LATE_MID),
-      `transparent ${GRADIENT_POSITIONS.END}%`,
-    ];
-  }
-  return [
-    createGradientStop(COLORS.white, GRADIENT_OPACITY.FULL, GRADIENT_POSITIONS.START),
-    createGradientStop(COLORS.white, GRADIENT_OPACITY.HIGH, GRADIENT_POSITIONS.EARLY),
-    createGradientStop(COLORS.white, GRADIENT_OPACITY.MEDIUM, GRADIENT_POSITIONS.MID),
-    createGradientStop(COLORS.white, GRADIENT_OPACITY.LOW, GRADIENT_POSITIONS.CENTER),
-    createGradientStop(COLORS.white, GRADIENT_OPACITY.MINIMAL, GRADIENT_POSITIONS.LATE_MID),
-    `transparent ${GRADIENT_POSITIONS.END}%`,
-  ];
-};
-
-const createInnerCenterStops = (isGold: boolean) => {
-  if (isGold) {
-    return [
-      createGradientStop(COLORS.white, GRADIENT_OPACITY.FULL, GRADIENT_POSITIONS.START),
-      createGradientStop(COLORS.white, GRADIENT_OPACITY.MEDIUM_HIGH, GRADIENT_POSITIONS.MID_EARLY),
-      createGradientStop(COLORS.goldLight, GRADIENT_OPACITY.LOW, GRADIENT_POSITIONS.MID_LATE),
-      createGradientStop(COLORS.gold, GRADIENT_OPACITY.VERY_LOW, GRADIENT_POSITIONS.LATE),
-      `transparent ${GRADIENT_POSITIONS.END}%`,
-    ];
-  }
-  return [
-    createGradientStop(COLORS.white, GRADIENT_OPACITY.FULL, GRADIENT_POSITIONS.START),
-    createGradientStop(COLORS.white, GRADIENT_OPACITY.MEDIUM_HIGH, GRADIENT_POSITIONS.MID_EARLY),
-    createGradientStop(COLORS.white, GRADIENT_OPACITY.MEDIUM_LOW, GRADIENT_POSITIONS.MID_LATE),
-    createGradientStop(COLORS.white, GRADIENT_OPACITY.LOW_MEDIUM, GRADIENT_POSITIONS.LATE),
-    `transparent ${GRADIENT_POSITIONS.END}%`,
-  ];
-};
+interface FireEffectProps {
+  variant?: 'white' | 'gold';
+  size?: number;
+}
 
 const createContainerFilter = (isGold: boolean, dropShadow: number) => {
   const { BRIGHTNESS, DROP_SHADOW_MULTIPLIERS } = FILTER_CONFIG;
@@ -86,7 +94,7 @@ const createContainerFilter = (isGold: boolean, dropShadow: number) => {
     return `${baseShadow} drop-shadow(0 0 ${dropShadow * DROP_SHADOW_MULTIPLIERS.WHITE}px ${COLORS.white})`;
   }
 
-  return `${baseShadow} drop-shadow(0 0 ${dropShadow * DROP_SHADOW_MULTIPLIERS.GOLD_LIGHT}px ${COLORS.goldLight}) drop-shadow(0 0 ${dropShadow * DROP_SHADOW_MULTIPLIERS.GOLD}px ${COLORS.gold})`;
+  return `${baseShadow} drop-shadow(0 0 ${dropShadow * DROP_SHADOW_MULTIPLIERS.GOLD}px ${COLORS.gold})`;
 };
 
 const generateRandomDelay = () => Math.random() * ANIMATION_CONFIG.MAX_DELAY;
@@ -107,26 +115,28 @@ export const FireEffect = ({ variant = 'white', size }: FireEffectProps) => {
   }, [screenWidth, size]);
 
   const animationDelays = useMemo(
-    () => ({
+    () =>
+      ({
       horizontal: generateRandomDelay(),
       vertical: generateRandomDelay(),
       diagonal45: generateRandomDelay(),
       diagonal135: generateRandomDelay(),
       centralCircle: generateRandomDelay(),
       innerCenter: generateRandomDelay(),
-    }),
+      }) as AnimationConfig,
     [],
   );
 
   const animationDurations = useMemo(
-    () => ({
+    () =>
+      ({
       horizontal: generateRandomDuration(ANIMATION_CONFIG.DURATION_BASE.HORIZONTAL),
       vertical: generateRandomDuration(ANIMATION_CONFIG.DURATION_BASE.VERTICAL),
       diagonal45: generateRandomDuration(ANIMATION_CONFIG.DURATION_BASE.DIAGONAL_45),
       diagonal135: generateRandomDuration(ANIMATION_CONFIG.DURATION_BASE.DIAGONAL_135),
       centralCircle: generateRandomDuration(ANIMATION_CONFIG.DURATION_BASE.CENTRAL_CIRCLE),
       innerCenter: generateRandomDuration(ANIMATION_CONFIG.DURATION_BASE.INNER_CENTER),
-    }),
+      }) as AnimationConfig,
     [],
   );
 
@@ -153,62 +163,32 @@ export const FireEffect = ({ variant = 'white', size }: FireEffectProps) => {
   );
 
   const beams = useMemo(
-    () => [
-      {
-        className: styles.beamHorizontal,
-        color: COLORS.white,
-        direction: BEAM_DIRECTIONS.HORIZONTAL,
-        stops: STANDARD_STOPS,
-        size: sizes.horizontalBeam,
-        delay: animationDelays.horizontal,
-        duration: animationDurations.horizontal,
-      },
-      {
-        className: styles.beamVertical,
-        color: isGold ? COLORS.goldLight : COLORS.white,
-        direction: BEAM_DIRECTIONS.VERTICAL,
-        stops: STANDARD_STOPS,
-        size: sizes.verticalBeam,
-        delay: animationDelays.vertical,
-        duration: animationDurations.vertical,
-      },
-      {
-        className: styles.beamDiagonal45,
-        color: COLORS.white,
-        direction: BEAM_DIRECTIONS.HORIZONTAL,
-        stops: DIAGONAL_STOPS,
-        size: sizes.diagonalBeam,
-        delay: animationDelays.diagonal45,
-        duration: animationDurations.diagonal45,
-      },
-      {
-        className: styles.beamDiagonal135,
-        color: isGold ? COLORS.gold : COLORS.white,
-        direction: BEAM_DIRECTIONS.HORIZONTAL,
-        stops: DIAGONAL_STOPS,
-        size: sizes.diagonalBeam,
-        delay: animationDelays.diagonal135,
-        duration: animationDurations.diagonal135,
-      },
-    ],
+    () =>
+      BEAM_BASE_CONFIG.map(baseConfig => ({
+        id: baseConfig.id,
+        className: baseConfig.className,
+        color: baseConfig.getColor({ isGold }),
+        direction: baseConfig.direction,
+        stops: baseConfig.stops,
+        size: sizes[baseConfig.sizeKey],
+        delay: animationDelays[baseConfig.id],
+        duration: animationDurations[baseConfig.id],
+      })),
     [sizes, animationDelays, animationDurations, isGold],
   );
 
-  const centralCircleStops = useMemo(() => createCentralCircleStops(isGold), [isGold]);
-  const innerCenterStops = useMemo(() => createInnerCenterStops(isGold), [isGold]);
-
   return (
     <div
-      className={styles.container}
+      className={cn(styles.container, isGold ? styles.variantGold : styles.variantWhite)}
       style={{
         width: sizes.container,
         height: sizes.container,
         filter: createContainerFilter(isGold, sizes.dropShadow),
       }}
     >
-      {beams.map((beam, index) => (
+      {beams.map(beam => (
         <div
-          key={index}
+          key={beam.id}
           className={cn(styles.beam, beam.className)}
           style={{
             height: beam.size.height,
@@ -225,7 +205,6 @@ export const FireEffect = ({ variant = 'white', size }: FireEffectProps) => {
         style={{
           height: sizes.centralCircle,
           width: sizes.centralCircle,
-          background: createRadialGradient(centralCircleStops),
           animationDelay: `${animationDelays.centralCircle}s`,
           animationDuration: `${animationDurations.centralCircle}s`,
         }}
@@ -236,7 +215,6 @@ export const FireEffect = ({ variant = 'white', size }: FireEffectProps) => {
         style={{
           height: sizes.innerCenter,
           width: sizes.innerCenter,
-          background: createRadialGradient(innerCenterStops),
           animationDelay: `${animationDelays.innerCenter}s`,
           animationDuration: `${animationDurations.innerCenter}s`,
         }}
