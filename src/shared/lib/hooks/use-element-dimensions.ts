@@ -47,8 +47,14 @@ const EPSILON = 0.9;
 
 const areEqual = (a: number, b: number): boolean => Math.abs(a - b) <= EPSILON;
 
-const areSizesEqual = (a: Dimensions, b: Dimensions): boolean =>
-  areEqual(a.width, b.width) && areEqual(a.height, b.height) && areEqual(a.scale, b.scale);
+const areDimensionsEqual = (a: Dimensions, b: Dimensions): boolean =>
+  areEqual(a.width, b.width) &&
+  areEqual(a.height, b.height) &&
+  areEqual(a.scale, b.scale) &&
+  areEqual(a.bottomLeft.x, b.bottomLeft.x) &&
+  areEqual(a.bottomLeft.y, b.bottomLeft.y) &&
+  areEqual(a.center.x, b.center.x) &&
+  areEqual(a.center.y, b.center.y);
 
 export const useElementDimensions = (
   elementRef?: React.RefObject<HTMLElement | null>,
@@ -73,10 +79,10 @@ export const useElementDimensions = (
       if (!element) return;
 
       const newDimensions = getElementDimensions(element, baseHeight, part, containerRef?.current);
-      const sizesChanged = !areSizesEqual(prevDimensions.current, newDimensions);
+      const hasChanged = !areDimensionsEqual(prevDimensions.current, newDimensions);
       prevDimensions.current = newDimensions;
 
-      if (sizesChanged) setDimensions(newDimensions);
+      if (hasChanged) setDimensions(newDimensions);
     };
 
     let rafScheduled = false;

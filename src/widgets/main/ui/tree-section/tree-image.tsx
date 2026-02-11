@@ -19,9 +19,8 @@ interface TreeImageProps {
   onImageLoad?: () => void;
 }
 
-export const TreeImage = forwardRef<HTMLImageElement, TreeImageProps>(
-  function TreeImage({ onImageLoad }, ref) {
-    const { screenWidth } = useScreenSizeContext();
+export const TreeImage = forwardRef<HTMLImageElement, TreeImageProps>(({ onImageLoad }, ref) => {
+    const { screenWidth, screenHeight } = useScreenSizeContext();
 
     const sources = createResponsiveSources(TREE_IMAGES);
     const fallbackSrc = getResponsiveFallbackSrc(screenWidth, TREE_IMAGES);
@@ -30,7 +29,6 @@ export const TreeImage = forwardRef<HTMLImageElement, TreeImageProps>(
 
     return (
       <ImageMask
-        key={screenWidth}
         ref={ref}
         className={styles.treeImage}
         imageClassName={styles.image}

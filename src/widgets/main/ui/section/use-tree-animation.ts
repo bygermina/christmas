@@ -23,8 +23,8 @@ export const useTreeAnimation = (
   const letterIRef = useRef<HTMLSpanElement>(null);
   const containerRef = useRef<HTMLElement>(null);
   const [targetPoint, setTargetPoint] = useState<{ x: number; y: number } | null>(null);
-  
-  const { isPortrait } = useScreenSizeContext();
+
+  const { isPortrait, screenWidth, screenHeight } = useScreenSizeContext();
 
   const imageDimensions = useElementDimensions(
     imageRef,
@@ -58,7 +58,7 @@ export const useTreeAnimation = (
     return () => {
       window.cancelAnimationFrame(raf);
     };
-  }, [isContentReady, isPortrait, letterTargetPart]);
+  }, [isContentReady, isPortrait, letterTargetPart, screenWidth, screenHeight]);
 
   const dx = getImageOffset(imageDimensions, IMAGE_ASPECT_RATIO);
 

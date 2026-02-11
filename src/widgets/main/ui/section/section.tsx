@@ -1,18 +1,18 @@
 import { useState, useCallback } from 'react';
 
-import { useLayoutKey } from '@/shared/lib/hooks/use-layout-key';
-
 import { TreeImage } from '../tree-section/tree-image';
 import { Content } from '../content';
 import { AnimatedPathEffects } from '../path-effects/animated-path-effects';
 import { useTreeAnimation } from './use-tree-animation';
 
 import styles from './section.module.scss';
+import { useScreenSizeContext } from '@/shared/lib/providers/use-context';
 
 export const Section = () => {
-  const layoutKey = useLayoutKey();
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [isContentReady, setIsContentReady] = useState(false);
+
+  const { screenWidth, screenHeight } = useScreenSizeContext();
 
   const {
     imageRef,
@@ -29,14 +29,13 @@ export const Section = () => {
     <section ref={containerRef} className={styles.root}>
       <TreeImage ref={imageRef} onImageLoad={handleImageLoad} />
       <Content
-        key={layoutKey}
         letterRef={letterIRef}
         onContentReady={setIsContentReady}
         isImageLoaded={isImageLoaded}
       />
       {isReady && isImageLoaded && (
         <AnimatedPathEffects
-          key={layoutKey}
+          key={`${screenWidth}-${screenHeight}`}
           mainPath={mainPath}
           additionalPaths={additionalPaths}
         />
