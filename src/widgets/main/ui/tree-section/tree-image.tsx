@@ -20,7 +20,7 @@ interface TreeImageProps {
 }
 
 export const TreeImage = forwardRef<HTMLImageElement, TreeImageProps>(({ onImageLoad }, ref) => {
-    const { screenWidth, screenHeight } = useScreenSizeContext();
+    const { screenWidth } = useScreenSizeContext();
 
     const sources = createResponsiveSources(TREE_IMAGES);
     const fallbackSrc = getResponsiveFallbackSrc(screenWidth, TREE_IMAGES);
