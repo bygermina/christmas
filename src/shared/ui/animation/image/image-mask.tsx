@@ -54,3 +54,5 @@ export const ImageMask = forwardRef<HTMLImageElement, ImageMaskProps>(
     );
   },
 );
+
+ImageMask.displayName = 'ImageMask';
