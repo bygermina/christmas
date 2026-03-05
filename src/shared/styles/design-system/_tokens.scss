@@ -121,6 +121,7 @@ $z-index: (
   tooltip: 1070,
 );
 
+// Sync with src/shared/lib/breakpoints.ts (BREAKPOINTS).
 $breakpoints: (
   xs: 500px,
   sm: 640px,
