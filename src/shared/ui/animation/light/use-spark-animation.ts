@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useCallback } from 'react';
 
 import type { Spark } from './light-follow.types';
 import { updateSparkPhysics, isSparkAlive } from './light-follow.utils';
@@ -12,7 +12,7 @@ export const useSparkAnimation = (
 ) => {
   const rafIdRef = useRef<number | null>(null);
 
-  const updateSparksDOM = () => {
+  const updateSparksDOM = useCallback(() => {
     if (!containerRef.current) return;
 
     const container = containerRef.current;
@@ -36,9 +36,9 @@ export const useSparkAnimation = (
       div.style.transform = 'translate(0px, 0px) translate(-50%, -50%)';
       container.appendChild(div);
     }
-  };
+  }, [containerRef, sparkClassName, sparksRef]);
 
-  const animate = () => {
+  const animate = useCallback(() => {
     if (sparksRef.current.length === 0) {
       rafIdRef.current = null;
       return;
@@ -55,21 +55,21 @@ export const useSparkAnimation = (
     } else {
       rafIdRef.current = null;
     }
-  };
+  }, [sparksRef, updateSparksDOM]);
 
-  const startAnimation = () => {
+  const startAnimation = useCallback(() => {
     if (rafIdRef.current === null && sparksRef.current.length > 0) {
       rafIdRef.current = requestAnimationFrame(animate);
     }
-  };
+  }, [animate, sparksRef]);
 
-  const addSpark = (spark: Spark) => {
+  const addSpark = useCallback((spark: Spark) => {
     if (sparksRef.current.length >= SPARK_CONFIG.MAX_SPARKS) {
       sparksRef.current.shift();
     }
     sparksRef.current.push(spark);
     startAnimation();
-  };
+  }, [sparksRef, startAnimation]);
 
   useEffect(() => {
     if (!isActive) {
