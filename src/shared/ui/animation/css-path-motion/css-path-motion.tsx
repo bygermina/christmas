@@ -22,6 +22,7 @@ interface CSSPathMotionProps {
 }
 
 const DEFAULT_DURATION = 3;
+const MOTION_ANIMATION_NAME = 'css-path-motion-animation';
 
 export const CSSPathMotion = ({
   path,
@@ -54,15 +55,18 @@ export const CSSPathMotion = ({
 
     element.style.animationPlayState = isVisible ? 'running' : 'paused';
 
-    const totalAnimationTime = (duration + delay) * 1000;
-    const timer = setTimeout(() => {
+    const handleAnimationEnd = (event: AnimationEvent) => {
+      if (event.animationName !== MOTION_ANIMATION_NAME) return;
+
       if (onCompleteEvent) {
         window.dispatchEvent(new CustomEvent(onCompleteEvent));
       }
       onComplete?.();
-    }, totalAnimationTime);
+    };
 
-    return () => clearTimeout(timer);
+    element.addEventListener('animationend', handleAnimationEnd);
+
+    return () => element.removeEventListener('animationend', handleAnimationEnd);
   }, [path, speed, delay, onCompleteEvent, onComplete, isVisible]);
 
   return (
