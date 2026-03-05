@@ -2,8 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { useElementDimensions } from '@/shared/lib/hooks/use-element-dimensions';
 import { pathTree, paths } from '@/shared/lib/svg-paths';
-import { getImageOffset, getScaledPath } from '@/shared/lib/svg';
-import { createSvgArc, getLastPointFromSvgPath } from '@/shared/lib/svg';
+import { getImageOffset, getScaledPath, createSvgArc, getLastPointFromSvgPath } from '@/shared/lib/svg';
 import { useScreenSizeContext } from '@/shared/lib/providers/use-context';
 
 import type { MainPath, TreePath } from '../path-effects/types';
