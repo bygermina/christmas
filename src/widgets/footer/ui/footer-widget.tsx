@@ -16,7 +16,7 @@ const SOCIAL_LINKS = [
   },
   {
     name: 'Email',
-    url: 'bygermina@gmail.com',
+    url: 'mailto:bygermina@gmail.com',
     Icon: EmailIcon,
   },
 ];
