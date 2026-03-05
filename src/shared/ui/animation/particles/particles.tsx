@@ -1,4 +1,4 @@
-import { useState, useEffect, memo } from 'react';
+import { useState, useEffect, useRef, memo } from 'react';
 import { motion } from 'framer-motion';
 
 import { useScreenSizeContext } from '@/shared/lib/providers/use-context';
@@ -29,14 +29,20 @@ export const Particles = () => {
   const { isMobile, screenWidth, screenHeight } = useScreenSizeContext();
 
   const particleCount = isMobile ? 15 : 30;
+  const viewportSizeRef = useRef({ width: screenWidth, height: screenHeight });
 
   const [particles, setParticles] = useState<
     ReturnType<typeof createParticles>
   >([]);
 
   useEffect(() => {
-    setParticles(createParticles(particleCount, screenWidth, screenHeight));
-  }, [particleCount, screenWidth, screenHeight]);
+    viewportSizeRef.current = { width: screenWidth, height: screenHeight };
+  }, [screenWidth, screenHeight]);
+
+  useEffect(() => {
+    const { width, height } = viewportSizeRef.current;
+    setParticles(createParticles(particleCount, width, height));
+  }, [particleCount]);
 
   if (prefersReducedMotion) return null;
 
