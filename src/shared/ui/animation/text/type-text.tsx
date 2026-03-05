@@ -17,23 +17,25 @@ interface TypeTextProps {
 
 export const TypeText = forwardRef<HTMLSpanElement, TypeTextProps>(
   ({ text, targetLetterIndex, className = '', delay = 0, speed = 0.1, onComplete }, ref) => {
-    const [displayedText, setDisplayedText] = useState('');
     const [currentIndex, setCurrentIndex] = useState(0);
     const didCompleteRef = useRef(false);
+    const displayedText = text.slice(0, currentIndex);
+
+    useEffect(() => {
+      didCompleteRef.current = false;
+      setCurrentIndex(0);
+    }, [text]);
 
     useEffect(() => {
       if (currentIndex >= text.length) return;
 
       const timer = setTimeout(
-        () => {
-          setDisplayedText((prev) => prev + text[currentIndex]);
-          setCurrentIndex(currentIndex + 1);
-        },
+        () => setCurrentIndex((prevIndex) => prevIndex + 1),
         currentIndex === 0 ? delay * 1000 : speed * 1000,
       );
 
       return () => clearTimeout(timer);
-    }, [currentIndex, text, delay, speed]);
+    }, [currentIndex, text.length, delay, speed]);
 
     useEffect(() => {
       if (didCompleteRef.current) return;
