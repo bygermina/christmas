@@ -1,8 +1,5 @@
 import { cn } from '@/shared/lib/cn';
-
-interface IconProps {
-  className?: string;
-}
+import type { IconProps } from './types';
 
 export const GithubIcon = ({ className }: IconProps) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={cn(className)}>
