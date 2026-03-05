@@ -22,7 +22,7 @@
     drop-shadow(0 0 30px rgba(from var(--color-cyan-400) r g b / 0.3))
     drop-shadow(0 0 60px rgba(from var(--color-blue-400) r g b / 0.2));
   
-  animation: pulse 2s ease-in-out infinite;
+  animation: cursor-pulse 2s ease-in-out infinite;
   mix-blend-mode: screen;
 }
 
@@ -99,7 +99,7 @@
   }
 }
 
-@keyframes pulse {
+@keyframes cursor-pulse {
   0%, 100% {
     transform: translate(-50%, -50%) scale(1);
     opacity: 0.8;

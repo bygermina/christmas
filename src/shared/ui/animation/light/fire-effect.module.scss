@@ -1,15 +1,5 @@
 @use '@/shared/styles/design-system' as *;
 
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-}
-
 @keyframes ping {
   75%,
   100% {
