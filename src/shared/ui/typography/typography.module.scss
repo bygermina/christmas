@@ -24,7 +24,7 @@
   --typography-h1-line-height: 1.2;
   font-size: clamp(2rem, 8vw, 3.5rem);
 
-  @media (min-width: 500px) and (max-width: 929px) {
+  @media (min-width: breakpoint(xs)) and (max-width: 929px) {
     font-size: clamp(2rem, 5vw, 3rem);
   }
 
@@ -119,60 +119,16 @@
   margin-bottom: spacing(1);
 }
 
-$sizes: xs, sm, base, lg, xl, 2xl, 3xl, 4xl;
-
-@each $size in $sizes {
-  .typography-size-#{$size} {
-    @include typography($size);
-  }
-}
-
-$weights: (
-  normal: normal,
-  medium: medium,
-  bold: bold,
-);
-
-@each $key, $value in $weights {
-  .typography-weight-#{$key} {
-    font-weight: font-weight($value);
-  }
-}
-
 $colors: (
   default: var(--color-white),
   muted: var(--color-slate-400),
   primary: var(--color-blue-300),
   secondary: var(--color-slate-300),
   accent: var(--color-blue-300),
-  subtle: var(--color-slate-500),
 );
 
 @each $key, $value in $colors {
   .typography-color-#{$key} {
     color: $value;
-  }
-}
-
-$alignments: (
-  left: left,
-  center: center,
-  right: right,
-  justify: justify,
-);
-
-@each $key, $value in $alignments {
-  .typography-align-#{$key} {
-    text-align: $value;
-  }
-}
-
-.typographyTruncate {
-  @include truncate;
-}
-
-@for $index from 1 through 4 {
-  .typographyLineClamp-#{$index} {
-    @include line-clamp($index);
   }
 }

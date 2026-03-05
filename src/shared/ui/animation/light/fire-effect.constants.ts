@@ -37,44 +37,14 @@ export const FILTER_CONFIG = {
   DROP_SHADOW_MULTIPLIERS: {
     BASE: 1.5,
     WHITE: 1,
-    GOLD_LIGHT: 1.2,
     GOLD: 0.8,
   },
 } as const;
 
-export const GRADIENT_OPACITY = {
-  FULL: 1,
-  HIGH: 0.95,
-  MEDIUM_HIGH: 0.9,
-  MEDIUM: 0.7,
-  MEDIUM_LOW: 0.6,
-  LOW: 0.5,
-  LOW_MEDIUM: 0.4,
-  VERY_LOW: 0.35,
-  MINIMAL: 0.3,
-} as const;
-
-export const GRADIENT_POSITIONS = {
-  START: 0,
-  EARLY: 20,
-  MID_EARLY: 30,
-  MID: 35,
-  MID_LATE: 45,
-  CENTER: 50,
-  LATE: 60,
-  LATE_MID: 65,
-  END: 80,
-  FULL: 100,
-} as const;
-
 export const COLORS = {
-  blue: 'var(--color-blue-400)',
-  blueLight: 'var(--color-blue-300)',
-  blueDark: 'var(--color-blue-500)',
   white: 'var(--color-white)',
   gold: 'var(--color-gold-400)',
   goldLight: 'var(--color-gold-300)',
-  goldDark: 'var(--color-gold-500)',
 } as const;
 
 export const STANDARD_STOPS = [
