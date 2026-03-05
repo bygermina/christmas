@@ -25,7 +25,7 @@
     background: linear-gradient(
       90deg,
       transparent,
-      var(--color-blue-400-50),
+      rgba(from var(--color-blue-400) r g b / 0.5),
       transparent
     );
   }
@@ -48,7 +48,7 @@
   &:hover {
     color: var(--color-blue-400);
     transform: translateY(-2px);
-    background-color: var(--color-blue-400-10);
+    background-color: rgba(from var(--color-blue-400) r g b / 0.1);
   }
 }
 

@@ -54,11 +54,7 @@
 }
 
 @function shadow($size) {
-  $shadow: map.get(tokens.$shadows, $size);
-  @if meta.type-of($shadow) == list {
-    @return $shadow;
-  }
-  @return $shadow;
+  @return map.get(tokens.$shadows, $size);
 }
 
 @function transition($speed) {
@@ -73,10 +69,3 @@
   @return map.get(tokens.$breakpoints, $size);
 }
 
-@function color-opacity($color-name, $shade: null, $opacity: 1) {
-  $color: ds-color($color-name, $shade);
-  @if meta.type-of($color) == color {
-    @return rgba($color, $opacity);
-  }
-  @return $color;
-}

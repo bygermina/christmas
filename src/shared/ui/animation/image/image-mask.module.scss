@@ -23,8 +23,8 @@
 
 .imageWrapperGradient {
   :global(img) {
-    $white: ds-color('white');
-    $white-50: color-opacity('white', null, 0.5);
+    $white: rgba(from var(--color-white) r g b / 1);
+    $white-50: rgba(from var(--color-white) r g b / 0.5);
     $gradient:
       linear-gradient(
         to bottom,

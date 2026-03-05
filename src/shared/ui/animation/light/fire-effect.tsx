@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 
-import { colorWithOpacity } from '@/shared/lib/colors';
 import { useScreenSizeContext } from '@/shared/lib/providers/use-context';
 import { cn } from '@/shared/lib/cn';
 
@@ -75,7 +74,7 @@ const createBeamGradient = (color: string, direction: number, stops: number[]) =
   const gradientStops = stops
     .map((opacity, index) => {
       const position = (index / (stops.length - 1)) * 100;
-      return `${colorWithOpacity(color, opacity)} ${position}%`;
+      return `rgba(from ${color} r g b / ${opacity}) ${position}%`;
     })
     .join(', ');
   return `linear-gradient(${direction}deg, transparent 0%, ${gradientStops}, transparent 100%)`;
