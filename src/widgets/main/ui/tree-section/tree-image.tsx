@@ -1,4 +1,4 @@
-import { forwardRef, useCallback } from 'react';
+import { forwardRef } from 'react';
 
 import { ImageMask } from '@/shared/ui/animation/image/image-mask';
 import {
@@ -25,8 +25,6 @@ export const TreeImage = forwardRef<HTMLImageElement, TreeImageProps>(({ onImage
     const sources = createResponsiveSources(TREE_IMAGES);
     const fallbackSrc = getResponsiveFallbackSrc(screenWidth, TREE_IMAGES);
 
-    const handleLoad = useCallback(() => onImageLoad?.(), [onImageLoad]);
-
     return (
       <ImageMask
         ref={ref}
@@ -35,7 +33,7 @@ export const TreeImage = forwardRef<HTMLImageElement, TreeImageProps>(({ onImage
         src={fallbackSrc}
         sources={sources}
         alt="Circuit tree"
-        onLoad={handleLoad}
+        onLoad={onImageLoad}
       />
     );
   },
