@@ -11,6 +11,7 @@ export const useSparkAnimation = (
   isActive: boolean,
 ) => {
   const rafIdRef = useRef<number | null>(null);
+  const animateRef = useRef<() => void>(() => undefined);
 
   const updateSparksDOM = useCallback(() => {
     if (!containerRef.current) return;
@@ -38,30 +39,32 @@ export const useSparkAnimation = (
     }
   }, [containerRef, sparkClassName, sparksRef]);
 
-  const animate = useCallback(() => {
-    if (sparksRef.current.length === 0) {
-      rafIdRef.current = null;
-      return;
-    }
+  useEffect(() => {
+    animateRef.current = () => {
+      if (sparksRef.current.length === 0) {
+        rafIdRef.current = null;
+        return;
+      }
 
-    sparksRef.current = sparksRef.current
-      .map(updateSparkPhysics)
-      .filter(isSparkAlive);
+      sparksRef.current = sparksRef.current
+        .map(updateSparkPhysics)
+        .filter(isSparkAlive);
 
-    updateSparksDOM();
+      updateSparksDOM();
 
-    if (sparksRef.current.length > 0) {
-      rafIdRef.current = requestAnimationFrame(animate);
-    } else {
-      rafIdRef.current = null;
-    }
+      if (sparksRef.current.length > 0) {
+        rafIdRef.current = requestAnimationFrame(animateRef.current);
+      } else {
+        rafIdRef.current = null;
+      }
+    };
   }, [sparksRef, updateSparksDOM]);
 
   const startAnimation = useCallback(() => {
     if (rafIdRef.current === null && sparksRef.current.length > 0) {
-      rafIdRef.current = requestAnimationFrame(animate);
+      rafIdRef.current = requestAnimationFrame(animateRef.current);
     }
-  }, [animate, sparksRef]);
+  }, [sparksRef]);
 
   const addSpark = useCallback((spark: Spark) => {
     if (sparksRef.current.length >= SPARK_CONFIG.MAX_SPARKS) {
