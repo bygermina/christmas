@@ -5,6 +5,10 @@ export const useAnimationFrame = (callback: () => void, isActive: boolean = true
   const rafRef = useRef<number | null>(null);
 
   useEffect(() => {
+    callbackRef.current = callback;
+  }, [callback]);
+
+  useEffect(() => {
     if (!isActive) {
       if (rafRef.current !== null) {
         cancelAnimationFrame(rafRef.current);
