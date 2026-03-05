@@ -71,7 +71,7 @@ export const AnimatedPathEffects = ({
   const speed = useMemo(() => {
     const screenSpeedMultiplier = isMobile
       ? SPEED_MULTIPLIERS.MOBILE
-      : screenWidth < BREAKPOINTS.TABLET
+      : screenWidth < BREAKPOINTS.LG
         ? SPEED_MULTIPLIERS.TABLET
         : SPEED_MULTIPLIERS.DESKTOP;
 

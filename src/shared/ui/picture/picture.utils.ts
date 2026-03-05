@@ -10,9 +10,9 @@ export const getResponsiveFallbackSrc = (
   screenWidth: number,
   images: ResponsiveImages,
 ): string =>
-  screenWidth >= BREAKPOINTS.TABLET
+  screenWidth >= BREAKPOINTS.LG
     ? images.desktop ?? images.tablet ?? images.mobile ?? ''
-    : screenWidth >= BREAKPOINTS.MOBILE
+    : screenWidth >= BREAKPOINTS.MD
       ? images.tablet ?? images.mobile ?? images.desktop ?? ''
       : images.mobile ?? images.tablet ?? images.desktop ?? '';
 
@@ -23,9 +23,9 @@ export interface PictureSource {
   sizes?: string;
 }
 
-const defaultMobileMedia = `(max-width: ${BREAKPOINTS.MOBILE - 1}px)`;
-const defaultTabletMedia = `(min-width: ${BREAKPOINTS.MOBILE}px) and (max-width: ${BREAKPOINTS.TABLET - 1}px)`;
-const defaultDesktopMedia = `(min-width: ${BREAKPOINTS.TABLET}px)`;
+const defaultMobileMedia = `(max-width: ${BREAKPOINTS.MD - 1}px)`;
+const defaultTabletMedia = `(min-width: ${BREAKPOINTS.MD}px) and (max-width: ${BREAKPOINTS.LG - 1}px)`;
+const defaultDesktopMedia = `(min-width: ${BREAKPOINTS.LG}px)`;
 
 export const createResponsiveSources = (
   images: ResponsiveImages,

@@ -11,7 +11,7 @@ export const useScreenSize = () => {
   );
 
   const isPortrait = screenHeight > screenWidth;
-  const isMobile = screenWidth < BREAKPOINTS.MOBILE;
+  const isMobile = screenWidth < BREAKPOINTS.MD;
 
   useEffect(() => {
     let timeoutId: number | undefined;
