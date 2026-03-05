@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
 import { useScreenSizeContext } from '@/shared/lib/providers/use-context';
 import { cn } from '@/shared/lib/cn';
@@ -113,31 +113,23 @@ export const FireEffect = ({ variant = 'white', size }: FireEffectProps) => {
     return baseScale * (size ?? 1);
   }, [screenWidth, size]);
 
-  const animationDelays = useMemo(
-    () =>
-      ({
-      horizontal: generateRandomDelay(),
-      vertical: generateRandomDelay(),
-      diagonal45: generateRandomDelay(),
-      diagonal135: generateRandomDelay(),
-      centralCircle: generateRandomDelay(),
-      innerCenter: generateRandomDelay(),
-      }) as AnimationConfig,
-    [],
-  );
+  const [animationDelays] = useState<AnimationConfig>(() => ({
+    horizontal: generateRandomDelay(),
+    vertical: generateRandomDelay(),
+    diagonal45: generateRandomDelay(),
+    diagonal135: generateRandomDelay(),
+    centralCircle: generateRandomDelay(),
+    innerCenter: generateRandomDelay(),
+  }));
 
-  const animationDurations = useMemo(
-    () =>
-      ({
-      horizontal: generateRandomDuration(ANIMATION_CONFIG.DURATION_BASE.HORIZONTAL),
-      vertical: generateRandomDuration(ANIMATION_CONFIG.DURATION_BASE.VERTICAL),
-      diagonal45: generateRandomDuration(ANIMATION_CONFIG.DURATION_BASE.DIAGONAL_45),
-      diagonal135: generateRandomDuration(ANIMATION_CONFIG.DURATION_BASE.DIAGONAL_135),
-      centralCircle: generateRandomDuration(ANIMATION_CONFIG.DURATION_BASE.CENTRAL_CIRCLE),
-      innerCenter: generateRandomDuration(ANIMATION_CONFIG.DURATION_BASE.INNER_CENTER),
-      }) as AnimationConfig,
-    [],
-  );
+  const [animationDurations] = useState<AnimationConfig>(() => ({
+    horizontal: generateRandomDuration(ANIMATION_CONFIG.DURATION_BASE.HORIZONTAL),
+    vertical: generateRandomDuration(ANIMATION_CONFIG.DURATION_BASE.VERTICAL),
+    diagonal45: generateRandomDuration(ANIMATION_CONFIG.DURATION_BASE.DIAGONAL_45),
+    diagonal135: generateRandomDuration(ANIMATION_CONFIG.DURATION_BASE.DIAGONAL_135),
+    centralCircle: generateRandomDuration(ANIMATION_CONFIG.DURATION_BASE.CENTRAL_CIRCLE),
+    innerCenter: generateRandomDuration(ANIMATION_CONFIG.DURATION_BASE.INNER_CENTER),
+  }));
 
   const sizes = useMemo(
     () => ({
