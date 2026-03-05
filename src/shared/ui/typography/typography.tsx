@@ -4,7 +4,16 @@ import { cn } from '@/shared/lib/cn';
 
 import styles from './typography.module.scss';
 
-export type TypographyVariant = 'h1' | 'h2' | 'h3' | 'subheading' | 'body' | 'caption' | 'label';
+export type TypographyVariant =
+  | 'h1'
+  | 'h1-hero'
+  | 'h2'
+  | 'h3'
+  | 'subheading'
+  | 'subheading-responsive'
+  | 'body'
+  | 'caption'
+  | 'label';
 
 export interface TypographyProps {
   variant?: TypographyVariant;
@@ -15,9 +24,11 @@ export interface TypographyProps {
 
 const variantToTag: Record<TypographyVariant, ElementType> = {
   h1: 'h1',
+  'h1-hero': 'h1',
   h2: 'h2',
   h3: 'h3',
   subheading: 'p',
+  'subheading-responsive': 'p',
   body: 'p',
   caption: 'span',
   label: 'label',

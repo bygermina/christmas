@@ -9,7 +9,6 @@ import { useEvent } from '@/shared/lib/hooks/use-event';
 import { CodeUnderText } from './code-under-text';
 
 import styles from './content.module.scss';
-import typographyStyles from '@/shared/ui/typography/typography.module.scss';
 
 const ANIMATION_CONFIG = {
   TITLE_SPEED: 0.1,
@@ -53,8 +52,8 @@ export const Content = ({ letterRef, onContentReady, isImageLoaded = false }: Co
   return (
     <div className={styles.container}>
       <Typography
-        variant="h1"
-        className={cn(styles.heading, typographyStyles['typography-h1-hero'])}
+        variant="h1-hero"
+        className={styles.heading}
       >
         {isImageLoaded && (
           <>
@@ -78,8 +77,7 @@ export const Content = ({ letterRef, onContentReady, isImageLoaded = false }: Co
       </Typography>
       <div className={cn(styles.subtitleWrapper, styles.subtitleWrapperAnimated)}>
         <Typography
-          variant="subheading"
-          className={typographyStyles['typography-subheading-responsive']}
+          variant="subheading-responsive"
           color="muted"
         >
           Wishing you a magical year ahead
