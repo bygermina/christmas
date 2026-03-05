@@ -4,8 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "generate:breakpoints": "node ./scripts/generate-breakpoints-scss.mjs",
+    "predev": "npm run generate:breakpoints",
     "dev": "vite",
+    "prebuild": "npm run generate:breakpoints",
     "build": "tsc -b && vite build",
+    "prelint": "npm run generate:breakpoints",
     "lint": "eslint .",
     "preview": "vite preview"
   },
