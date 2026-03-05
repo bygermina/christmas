@@ -9,6 +9,10 @@
   grid-template-rows: clamp(220px, 46vh, 520px) minmax(0, 1fr);
   align-items: stretch;
 
+  @media (orientation: portrait) and (min-aspect-ratio: 3/5) {
+    grid-template-rows: clamp(260px, 54vh, 620px) minmax(0, 1fr);
+  }
+
   @include landscape-main {
     grid-template-rows: 1fr;
     grid-template-columns: minmax(0, 46vw) minmax(0, 1fr);
