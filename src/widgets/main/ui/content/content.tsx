@@ -21,16 +21,33 @@ interface ContentProps {
   letterRef?: RefObject<HTMLSpanElement | null>;
   onContentReady?: (isReady: boolean) => void;
   isImageLoaded?: boolean;
+  animationCycleKey: string;
 }
 
-export const Content = ({ letterRef, onContentReady, isImageLoaded = false }: ContentProps) => {
-  const [isTextVisible, setIsTextVisible] = useState(false);
-  const [isTitleComplete, setIsTitleComplete] = useState(false);
-  const [isSubtitleComplete, setIsSubtitleComplete] = useState(false);
+export const Content = ({
+  letterRef,
+  onContentReady,
+  isImageLoaded = false,
+  animationCycleKey,
+}: ContentProps) => {
+  const [completedCycleKey, setCompletedCycleKey] = useState<string | null>(null);
+  const [titleCompletedCycleKey, setTitleCompletedCycleKey] = useState<string | null>(null);
+  const [subtitleCompletedCycleKey, setSubtitleCompletedCycleKey] = useState<string | null>(null);
+  const isTextVisible = completedCycleKey === animationCycleKey;
+  const isTitleComplete = titleCompletedCycleKey === animationCycleKey;
+  const isSubtitleComplete = subtitleCompletedCycleKey === animationCycleKey;
 
   const handleStarAnimationComplete = useCallback(() => {
-    setIsTextVisible(true);
-  }, []);
+    setCompletedCycleKey(animationCycleKey);
+  }, [animationCycleKey]);
+
+  const handleTitleComplete = useCallback(() => {
+    setTitleCompletedCycleKey(animationCycleKey);
+  }, [animationCycleKey]);
+
+  const handleSubtitleComplete = useCallback(() => {
+    setSubtitleCompletedCycleKey(animationCycleKey);
+  }, [animationCycleKey]);
 
   useEvent('starAnimationComplete', handleStarAnimationComplete);
 
@@ -58,24 +75,32 @@ export const Content = ({ letterRef, onContentReady, isImageLoaded = false }: Co
         {isImageLoaded && (
           <>
             <TypeText
+              key={`title-${animationCycleKey}`}
               text="Merry Christmas &"
               ref={letterRef}
               targetLetterIndex={ANIMATION_CONFIG.TARGET_LETTER_INDEX}
               className={cn('glass-text-shine', styles.titleMain)}
               speed={ANIMATION_CONFIG.TITLE_SPEED}
               delay={ANIMATION_CONFIG.TITLE_DELAY}
-              onComplete={() => setIsTitleComplete(true)}
+              onComplete={handleTitleComplete}
             />
 
             <TypeText
+              key={`subtitle-${animationCycleKey}`}
               text="Happy new year"
               delay={ANIMATION_CONFIG.SUBTITLE_DELAY}
-              onComplete={() => setIsSubtitleComplete(true)}
+              onComplete={handleSubtitleComplete}
             />
           </>
         )}
       </Typography>
-      <div className={cn(styles.subtitleWrapper, styles.subtitleWrapperAnimated)}>
+      <div
+        className={cn(
+          styles.subtitleWrapper,
+          !isSubtitleComplete && styles.subtitleWrapperHidden,
+          isSubtitleComplete && styles.subtitleWrapperVisible,
+        )}
+      >
         <Typography
           variant="subheading-responsive"
           color="muted"

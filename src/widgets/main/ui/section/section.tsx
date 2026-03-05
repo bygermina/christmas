@@ -6,6 +6,7 @@ import { AnimatedPathEffects } from '../path-effects/animated-path-effects';
 import { useTreeAnimation } from './use-tree-animation';
 
 import styles from './section.module.scss';
+import { getLayoutKey } from '@/shared/lib/layout-key';
 import { useScreenSizeContext } from '@/shared/lib/providers/use-context';
 
 export const Section = () => {
@@ -13,6 +14,7 @@ export const Section = () => {
   const [isContentReady, setIsContentReady] = useState(false);
 
   const { screenWidth, screenHeight } = useScreenSizeContext();
+  const animationCycleKey = getLayoutKey(screenWidth, screenHeight);
 
   const {
     imageRef,
@@ -32,10 +34,11 @@ export const Section = () => {
         letterRef={letterIRef}
         onContentReady={setIsContentReady}
         isImageLoaded={isImageLoaded}
+        animationCycleKey={animationCycleKey}
       />
       {isReady && isImageLoaded && (
         <AnimatedPathEffects
-          key={`${screenWidth}-${screenHeight}`}
+          key={animationCycleKey}
           mainPath={mainPath}
           additionalPaths={additionalPaths}
         />

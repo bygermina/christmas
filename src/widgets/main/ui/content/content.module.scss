@@ -54,6 +54,12 @@
   visibility: hidden;
 }
 
-.subtitleWrapperAnimated {
-  @include fade-in(0.8s, 5s);
+.subtitleWrapperHidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.subtitleWrapperVisible {
+  visibility: visible;
+  @include fade-in(0.8s, 0s);
 }

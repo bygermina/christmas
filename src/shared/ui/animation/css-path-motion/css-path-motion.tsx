@@ -34,6 +34,7 @@ export const CSSPathMotion = ({
   onComplete,
 }: CSSPathMotionProps) => {
   const motionRef = useRef<HTMLDivElement>(null);
+  const hasCompletedRef = useRef(false);
 
   const isVisible = useIntersectionObserver(motionRef, {
     threshold: 0,
@@ -43,9 +44,11 @@ export const CSSPathMotion = ({
   useEffect(() => {
     const element = motionRef.current;
     if (!element) return;
+    hasCompletedRef.current = false;
 
-    const length = getPathLength(path);
-    const duration = speed ? getDurationFromSpeed(DEFAULT_DURATION, speed, length) : DEFAULT_DURATION;
+    const duration = speed
+      ? getDurationFromSpeed(DEFAULT_DURATION, speed, getPathLength(path))
+      : DEFAULT_DURATION;
     element.style.setProperty('--animation-duration', `${duration}s`);
     element.style.setProperty('--animation-delay', `${delay}s`);
     element.style.setProperty('--animation-timing', 'linear');
@@ -53,10 +56,10 @@ export const CSSPathMotion = ({
     element.style.setProperty('--animation-direction', 'normal');
     element.style.setProperty('--rotation-degrees', '1080deg');
 
-    element.style.animationPlayState = isVisible ? 'running' : 'paused';
-
     const handleAnimationEnd = (event: AnimationEvent) => {
-      if (event.animationName !== MOTION_ANIMATION_NAME) return;
+      if (!event.animationName.includes(MOTION_ANIMATION_NAME)) return;
+      if (hasCompletedRef.current) return;
+      hasCompletedRef.current = true;
 
       if (onCompleteEvent) {
         window.dispatchEvent(new CustomEvent(onCompleteEvent));
@@ -67,7 +70,14 @@ export const CSSPathMotion = ({
     element.addEventListener('animationend', handleAnimationEnd);
 
     return () => element.removeEventListener('animationend', handleAnimationEnd);
-  }, [path, speed, delay, onCompleteEvent, onComplete, isVisible]);
+  }, [path, speed, delay, onCompleteEvent, onComplete]);
+
+  useEffect(() => {
+    const element = motionRef.current;
+    if (!element) return;
+    
+    element.style.animationPlayState = isVisible ? 'running' : 'paused';
+  }, [isVisible]);
 
   return (
     <div className={styles.container}>
