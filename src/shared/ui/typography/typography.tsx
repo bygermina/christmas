@@ -17,7 +17,7 @@ export type TypographyVariant =
 
 export interface TypographyProps {
   variant?: TypographyVariant;
-  color?: 'default' | 'muted' | 'primary' | 'secondary' | 'accent';
+  color?: 'default' | 'muted' | 'primary' | 'secondary';
   className?: string;
   children: React.ReactNode;
 }

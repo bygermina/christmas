@@ -1,3 +1,5 @@
+@use '@/shared/styles/design-system' as *;
+
 .glass-text-shine {
   background: linear-gradient(
     135deg,
@@ -18,16 +20,6 @@
   filter: drop-shadow(0 0 8px rgba(from var(--color-blue-400) r g b / 0.25))
     drop-shadow(0 0 16px rgba(from var(--color-blue-400) r g b / 0.2));
   -webkit-text-stroke: 0.5px rgba(from var(--color-white) r g b / 0.2);
-  animation: glass-shine 12s ease-in-out infinite;
+  animation: code-shimmer 12s ease-in-out infinite;
   animation-delay: 2s;
-}
-
-@keyframes glass-shine {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
 }

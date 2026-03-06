@@ -124,7 +124,6 @@ $colors: (
   muted: var(--color-slate-400),
   primary: var(--color-blue-300),
   secondary: var(--color-slate-300),
-  accent: var(--color-blue-300),
 );
 
 @each $key, $value in $colors {

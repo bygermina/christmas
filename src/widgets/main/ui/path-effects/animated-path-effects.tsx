@@ -15,6 +15,11 @@ interface AnimatedPathEffectsProps {
 
 interface StarWithColorChangeProps extends PathEffectProps {
   onCompleteEvent?: string;
+  performanceMode?: boolean;
+}
+
+interface PathEffectWithModeProps extends PathEffectProps {
+  performanceMode?: boolean;
 }
 
 const StarWithColorChange = ({
@@ -24,6 +29,7 @@ const StarWithColorChange = ({
   enableRotation,
   onCompleteEvent,
   size,
+  performanceMode = false,
 }: StarWithColorChangeProps) => {
   const [variant, setVariant] = useState<'white' | 'gold'>('white');
 
@@ -40,7 +46,7 @@ const StarWithColorChange = ({
       onComplete={handleComplete}
       onCompleteEvent={onCompleteEvent}
     >
-      <FireEffect variant={variant} size={size} />
+      <FireEffect variant={variant} size={size} performanceMode={performanceMode} />
     </CSSPathMotion>
   );
 };
@@ -51,14 +57,15 @@ const PathEffect = ({
   speed,
   enableRotation,
   size,
-}: PathEffectProps) => (
+  performanceMode = false,
+}: PathEffectWithModeProps) => (
   <CSSPathMotion
     speed={speed}
     enableRotation={enableRotation}
     path={path}
     delay={delay}
   >
-    <FireEffect variant="white" size={size} />
+    <FireEffect variant="white" size={size} performanceMode={performanceMode} />
   </CSSPathMotion>
 );
 
@@ -78,6 +85,8 @@ export const AnimatedPathEffects = ({
     return BASE_SPEED * screenSpeedMultiplier;
   }, [isMobile, screenWidth]);
 
+  const isPerformanceMode = isMobile || screenWidth < BREAKPOINTS.MD;
+
   return (
     <>
       <StarWithColorChange
@@ -87,6 +96,7 @@ export const AnimatedPathEffects = ({
         enableRotation
         onCompleteEvent="starAnimationComplete"
         size={mainPath.size}
+        performanceMode={isPerformanceMode}
       />
       {additionalPaths.map((p, index) => (
         <PathEffect
@@ -96,6 +106,7 @@ export const AnimatedPathEffects = ({
           speed={speed}
           enableRotation
           size={p.size}
+          performanceMode
         />
       ))}
     </>

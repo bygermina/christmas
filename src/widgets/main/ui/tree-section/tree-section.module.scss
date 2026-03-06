@@ -9,7 +9,6 @@
   width: min(100%, 560px);
   height: auto;
   max-height: 100%;
-  margin-top: 0;
 
   @include landscape-main {
     left: 23vw;
@@ -18,7 +17,6 @@
     width: auto;
     height: 88dvh;
     max-width: 960px;
-    margin-top: 0;
   }
 
   @media (min-width: breakpoint(sm)) and (orientation: landscape) {

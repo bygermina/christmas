@@ -145,3 +145,29 @@
     );
   }
 }
+
+.performanceMode {
+  -webkit-mask-image: none;
+  mask-image: none;
+
+  .beamHorizontal,
+  .beamVertical,
+  .beamDiagonal45,
+  .beamDiagonal135 {
+    filter: none;
+  }
+
+  .centralCircle {
+    filter: none;
+    box-shadow:
+      0 0 6px rgba(from var(--color-white) r g b / 0.75),
+      0 0 12px rgba(from var(--color-gold-400) r g b / 0.3);
+  }
+
+  .innerCenter {
+    filter: none;
+    box-shadow:
+      0 0 4px rgba(from var(--color-white) r g b / 0.8),
+      0 0 8px rgba(from var(--color-gold-400) r g b / 0.3);
+  }
+}

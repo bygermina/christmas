@@ -1,5 +1,5 @@
 @use '@/shared/styles/design-system/css-variables' as *;
-@import '@/shared/styles/glass-text.css';
+@use '@/shared/styles/glass-text' as *;
 
 * {
   box-sizing: border-box;
@@ -17,8 +17,5 @@ body {
 body {
   font-family: var(--font-family-sans, system-ui);
   background: var(--color-dark);
-  color: var(--color-white);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
 }

@@ -83,6 +83,7 @@ const createBeamGradient = (color: string, direction: number, stops: number[]) =
 interface FireEffectProps {
   variant?: 'white' | 'gold';
   size?: number;
+  performanceMode?: boolean;
 }
 
 const createContainerFilter = (isGold: boolean, dropShadow: number) => {
@@ -101,7 +102,7 @@ const generateRandomDelay = () => Math.random() * ANIMATION_CONFIG.MAX_DELAY;
 const generateRandomDuration = (base: number) =>
   base + Math.random() * ANIMATION_CONFIG.DURATION_VARIANCE;
 
-export const FireEffect = ({ variant = 'white', size }: FireEffectProps) => {
+export const FireEffect = ({ variant = 'white', size, performanceMode = false }: FireEffectProps) => {
   const { screenWidth } = useScreenSizeContext();
   const isGold = variant === 'gold';
 
@@ -170,11 +171,15 @@ export const FireEffect = ({ variant = 'white', size }: FireEffectProps) => {
 
   return (
     <div
-      className={cn(styles.container, isGold ? styles.variantGold : styles.variantWhite)}
+      className={cn(
+        styles.container,
+        isGold ? styles.variantGold : styles.variantWhite,
+        performanceMode && styles.performanceMode,
+      )}
       style={{
         width: sizes.container,
         height: sizes.container,
-        filter: createContainerFilter(isGold, sizes.dropShadow),
+        ...(performanceMode ? {} : { filter: createContainerFilter(isGold, sizes.dropShadow) }),
       }}
     >
       {beams.map(beam => (

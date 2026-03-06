@@ -29,7 +29,6 @@ export const TreeImage = forwardRef<HTMLImageElement, TreeImageProps>(({ onImage
       <ImageMask
         ref={ref}
         className={styles.treeImage}
-        imageClassName={styles.image}
         src={fallbackSrc}
         sources={sources}
         alt="Circuit tree"

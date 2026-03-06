@@ -96,7 +96,6 @@ export const Content = ({
       </Typography>
       <div
         className={cn(
-          styles.subtitleWrapper,
           !isSubtitleComplete && styles.subtitleWrapperHidden,
           isSubtitleComplete && styles.subtitleWrapperVisible,
         )}
