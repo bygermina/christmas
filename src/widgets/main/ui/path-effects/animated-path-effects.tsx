@@ -2,13 +2,16 @@ import { memo, useState } from 'react';
 
 import { FireEffect } from '@/shared/ui/animation/light';
 import { CSSPathMotion } from '@/shared/ui/animation/css-path-motion';
-import { useScreenSizeContext } from '@/shared/lib/providers/use-context';
+import { useScreenSizeContext } from '@/shared/lib/providers/screen-size-context';
 import { BREAKPOINTS } from '@/shared/lib/breakpoints';
 
 import type { TreePath } from '@/shared/lib/svg-paths';
 
-import { STAR_ANIMATION } from '../../config';
-import { useOrchestratorActions } from '../../model';
+import { useOrchestratorActions } from '../../model/animation-orchestrator-context';
+
+const STAR_ANIMATION = {
+  MAIN_PATH_SPEED: 300,
+} as const;
 import { BASE_SPEED, SPEED_MULTIPLIERS } from './constants';
 import type { MainPath } from './types';
 

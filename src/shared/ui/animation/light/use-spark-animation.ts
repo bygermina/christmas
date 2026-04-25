@@ -8,7 +8,6 @@ export const useSparkAnimation = (
   sparksRef: React.RefObject<Spark[]>,
   containerRef: React.RefObject<HTMLDivElement | null>,
   sparkClassName: string,
-  isActive: boolean,
 ) => {
   const rafIdRef = useRef<number | null>(null);
   const animateRef = useRef<(() => void) | null>(null);
@@ -75,7 +74,7 @@ export const useSparkAnimation = (
         rafIdRef.current = null;
       }
     };
-  }, [isActive]);
+  }, []);
 
   return { addSpark };
 };

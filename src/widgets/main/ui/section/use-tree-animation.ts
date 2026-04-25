@@ -3,9 +3,14 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useElementDimensions } from '@/shared/lib/hooks/use-element-dimensions';
 import { pathTree, paths, portraitPathTree, type TreePath } from '@/shared/lib/svg-paths';
 import { getImageOffset, getScaledPath, createSvgArc, getLastPointFromSvgPath } from '@/shared/lib/svg';
-import { useScreenSizeContext } from '@/shared/lib/providers/use-context';
+import { useScreenSizeContext } from '@/shared/lib/providers/screen-size-context';
 
-import { TREE_GEOMETRY } from '../../config';
+const TREE_GEOMETRY = {
+  IMAGE_BASE_HEIGHT: 1115,
+  IMAGE_ASPECT_RATIO: 1115 / 1116,
+  DEFAULT_LETTER_TARGET_PART: 0.23,
+  ARC_RADIUS: 250,
+} as const;
 import type { MainPath } from '../path-effects/types';
 
 type Point = { x: number; y: number };

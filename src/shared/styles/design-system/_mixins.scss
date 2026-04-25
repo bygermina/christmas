@@ -1,11 +1,5 @@
 @use './functions' as *;
 
-@mixin typography($size, $weight: normal) {
-  font-size: font-size($size);
-  line-height: line-height($size);
-  font-weight: font-weight($weight);
-}
-
 @mixin respond-to($breakpoint) {
   @media (min-width: breakpoint($breakpoint)) {
     @content;
@@ -18,13 +12,8 @@
   }
 }
 
-@mixin flex-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 @mixin fade-in($duration: 0.8s, $delay: 0s) {
   opacity: 0;
   animation: fade-in $duration $delay forwards;
 }
+

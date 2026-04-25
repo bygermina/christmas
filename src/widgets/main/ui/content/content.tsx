@@ -5,8 +5,14 @@ import { Typography } from '@/shared/ui/typography';
 import { cn } from '@/shared/lib/cn';
 import { whenFontsReady } from '@/shared/lib/fonts-ready';
 
-import { TEXT_ANIMATION } from '../../config';
-import { useOrchestratorActions, useOrchestratorState } from '../../model';
+import { useOrchestratorActions, useOrchestratorState } from '../../model/animation-orchestrator-context';
+
+const TEXT_ANIMATION = {
+  TITLE_SPEED: 0.1,
+  TITLE_DELAY: 1.0,
+  SUBTITLE_DELAY: 3.0,
+  TARGET_LETTER_INDEX: 9,
+} as const;
 import { CodeUnderText } from './code-under-text';
 
 import styles from './content.module.scss';

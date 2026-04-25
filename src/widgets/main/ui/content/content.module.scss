@@ -23,6 +23,10 @@
     @media (min-width: 1401px) {
       font-size: 4.05rem;
     }
+
+    @include landscape-main {
+      font-size: min(3.35rem, 4.4vw);
+    }
   }
 }
 
@@ -37,20 +41,16 @@
   font-size: 1.12em;
   line-height: 1.08;
   padding-bottom: 0.04em;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.022em;
   white-space: nowrap;
-  transform: scaleX(1.02);
-  transform-origin: center;
 
   @include respond-to(sm) {
     font-size: 1.16em;
-    transform: scaleX(1.03);
   }
 
   @media (max-width: 929px) {
     font-size: clamp(1.15em, 12vw, 1.22em);
     margin-right: clamp(0.35rem, 1.6vw, 0.7rem);
-    transform: none;
   }
 }
 

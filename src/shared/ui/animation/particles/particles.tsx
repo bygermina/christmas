@@ -1,7 +1,7 @@
 import { useState, useEffect, memo } from 'react';
 import { motion } from 'framer-motion';
 
-import { useScreenSizeContext } from '@/shared/lib/providers/use-context';
+import { useScreenSizeContext } from '@/shared/lib/providers/screen-size-context';
 import { usePrefersReducedMotion } from '@/shared/lib/hooks/use-prefers-reduced-motion';
 
 import styles from './particles.module.scss';

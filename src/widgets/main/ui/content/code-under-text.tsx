@@ -1,6 +1,6 @@
 import { CodeText } from '@/shared/ui/typography';
 import { cn } from '@/shared/lib/cn';
-import { useScreenSizeContext } from '@/shared/lib/providers/use-context';
+import { useScreenSizeContext } from '@/shared/lib/providers/screen-size-context';
 
 import styles from './code-under-text.module.scss';
 
@@ -25,7 +25,6 @@ const Lines = ({ lines, lineClassName }: { lines: CodeLine[]; lineClassName: str
   lines.map((line, index) => (
     <CodeText
       key={index}
-      variant="gradient"
       className={cn(styles.line, lineClassName)}
       style={{ paddingInlineStart: `${line.indent * 2}ch` }}
     >

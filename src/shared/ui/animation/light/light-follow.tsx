@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { useScreenSizeContext } from '@/shared/lib/providers/use-context';
+import { useScreenSizeContext } from '@/shared/lib/providers/screen-size-context';
 import { usePrefersReducedMotion } from '@/shared/lib/hooks/use-prefers-reduced-motion';
 
 import { useMouseVelocity } from './use-mouse-velocity';
@@ -21,7 +21,7 @@ export const LightFollowCursor = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const { updateVelocity } = useMouseVelocity();
-  const { addSpark } = useSparkAnimation(sparksRef, containerRef, styles.spark, !isDisabled && isVisible);
+  const { addSpark } = useSparkAnimation(sparksRef, containerRef, styles.spark);
 
   useEffect(() => {
     if (isDisabled) return;

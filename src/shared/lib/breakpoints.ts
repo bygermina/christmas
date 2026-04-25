@@ -1,6 +1,4 @@
-import breakpoints from './breakpoints.json';
-
 export const BREAKPOINTS = {
-  MD: breakpoints.md,
-  LG: breakpoints.lg,
+  MD: 768,
+  LG: 1024,
 } as const;

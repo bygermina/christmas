@@ -13,7 +13,9 @@ export const useIntersectionObserver = (elementRef: React.RefObject<HTMLElement 
     observer.observe(elementRef.current);
 
     return () => observer.disconnect();
-  }, [elementRef]);
+  // elementRef — стабильный RefObject, его identity не меняется между рендерами
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return isIntersecting;
 };

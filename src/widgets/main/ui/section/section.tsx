@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
-import { useScreenSizeContext } from '@/shared/lib/providers/use-context';
+import { useScreenSizeContext } from '@/shared/lib/providers/screen-size-context';
 
-import { AnimationOrchestratorProvider } from '../../model';
-import { TreeImage } from '../tree-section';
-import { Content } from '../content';
-import { AnimatedPathEffects } from '../path-effects';
+import { AnimationOrchestratorProvider } from '../../model/animation-orchestrator';
+import { TreeImage } from '../tree-section/tree-image';
+import { Content } from '../content/content';
+import { AnimatedPathEffects } from '../path-effects/animated-path-effects';
 import { useTreeAnimation } from './use-tree-animation';
 
 import styles from './section.module.scss';

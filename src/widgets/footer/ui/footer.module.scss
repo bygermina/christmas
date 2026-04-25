@@ -32,13 +32,17 @@
 }
 
 .socialLinks {
-  @include flex-center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   gap: spacing(3);
   pointer-events: auto;
 }
 
 .socialLink {
-  @include flex-center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 2rem;
   height: 2rem;
   color: var(--color-slate-500);
@@ -58,7 +62,9 @@
 }
 
 .footerText {
-  @include typography(xs);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: font-weight(normal);
   color: var(--color-slate-600);
   pointer-events: auto;
 }

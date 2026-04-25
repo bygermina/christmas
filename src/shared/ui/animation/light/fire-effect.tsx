@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 
-import { useScreenSizeContext } from '@/shared/lib/providers/use-context';
+import { useScreenSizeContext } from '@/shared/lib/providers/screen-size-context';
 import { cn } from '@/shared/lib/cn';
 
 import styles from './fire-effect.module.scss';

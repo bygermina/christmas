@@ -13,9 +13,9 @@
     }
   }
 
-  --color-primary-strong: #{semantic-color(primary-strong)};
-  --color-surface: #{semantic-color(surface)};
-  --color-on-surface: #{semantic-color(on-surface)};
+  --color-primary-strong: #{ds-color('blue', 500)};
+  --color-surface: #{ds-color('dark')};
+  --color-on-surface: #{ds-color('white')};
 
   --font-family-sans: #{font-family(sans)};
 }

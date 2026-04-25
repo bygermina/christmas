@@ -1,5 +1,5 @@
 import { GithubIcon, LinkedinIcon, EmailIcon } from '@/shared/ui/icons';
-import { useScreenSizeContext } from '@/shared/lib/providers/use-context';
+import { useScreenSizeContext } from '@/shared/lib/providers/screen-size-context';
 
 import styles from './footer.module.scss';
 

@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 
 import { useScreenSize } from '@/shared/lib/hooks/use-screen-size';
-import { ScreenSizeContext } from '@/shared/lib/providers/use-context';
+import { ScreenSizeContext } from '@/shared/lib/providers/screen-size-context';
 
 export const ScreenSizeProvider = ({ children }: { children: ReactNode }) => {
   const value = useScreenSize();

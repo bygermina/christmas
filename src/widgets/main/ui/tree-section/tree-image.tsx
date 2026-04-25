@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 
 import { BREAKPOINTS } from '@/shared/lib/breakpoints';
-import { useScreenSizeContext } from '@/shared/lib/providers/use-context';
+import { useScreenSizeContext } from '@/shared/lib/providers/screen-size-context';
 
 import desktop from '../../assets/blue electronic christmas tree.webp';
 import mobile from '../../assets/blue electronic christmas tree-600.webp';

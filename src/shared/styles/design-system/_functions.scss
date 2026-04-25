@@ -1,5 +1,4 @@
 @use 'sass:map';
-@use 'sass:list';
 @use 'sass:meta';
 @use './tokens' as tokens;
 
@@ -27,11 +26,6 @@
   @return _lookup($color-value, $shade, "Shade for color '#{$color-name}'");
 }
 
-@function semantic-color($role) {
-  $ref: _lookup(tokens.$semantic-colors, $role, 'Semantic color');
-  @return ds-color(list.nth($ref, 1), list.nth($ref, 2));
-}
-
 // Spacing & sizing -------------------------------------------------------
 
 @function spacing($size) {
@@ -46,14 +40,6 @@
 
 @function font-family($family) {
   @return _lookup(tokens.$font-family, $family, 'Font family');
-}
-
-@function font-size($size) {
-  @return map.get(_lookup(tokens.$font-size, $size, 'Font size'), size);
-}
-
-@function line-height($size) {
-  @return map.get(_lookup(tokens.$font-size, $size, 'Font size'), line-height);
 }
 
 @function font-weight($weight) {
